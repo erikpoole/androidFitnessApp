@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Main2Activity extends AppCompatActivity implements View.OnClickListener{
@@ -23,6 +24,14 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         Button button2 = findViewById(R.id.button_take_picture);
         button2.setOnClickListener(this);
 
+        String fullName = getIntent().getExtras().getString("userInput");
+        String[] nameSplit = fullName.split(" ");
+
+        TextView first = findViewById(R.id.text3);
+        TextView last = findViewById(R.id.text4);
+
+        first.setText(nameSplit[0]);
+        last.setText(nameSplit[1]);
     }
 
     @Override

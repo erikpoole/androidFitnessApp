@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 
@@ -18,7 +19,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button button1 = findViewById(R.id.button1);
         button1.setOnClickListener(this);
-
     }
 
     @Override
@@ -26,6 +26,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(view.getId()) {
             case R.id.button1:
                 Intent secondPage = new Intent(this, Main2Activity.class);
+                Bundle nameBndl = new Bundle();
+                EditText nameEdit = findViewById(R.id.name);
+                nameBndl.putString("userInput", nameEdit.getText().toString());
+                secondPage.putExtras(nameBndl);
                 startActivity(secondPage);
                 break;
         }
