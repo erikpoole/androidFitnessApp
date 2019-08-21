@@ -1,5 +1,6 @@
 package com.example.lab2;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,8 +25,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.button1:
-                Toast toast = Toast.makeText(getApplicationContext(), "Button", Toast.LENGTH_SHORT);
-                toast.show();
+                Intent secondPage = new Intent(this, Main2Activity.class);
+                startActivity(secondPage);
                 break;
         }
     }
