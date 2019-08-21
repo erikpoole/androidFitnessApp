@@ -1,0 +1,8 @@
+*build/
+*generatedJava/
+*.idea/
+*.gradle/
+
+*.iml
+*.pro
+*.properties
