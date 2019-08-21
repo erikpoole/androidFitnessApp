@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class Weather extends AppCompatActivity implements View.OnClickListener {
+public class WeatherActivity extends AppCompatActivity implements View.OnClickListener {
     final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     @Override
