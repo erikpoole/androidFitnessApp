@@ -25,9 +25,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-
-//        Intent weatherPage = new Intent(this, WeatherActivity.class);
-//        startActivity(weatherPage);
     }
 
     @Override
@@ -51,13 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Toast.makeText(getApplicationContext(), "Item selected!", Toast.LENGTH_LONG).show();
-
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_home:
-                Toast.makeText(getApplicationContext(), "Go Home!", Toast.LENGTH_LONG).show();
-                finish();
+                Intent mainPage = new Intent(this, MainActivity.class);
+                startActivity(mainPage);
                 return true;
             case R.id.nav_weather:
                 Intent weatherPage = new Intent(this, WeatherActivity.class);

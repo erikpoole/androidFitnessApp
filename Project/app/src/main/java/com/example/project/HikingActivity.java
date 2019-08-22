@@ -6,13 +6,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class HikingActivity extends AppCompatActivity {
+public class HikingActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hiking);
 
+        Button hikingButton = findViewById(R.id.hikingButton);
+        hikingButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
         Toast.makeText(getApplicationContext(), "Hiking!", Toast.LENGTH_LONG).show();
     }
 }

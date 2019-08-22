@@ -6,11 +6,11 @@
     tools:context=".HikingActivity">
 
     <Button
-        android:id="@+id/weatherButton"
+        android:id="@+id/hikingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/take_picture"
+        android:text="@string/find_hike"
         tools:layout_constraintTop_toBottomOf="parent"
         tools:layout_constraintLeft_toLeftOf="parent" />
 
