@@ -62,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent hikingPage = new Intent(this, HikingActivity.class);
                 startActivity(hikingPage);
                 return true;
+            case R.id.nav_bio:
+                Intent bioPage = new Intent(this, Bio.class);
+                startActivity(bioPage);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

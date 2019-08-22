@@ -17,6 +17,10 @@
             android:id="@+id/nav_hiking"
             android:icon="@drawable/ic_terrain_black"
             android:title="@string/hiking" />
+        <item
+            android:id="@+id/nav_bio"
+            android:icon="@drawable/ic_terrain_black"
+            android:title="Bio" />
     </group>
 
 </menu>
