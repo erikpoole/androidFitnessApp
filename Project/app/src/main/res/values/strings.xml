@@ -6,4 +6,5 @@
     <string name="weather">Weather</string>
     <string name="hiking">Hiking</string>
     <string name="redirect_to_weather">redirect to weather</string>
+    <string name="take_picture">Take Picture</string>
 </resources>

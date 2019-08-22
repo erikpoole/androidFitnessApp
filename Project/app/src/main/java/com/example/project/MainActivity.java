@@ -7,6 +7,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,26 +42,34 @@ public class MainActivity extends AppCompatActivity {
         toggle.onConfigurationChanged(newConfig);
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        Toast.makeText(getApplicationContext(), "Item selected", Toast.LENGTH_LONG).show();
-//
-//        int id = item.getItemId();
-//        switch (id) {
-//            case R.id.nav_home:
-//                Toast.makeText(getApplicationContext(), "Go Home Not Implemented!", Toast.LENGTH_LONG).show();
-//                return true;
-//            case R.id.nav_weather:
-//                Toast.makeText(getApplicationContext(), "Go Weather", Toast.LENGTH_LONG).show();
-//                Intent weatherPage = new Intent(this, WeatherActivity.class);
-//                startActivity(weatherPage);
-//                return true;
-//            case R.id.nav_hiking:
-//                Toast.makeText(getApplicationContext(), "Go Hiking", Toast.LENGTH_LONG).show();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Toast.makeText(getApplicationContext(), "Item selected!", Toast.LENGTH_LONG).show();
+
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.nav_home:
+                Toast.makeText(getApplicationContext(), "Go Home!", Toast.LENGTH_LONG).show();
+                finish();
+                return true;
+            case R.id.nav_weather:
+                Intent weatherPage = new Intent(this, WeatherActivity.class);
+                startActivity(weatherPage);
+                return true;
+            case R.id.nav_hiking:
+                Intent hikingPage = new Intent(this, HikingActivity.class);
+                startActivity(hikingPage);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }
