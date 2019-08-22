@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">project</string>
+    <string name="navigation_drawer_open">project</string>
+    <string name="navigation_drawer_close">project</string>
+    <string name="home">Home</string>
+    <string name="weather">Weather</string>
+    <string name="hiking">Hiking</string>
 </resources>
