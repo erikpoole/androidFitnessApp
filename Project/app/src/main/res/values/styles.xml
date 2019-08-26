@@ -1,22 +1,22 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/purple_A700</item>
+        <item name="colorPrimaryDark">@color/purple_900</item>
+        <item name="colorAccent">@color/purple_A400</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="AppTheme">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/purple_A700</item>
+        <item name="colorPrimaryDark">@color/purple_900</item>
+        <item name="colorAccent">@color/purple_A400</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:textColorPrimary">@color/colorAccent</item>
-        <item name="android:textColorSecondary">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/purple_50</item>
+        <item name="android:textColorSecondary">@color/black</item>
     </style>
 
 </resources>

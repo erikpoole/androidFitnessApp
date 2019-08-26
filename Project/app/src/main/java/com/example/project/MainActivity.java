@@ -3,6 +3,8 @@ package com.example.project;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,10 +23,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Handle navigation drawer
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        NavigationView nav  = findViewById(R.id.nav_view);
+        nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                return handleNavigationEvent(item);
+            }
+        });
     }
 
     @Override
@@ -42,13 +52,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
+        inflater.inflate(R.menu.options_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        switch (id) {
+            case R.id.settings:
+                Toast.makeText(getApplicationContext(), "Settings page not implemented!", Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public boolean handleNavigationEvent(@NonNull MenuItem menuItem) {
+        int id = menuItem.getItemId();
         switch (id) {
             case R.id.nav_home:
                 Intent mainPage = new Intent(this, MainActivity.class);
@@ -67,8 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(bioPage);
                 return true;
             default:
-                return super.onOptionsItemSelected(item);
+                return false;
         }
     }
-
 }
