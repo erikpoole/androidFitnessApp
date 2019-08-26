@@ -12,16 +12,27 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
-import javax.net.ssl.HttpsURLConnection;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class WeatherActivity extends AppCompatActivity implements View.OnClickListener {
     final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     final String OPEN_WEATHER_API_KEY = "8a85f0c871ca098af96f9408e91bb57d";
+
+    TextView weatherText;
+    TextView temperateText;
+    TextView windText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +41,10 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
 
         Button weatherButton = findViewById(R.id.weatherButton);
         weatherButton.setOnClickListener(this);
+
+        weatherText = findViewById(R.id.weatherText);
+        temperateText = findViewById(R.id.temperatureText);
+        windText = findViewById(R.id.windText);
     }
 
     public void onClick(View v) {
@@ -82,48 +97,47 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                     .show();
             return;
         }
-        Toast.makeText(getApplicationContext(), location.toString(), Toast.LENGTH_LONG).show();
-        Log.d("DATA:", location.toString());
-        makeRequest(location);
+
+        String latitude = Double.toString(location.getLatitude());
+        String longitude = Double.toString(location.getLongitude());
+        String url = "https://api.openweathermap.org/data/2.5/weather?lat=" +
+                        latitude +
+                        "&lon=" +
+                        longitude +
+                        "&appid=" +
+                        OPEN_WEATHER_API_KEY;
+
+        makeRequest(url);
     }
 
-
-    //todo put in thread: http://mobiledevtuts.com/android/android-http-with-asynctask-example/
-    public void makeRequest(Location location) {
-        URL url = null;
+    public void handleWeatherResponse(String response) {
         try {
-            url = new URL(("https://samples.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid="+OPEN_WEATHER_API_KEY));
-        } catch (MalformedURLException e) {
-            Log.d("DATA:", "bad url");
-        }
-        HttpsURLConnection urlConnection = null;
-        try {
-            urlConnection = (HttpsURLConnection) url.openConnection();
-//            InputStream in = new BufferedInputStream((urlConnection.getInputStream()));
-//            Log.d("DATA:", in.toString());
-        } catch (IOException e) {
-            Log.d("DATA:", "bad connection");
-        } finally {
-            urlConnection.disconnect();
+            JSONObject json = new JSONObject(response);
+            weatherText.setText(json.get("weather").toString());
+            temperateText.setText(json.get("main").toString());
+            windText.setText(json.get("wind").toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
-    //TODO test API Key
-//        https://samples.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=b6907d289e10d714a6e88b30761fae22
+    //TODO make generic request handler - pass handler..  (callable?)?
+    public void makeRequest(String inputURL) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest request = new StringRequest(Request.Method.GET, inputURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("DATA: ", response);
+                handleWeatherResponse(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("ERROR: ", error.toString());
+            }
+        });
 
-
-
-//                Uri webpage = Uri.parse("http://weather.com/weather/tenday/l/Salt+Lake+City+UT+USUT0225:1:US");
-//                Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
-//                startActivity(webIntent);
-
-//    URL url = new URL("http://www.android.com/");
-//    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-//   try {
-//        InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-//        readStream(in);
-//    } finally {
-//        urlConnection.disconnect();
-//    }
+        queue.add(request);
+    }
 
 }
