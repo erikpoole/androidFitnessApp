@@ -2,16 +2,14 @@ package com.example.lab2;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -24,16 +22,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private String PATH_TO_IMAGE;
+    private String NAME;
+    private EditText NAME_INPUT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Button button1 = findViewById(R.id.button1);
         button1.setOnClickListener(this);
         Button button2 = findViewById(R.id.button_take_picture);
         button2.setOnClickListener(this);
+        NAME_INPUT = findViewById(R.id.name);
+
+        if (savedInstanceState != null) {
+            PATH_TO_IMAGE = savedInstanceState.getString("imgPath");
+            NAME = savedInstanceState.getString("fullname");
+            NAME_INPUT.setText(NAME);
+        }
     }
 
     @Override
@@ -42,8 +48,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button1:
                 Intent secondPage = new Intent(this, Main2Activity.class);
                 Bundle nameBndl = new Bundle();
-                EditText nameEdit = findViewById(R.id.name);
-                nameBndl.putString("userInput", nameEdit.getText().toString());
+                NAME = NAME_INPUT.getText().toString();
+                nameBndl.putString("userInput", NAME);
                 nameBndl.putString("imagePath", PATH_TO_IMAGE);
                 secondPage.putExtras(nameBndl);
                 startActivity(secondPage);
@@ -99,5 +105,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle sis) {
+        super.onSaveInstanceState(sis);
+        NAME = NAME_INPUT.getText().toString();
+        sis.putString("fullname", NAME);
+        sis.putString("imgPath", PATH_TO_IMAGE);
+    }
 
+//    @Override
+//    public void onRestoreInstanceState(Bundle sis) {
+//        super.onRestoreInstanceState(sis);
+//        PATH_TO_IMAGE = sis.getString("imgPath");
+//        NAME = sis.getString("fullname");
+//        NAME_INPUT.setText(NAME);
+//    }
 }
