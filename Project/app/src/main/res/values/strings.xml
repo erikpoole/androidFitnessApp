@@ -8,4 +8,6 @@
     <string name="redirect_to_weather">redirect to weather</string>
     <string name="take_picture">Take Picture</string>
     <string name="find_hike">Find Hike</string>
+    <string name="bio">Bio</string>
+    <string name="Settings">Settings</string>/>
 </resources>
