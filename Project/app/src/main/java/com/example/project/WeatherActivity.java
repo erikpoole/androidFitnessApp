@@ -32,9 +32,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         weatherButton.setOnClickListener(this);
     }
 
-    @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.weatherButton:
                 LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

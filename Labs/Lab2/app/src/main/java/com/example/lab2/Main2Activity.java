@@ -2,6 +2,7 @@ package com.example.lab2;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,19 +13,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Main2Activity extends AppCompatActivity implements View.OnClickListener{
-
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+//public class Main2Activity extends AppCompatActivity implements View.OnClickListener{
+public class Main2Activity extends AppCompatActivity {
+    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        Button button2 = findViewById(R.id.button_take_picture);
-        button2.setOnClickListener(this);
-
-        String fullName = getIntent().getExtras().getString("userInput");
+        bundle = getIntent().getExtras();
+        String fullName = bundle.getString("userInput");
         String[] nameSplit = fullName.split(" ");
 
         TextView first = findViewById(R.id.text3);
@@ -32,27 +31,16 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
         first.setText(nameSplit[0]);
         last.setText(nameSplit[1]);
+
+        String path = bundle.getString("imagePath");
+        if (path!=null) {
+            Bitmap thumbnail = BitmapFactory.decodeFile(path);
+            ImageView imageHolder = findViewById(R.id.image);
+            imageHolder.setImageBitmap(thumbnail);
+        }
+
+
+
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.button_take_picture:
-                Toast.makeText(getApplicationContext(),"Case activated",Toast.LENGTH_SHORT).show();
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if(cameraIntent.resolveActivity(getPackageManager())!=null){
-                    startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
-                }
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode==REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK){
-            Bundle extras = data.getExtras();
-            Bitmap thumbnailImage = (Bitmap) extras.get("data");
-            ImageView image = (ImageView) findViewById(R.id.image);
-            image.setImageBitmap(thumbnailImage);
-        }
-    }
 }
