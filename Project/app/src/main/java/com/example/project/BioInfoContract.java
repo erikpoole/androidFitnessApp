@@ -10,12 +10,12 @@ public class BioInfoContract {
     /* Inner class that defines the table contents */
     public static class BioEntry implements BaseColumns {
         public static final String TABLE_NAME = "bio";
-        public static final String USER_NAME = "enter your name";
-        public static final String CITY = "enter your city";
-        public static final String COUNTRY = "enter your country";
-        public static final String HEIGHT = "enter your height";
-        public static final String WEIGHT = "enter your weight";
-        public static final String AGE = "enter your age";
-        public static final String SEX = "enter your sex";
+        public static final String USER_NAME = "username";
+        public static final String CITY = "city";
+        public static final String COUNTRY = "country";
+        public static final String HEIGHT = "height";
+        public static final String WEIGHT = "weight";
+        public static final String AGE = "age";
+        public static final String SEX = "sex";
     }
 }

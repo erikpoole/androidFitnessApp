@@ -6,15 +6,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class BioHelperDB extends SQLiteOpenHelper {
     private static final String SQL_CREATE_BIO =
-            "CREATE TABLE " + BioInfoContract.BioEntry.TABLE_NAME + " (" +
+            "CREATE TABLE IF NOT EXISTS " + BioInfoContract.BioEntry.TABLE_NAME + " (" +
                     BioInfoContract.BioEntry._ID + " INTEGER PRIMARY KEY," +
                     BioInfoContract.BioEntry.USER_NAME + " TEXT," +
                     BioInfoContract.BioEntry.CITY + " TEXT," +
                     BioInfoContract.BioEntry.COUNTRY + " TEXT," +
                     BioInfoContract.BioEntry.HEIGHT + " TEXT," +
-                    BioInfoContract.BioEntry.WEIGHT + " TEXT," +
+                    BioInfoContract.BioEntry.WEIGHT + " INTEGER," +
                     BioInfoContract.BioEntry.AGE + " INTEGER," +
-                    BioInfoContract.BioEntry.SEX + " INTEGER)";
+                    BioInfoContract.BioEntry.SEX + " TEXT)";
 
     private static final String SQL_DELETE_BIO =
             "DROP TABLE IF EXISTS " + BioInfoContract.BioEntry.TABLE_NAME;
