@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TopFragment.TopInterface {
 
     private String mStringFullName;
     private EditText mEtFullName;
@@ -38,26 +38,9 @@ public class MainActivity extends AppCompatActivity {
         fTrans.commit();
     }
 
-//    @Override
-//    public void onClick(View view) {
-//        switch(view.getId()) {
-//            case R.id.button1:
-//                Intent secondPage = new Intent(this, Main2Activity.class);
-//                Bundle nameBndl = new Bundle();
-//                NAME = NAME_INPUT.getText().toString();
-//                nameBndl.putString("userInput", NAME);
-//                nameBndl.putString("imagePath", PATH_TO_IMAGE);
-//                secondPage.putExtras(nameBndl);
-//                startActivity(secondPage);
-//                break;
-//            case R.id.button_take_picture:
-//                Toast.makeText(getApplicationContext(), "Case activated", Toast.LENGTH_SHORT).show();
-//                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-//                    startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
-//                }
-//        }
-//    }
-//
+    @Override
+    public void handleTransaction(String name) {
+
+    }
 
 }
