@@ -13,15 +13,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bio extends AppCompatActivity implements View.OnClickListener {
+public class Bio extends AppCompatActivity {
 
     BioHelperDB dbHelper;
-    EditText nameET, ageET, sexET, heightET, weightET, cityET, countryET;
+    TextView nameET, ageET, sexET, heightET, weightET, cityET, countryET;
     String username, age, sex, height, weight, city, country;
 
     @Override
@@ -36,37 +39,37 @@ public class Bio extends AppCompatActivity implements View.OnClickListener {
         cityET = findViewById(R.id.city);
         countryET = findViewById(R.id.country);
 
-        Button submitBtn = findViewById(R.id.submit);
-        submitBtn.setOnClickListener(this);
-        Button testBtn = findViewById(R.id.test);
-        testBtn.setOnClickListener(this);
+//        Button submitBtn = findViewById(R.id.submit);
+//        submitBtn.setOnClickListener(this);
+//        Button testBtn = findViewById(R.id.test);
+//        testBtn.setOnClickListener(this);
 
         dbHelper = new BioHelperDB(getApplicationContext());
     }
-
-    @Override
-    public void onClick(View view) {
-        switch(view.getId()) {
-            case R.id.submit:
-                assignVariablesToFieldVals();
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-                ContentValues values = new ContentValues();
-                values.put(BioInfoContract.BioEntry.USER_NAME, username);
-                values.put(BioInfoContract.BioEntry.AGE, age);
-                values.put(BioInfoContract.BioEntry.SEX, sex);
-                values.put(BioInfoContract.BioEntry.HEIGHT, height);
-                values.put(BioInfoContract.BioEntry.WEIGHT, weight);
-                values.put(BioInfoContract.BioEntry.CITY, city);
-                values.put(BioInfoContract.BioEntry.COUNTRY, country);
-                long newRowId = db.insert(BioInfoContract.BioEntry.TABLE_NAME, null, values);
-                db.close();
-                break;
-            case R.id.test:
-                getInfoFromDB();
-//                deleteUserFromDB();
-        }
-
-    }
+//
+//    @Override
+//    public void onClick(View view) {
+//        switch(view.getId()) {
+//            case R.id.submit:
+//                assignVariablesToFieldVals();
+//                SQLiteDatabase db = dbHelper.getWritableDatabase();
+//                ContentValues values = new ContentValues();
+//                values.put(BioInfoContract.BioEntry.USER_NAME, username);
+//                values.put(BioInfoContract.BioEntry.AGE, age);
+//                values.put(BioInfoContract.BioEntry.SEX, sex);
+//                values.put(BioInfoContract.BioEntry.HEIGHT, height);
+//                values.put(BioInfoContract.BioEntry.WEIGHT, weight);
+//                values.put(BioInfoContract.BioEntry.CITY, city);
+//                values.put(BioInfoContract.BioEntry.COUNTRY, country);
+//                long newRowId = db.insert(BioInfoContract.BioEntry.TABLE_NAME, null, values);
+//                db.close();
+//                break;
+//            case R.id.test:
+//                getInfoFromDB();
+////                deleteUserFromDB();
+//        }
+//
+//    }
 
     private void assignVariablesToFieldVals() {
         username = nameET.getText().toString();

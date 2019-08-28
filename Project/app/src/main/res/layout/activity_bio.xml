@@ -30,11 +30,11 @@
         app:layout_constraintTop_toBottomOf="@id/title"
         />
 
-    <EditText
+    <TextView
         android:id="@+id/name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_margin="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/name-label"
         app:layout_constraintTop_toBottomOf="@id/title"
@@ -52,11 +52,11 @@
         app:layout_constraintTop_toBottomOf="@id/name-label"
         />
 
-    <EditText
+    <TextView
         android:id="@+id/city"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_margin="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/city-label"
         app:layout_constraintTop_toBottomOf="@id/name"
@@ -74,11 +74,11 @@
         app:layout_constraintTop_toBottomOf="@id/city-label"
         />
 
-    <EditText
+    <TextView
         android:id="@+id/country"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_margin="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/country-label"
         app:layout_constraintTop_toBottomOf="@id/city"
@@ -96,11 +96,11 @@
         app:layout_constraintTop_toBottomOf="@id/country-label"
         />
 
-    <EditText
+    <TextView
         android:id="@+id/height"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_margin="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/height-label"
         app:layout_constraintTop_toBottomOf="@id/country"
@@ -118,11 +118,11 @@
         app:layout_constraintTop_toBottomOf="@id/height-label"
         />
 
-    <EditText
+    <TextView
         android:id="@+id/weight"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_margin="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/weight-label"
         app:layout_constraintTop_toBottomOf="@id/height"
@@ -140,11 +140,11 @@
         app:layout_constraintTop_toBottomOf="@id/weight-label"
         />
 
-    <EditText
+    <TextView
         android:id="@+id/age"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_margin="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/age-label"
         app:layout_constraintTop_toBottomOf="@id/weight"
@@ -162,36 +162,26 @@
         app:layout_constraintTop_toBottomOf="@id/age-label"
         />
 
-    <EditText
+    <TextView
         android:id="@+id/sex"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_margin="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/sex-label"
         app:layout_constraintTop_toBottomOf="@id/age"
         />
 
     <Button
-        android:id="@+id/submit"
+        android:id="@+id/edit_bio"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_margin="12dp"
-        android:text="Submit Changes"
+        android:text="Edit Bio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sex"
         />
 
-    <Button
-        android:id="@+id/test"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_margin="12dp"
-        android:text="Test Read"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/submit"
-        />
 
 </android.support.constraint.ConstraintLayout>

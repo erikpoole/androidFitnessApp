@@ -14,7 +14,9 @@ public class BioHelperDB extends SQLiteOpenHelper {
                     BioInfoContract.BioEntry.HEIGHT + " TEXT," +
                     BioInfoContract.BioEntry.WEIGHT + " INTEGER," +
                     BioInfoContract.BioEntry.AGE + " INTEGER," +
-                    BioInfoContract.BioEntry.SEX + " TEXT)";
+                    BioInfoContract.BioEntry.SEX + " TEXT," +
+                    BioInfoContract.BioEntry.IMG_PATH + " TEXT," +
+                    BioInfoContract.BioEntry.IS_LOGGED_IN + " INTEGER)";
 
     private static final String SQL_DELETE_BIO =
             "DROP TABLE IF EXISTS " + BioInfoContract.BioEntry.TABLE_NAME;
