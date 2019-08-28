@@ -14,13 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -107,7 +101,14 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                         "&appid=" +
                         OPEN_WEATHER_API_KEY;
 
-        makeRequest(url);
+        Response.Listener<String> listener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("DATA: ", response);
+                handleWeatherResponse(response);
+            }
+        };
+        Requests.makeRequest(url, listener, this);
     }
 
     public void handleWeatherResponse(String response) {
@@ -119,25 +120,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    //TODO make generic request handler - pass handler..  (callable?)?
-    public void makeRequest(String inputURL) {
-        RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest request = new StringRequest(Request.Method.GET, inputURL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("DATA: ", response);
-                handleWeatherResponse(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("ERROR: ", error.toString());
-            }
-        });
-
-        queue.add(request);
     }
 
 }
