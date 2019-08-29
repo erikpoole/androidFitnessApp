@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
+import com.example.project.TileFragment;
 import com.example.project.activity.bio.BioHelperDB;
 import com.example.project.R;
 import com.google.android.material.navigation.NavigationView;
@@ -13,6 +14,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
                 return handleNavigationEvent(item);
             }
         });
+
+        //Find each frame layout, replace with corresponding fragment
+        FragmentTransaction fTrans = getSupportFragmentManager().beginTransaction();
+        fTrans.replace(R.id.fl_test_frag, new TileFragment(),"Frag_1");
+        fTrans.commit();
 
         //Init SQLite
         dbHelper = new BioHelperDB(getApplicationContext());

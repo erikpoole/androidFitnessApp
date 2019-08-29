@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * This class was based on a demo class from the Android Design Library.
  */
 public class TileFragment extends Fragment {
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,8 +53,8 @@ public class TileFragment extends Fragment {
 
         public ContentAdapter(Context context) {
             Resources resources = context.getResources();
-            mPlaces = resources.getStringArray(R.array.places);
-            TypedArray a = resources.obtainTypedArray(R.array.places_picture);
+            mPlaces = resources.getStringArray(R.array.activities);
+            TypedArray a = resources.obtainTypedArray(R.array.activity_pictures);
             mPlacePictures = new Drawable[a.length()];
             for (int i = 0; i < mPlacePictures.length; i++) {
                 mPlacePictures[i] = a.getDrawable(i);
@@ -62,9 +62,8 @@ public class TileFragment extends Fragment {
             a.recycle();
         }
 
-        @NonNull
         @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             return new ViewHolder(LayoutInflater.from(parent.getContext()), parent);
         }
 

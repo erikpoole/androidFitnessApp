@@ -7,27 +7,25 @@
     android:layout_height="match_parent"
     tools:openDrawer="start">
 
-    <include
-        layout="@layout/app_bar_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Main"
-            android:textSize="50dp"
-            android:id="@+id/textView"
-            android:layout_marginTop="200dp"
-            android:layout_marginLeft="130dp"/>
-
+        <!--TODO Don't hardcode tile position-->
+        <FrameLayout
+            android:paddingTop="55dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:id="@+id/fl_test_frag">
+        </FrameLayout>
 
     </RelativeLayout>
+
+    <include
+        layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <!--NAVIGATION VIEW NEEDS TO REMAIN LAST ELEMENT-->
     <com.google.android.material.navigation.NavigationView

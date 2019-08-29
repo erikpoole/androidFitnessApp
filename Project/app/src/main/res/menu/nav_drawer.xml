@@ -18,7 +18,7 @@
             android:title="@string/hiking" />
         <item
             android:id="@+id/nav_bio"
-            android:icon="@drawable/profile_24px"
+            android:icon="@drawable/ic_profile_24px"
             android:title="@string/bio" />
     </group>
 
