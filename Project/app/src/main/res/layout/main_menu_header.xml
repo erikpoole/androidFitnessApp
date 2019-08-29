@@ -3,7 +3,7 @@
     android:id="@+id/nav_header"
     android:layout_width="match_parent"
     android:layout_height="160dp"
-    android:background="@color/purple_A200"
+    android:background="@color/dark_gray"
     android:clickable="true"
     android:focusable="true"
     android:gravity="bottom"
@@ -23,6 +23,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
-        android:text="FirstName LastName"
+        android:text="Jane Doe"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 </LinearLayout>
