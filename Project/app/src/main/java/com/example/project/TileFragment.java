@@ -47,7 +47,7 @@ public class TileFragment extends Fragment {
     }
 
     public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder> {
-        private static final int LENGTH = 18;
+        private static final int LENGTH = 8;
         private final String[] mPlaces;
         private final Drawable[] mPlacePictures;
 
