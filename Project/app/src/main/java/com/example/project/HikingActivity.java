@@ -8,27 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class HikingActivity extends AppCompatActivity implements View.OnClickListener {
+public class HikingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hiking);
 
-        Button hikingButton = findViewById(R.id.hikingButton);
-        hikingButton.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-//        String currentLocation = getLocation();
-//        if (currentLocation.isEmpty()) {
-//            Toast.makeText(getApplicationContext(), "Can't obtain location.", Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//        Toast.makeText(getApplicationContext(), currentLocation, Toast.LENGTH_LONG).show();
-
-        Uri gmmIntentUri = Uri.parse("geo:37.7749,-122.4192?q=" + Uri.encode("1st & Pike, Seattle"));
+        Uri gmmIntentUri = Uri.parse("geo:37.7749,-122.4194?q=hiking");
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
         if (mapIntent.resolveActivity(getPackageManager()) != null) {
