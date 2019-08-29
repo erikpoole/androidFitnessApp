@@ -1,11 +1,14 @@
-package com.example.project;
+package com.example.project.activity.bio;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-public class BioEdit extends AppCompatActivity implements View.OnClickListener {
+import com.example.project.activity.bio.BioHelperDB;
+import com.example.project.R;
+
+public class BioEditActivity extends AppCompatActivity implements View.OnClickListener {
 
     BioHelperDB dbHelper;
     EditText nameET, ageET, sexET, heightET, weightET, cityET, countryET;

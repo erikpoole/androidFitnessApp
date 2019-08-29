@@ -1,4 +1,4 @@
-package com.example.project;
+package com.example.project.activity;
 
 import android.Manifest;
 import android.content.Context;
@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import com.example.project.R;
 
 import java.util.Locale;
 

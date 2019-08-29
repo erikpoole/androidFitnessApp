@@ -1,4 +1,4 @@
-package com.example.project;
+package com.example.project.activity.bio;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,7 +23,7 @@ public class BioHelperDB extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "Bio.db";
+    public static final String DATABASE_NAME = "BioActivity.db";
 
     public BioHelperDB(Context ctx) {
         super(ctx, DATABASE_NAME, null, DATABASE_VERSION);

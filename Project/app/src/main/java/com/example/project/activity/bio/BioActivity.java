@@ -1,4 +1,4 @@
-package com.example.project;
+package com.example.project.activity.bio;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,7 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class Bio extends AppCompatActivity {
+import com.example.project.activity.bio.BioHelperDB;
+import com.example.project.activity.bio.BioInfoContract;
+import com.example.project.R;
+
+public class BioActivity extends AppCompatActivity {
 
     BioHelperDB dbHelper;
     TextView nameET, ageET, sexET, heightET, weightET, cityET, countryET;

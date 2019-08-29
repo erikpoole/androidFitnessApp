@@ -1,10 +1,13 @@
-package com.example.project;
+package com.example.project.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+
+import com.example.project.activity.bio.BioHelperDB;
+import com.example.project.R;
 import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -149,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //            cursor.close();
 //            db.close();
-//            Intent bioIntent = new Intent(this, Bio.class);
+//            Intent bioIntent = new Intent(this, BioActivity.class);
 //            Bundle bioBndl = new Bundle();
 //            bioBndl.putString("rowID", rowID);
 //            bioIntent.putExtras(bioBndl);
@@ -162,13 +165,13 @@ public class MainActivity extends AppCompatActivity {
 //    private void startBioActivity() {
 //        String rowID = getRowID();
 //        if (rowID != null) {
-//            Intent bioIntent = new Intent(this, Bio.class);
+//            Intent bioIntent = new Intent(this, BioActivity.class);
 //            Bundle bioBndl = new Bundle();
 //            bioBndl.putString("rowID", rowID);
 //            bioIntent.putExtras(bioBndl);
 //            startActivity(bioIntent);
 //        } else {
-//            Intent bioEditIntent = new Intent(this, BioEdit.class);
+//            Intent bioEditIntent = new Intent(this, BioEditActivity.class);
 //            startActivity(bioEditIntent);
 //        }
 //    }

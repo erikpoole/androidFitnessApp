@@ -1,4 +1,4 @@
-package com.example.project;
+package com.example.project.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Response;
+import com.example.project.R;
+import com.example.project.Requests;
 
 import org.json.JSONException;
 import org.json.JSONObject;
