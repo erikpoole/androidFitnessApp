@@ -6,14 +6,16 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.android.volley.Response;
 
 import org.json.JSONException;
@@ -95,11 +97,11 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         String latitude = Double.toString(location.getLatitude());
         String longitude = Double.toString(location.getLongitude());
         String url = "https://api.openweathermap.org/data/2.5/weather?lat=" +
-                        latitude +
-                        "&lon=" +
-                        longitude +
-                        "&appid=" +
-                        OPEN_WEATHER_API_KEY;
+                latitude +
+                "&lon=" +
+                longitude +
+                "&appid=" +
+                OPEN_WEATHER_API_KEY;
 
         Response.Listener<String> listener = new Response.Listener<String>() {
             @Override

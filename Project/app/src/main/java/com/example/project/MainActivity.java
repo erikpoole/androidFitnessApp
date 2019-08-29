@@ -2,16 +2,14 @@ package com.example.project;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.BaseColumns;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import com.google.android.material.navigation.NavigationView;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -44,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new BioHelperDB(getApplicationContext());
 
         //Redirect to right page
-        startBioActivity();
+//        startBioActivity();
     }
 
     @Override
@@ -94,72 +92,72 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(hikingPage);
                 return true;
             case R.id.nav_bio:
-                startBioActivity();
+//                startBioActivity();
                 return true;
             default:
                 return false;
         }
     }
 
-    private void startBioActivity() {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        // COMMENTS FROM SQLite ANDROID DOCS
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                BaseColumns._ID,
-                BioInfoContract.BioEntry.USER_NAME,
-                BioInfoContract.BioEntry.CITY,
-                BioInfoContract.BioEntry.COUNTRY,
-                BioInfoContract.BioEntry.HEIGHT,
-                BioInfoContract.BioEntry.WEIGHT,
-                BioInfoContract.BioEntry.SEX,
-                BioInfoContract.BioEntry.AGE,
-                BioInfoContract.BioEntry.IMG_PATH
-        };
-
-        String selection = BioInfoContract.BioEntry.IS_LOGGED_IN + " = 1";
-
-        // How you want the results sorted in the resulting Cursor
-        String sortOrder =
-                BioInfoContract.BioEntry.USER_NAME + " ASC";
-
-        Cursor cursor = db.query(
-                BioInfoContract.BioEntry.TABLE_NAME,   // The table to query
-                projection,             // The array of columns to return (pass null to get all)
-                selection,              // The columns for the WHERE clause
-                null,          // The values for the WHERE clause
-                null,                   // don't group the rows
-                null,                   // don't filter by row groups
-                sortOrder               // The sort order
-        );
-
-        if(cursor != null) {
-            int rowID, age, weight;
-            String username, city, country, height, weight, sex, imgPath;
-            if (cursor.moveToFirst()) {
-                rowID = cursor.getInt(0);
-                username = cursor.getString(1);
-                city = cursor.getString(2);
-                country = cursor.getString(3);
-                height = cursor.getString(4);
-                weight = cursor.getString(5);
-                sex = cursor.getString(6);
-                age = cursor.getString(7;
-                imgPath = cursor.getString(8);
-            }
-            cursor.close();
-            db.close();
-            Intent bioIntent = new Intent(this, Bio.class);
-            Bundle bioBndl = new Bundle();
-            bioBndl.putString("rowID", rowID);
-            bioIntent.putExtras(bioBndl);
-            startActivity(bioIntent);
-        } else {
-            return null;
-        }
-    }
+//    private void startBioActivity() {
+//        SQLiteDatabase db = dbHelper.getReadableDatabase();
+//
+//        // COMMENTS FROM SQLite ANDROID DOCS
+//        // Define a projection that specifies which columns from the database
+//        // you will actually use after this query.
+//        String[] projection = {
+//                BaseColumns._ID,
+//                BioInfoContract.BioEntry.USER_NAME,
+//                BioInfoContract.BioEntry.CITY,
+//                BioInfoContract.BioEntry.COUNTRY,
+//                BioInfoContract.BioEntry.HEIGHT,
+//                BioInfoContract.BioEntry.WEIGHT,
+//                BioInfoContract.BioEntry.SEX,
+//                BioInfoContract.BioEntry.AGE,
+//                BioInfoContract.BioEntry.IMG_PATH
+//        };
+//
+//        String selection = BioInfoContract.BioEntry.IS_LOGGED_IN + " = 1";
+//
+//        // How you want the results sorted in the resulting Cursor
+//        String sortOrder =
+//                BioInfoContract.BioEntry.USER_NAME + " ASC";
+//
+//        Cursor cursor = db.query(
+//                BioInfoContract.BioEntry.TABLE_NAME,   // The table to query
+//                projection,             // The array of columns to return (pass null to get all)
+//                selection,              // The columns for the WHERE clause
+//                null,          // The values for the WHERE clause
+//                null,                   // don't group the rows
+//                null,                   // don't filter by row groups
+//                sortOrder               // The sort order
+//        );
+//
+//        if(cursor != null) {
+//            int rowID, age, weight;
+//            String username, city, country, height, weight, sex, imgPath;
+//            if (cursor.moveToFirst()) {
+//                rowID = cursor.getInt(0);
+//                username = cursor.getString(1);
+//                city = cursor.getString(2);
+//                country = cursor.getString(3);
+//                height = cursor.getString(4);
+//                weight = cursor.getString(5);
+//                sex = cursor.getString(6);
+//                age = cursor.getString(7);
+//                imgPath = cursor.getString(8);
+//            }
+//            cursor.close();
+//            db.close();
+//            Intent bioIntent = new Intent(this, Bio.class);
+//            Bundle bioBndl = new Bundle();
+//            bioBndl.putString("rowID", rowID);
+//            bioIntent.putExtras(bioBndl);
+//            startActivity(bioIntent);
+//        } else {
+//            return null;
+//        }
+//    }
 
 //    private void startBioActivity() {
 //        String rowID = getRowID();
