@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">GetFit()</string>
-    <string name="navigation_drawer_open">AppName</string>
-    <string name="navigation_drawer_close">AppName</string>
+    <string name="navigation_drawer_open">GetFit()</string>
+    <string name="navigation_drawer_close">GetFit()</string>
     <string name="home">Home</string>
     <string name="weather">Weather</string>
     <string name="hiking">Hiking</string>
@@ -9,5 +9,5 @@
     <string name="take_picture">Take Picture</string>
     <string name="find_hike">Find Hike</string>
     <string name="bio">Bio</string>
-    <string name="Settings">Settings</string>/>
+    <string name="settings">Settings</string>/>
 </resources>
