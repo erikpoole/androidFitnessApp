@@ -18,6 +18,9 @@ public class BioInfoContract {
         public static final String AGE = "age";
         public static final String SEX = "sex";
         public static final String IMG_PATH = "imgPath";
+        public static final String GOAL = "goal";
+        public static final String ACTIVE_STATE = "activeState";
+        public static final String PASSWORD = "password";
         public static final String IS_LOGGED_IN = "isLoggedIn";
     }
 }

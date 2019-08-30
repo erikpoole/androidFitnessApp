@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="36dp"
+        android:text="@string/sign_up"
+        />
+
+    <EditText
+        android:id="@+id/name_sign_up"
+        android:paddingTop="16dp"
+        android:inputType="textPersonName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_name"
+        android:autofillHints="@string/enter_name"
+        />
+    <EditText
+        android:id="@+id/password_sign_up"
+        android:paddingTop="16dp"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_password"
+        android:autofillHints="@string/enter_password"
+        />
+    <EditText
+        android:id="@+id/confirm_password_sign_up"
+        android:paddingTop="16dp"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/confirm_password"
+        android:autofillHints="@string/confirm_password"
+        />
+
+    <fragment android:name="com.example.project.activity.bio.BioFormFragment"
+        android:id="@+id/bio_form_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

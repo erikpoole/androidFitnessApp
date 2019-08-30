@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="start">
+
+    <EditText
+        android:id="@+id/bio_form_age"
+        android:paddingTop="16dp"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_age"
+        android:autofillHints="@string/enter_age"
+        />
+
+    <EditText
+        android:id="@+id/bio_form_sex"
+        android:paddingTop="16dp"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_sex"
+        android:autofillHints="@string/enter_sex"
+        />
+
+    <EditText
+        android:id="@+id/bio_form_height"
+        android:paddingTop="16dp"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_height"
+        android:autofillHints="@string/enter_height"
+        />
+
+    <EditText
+        android:id="@+id/bio_form_weight"
+        android:paddingTop="16dp"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_weight"
+        android:autofillHints="@string/enter_weight"
+        />
+
+    <EditText
+        android:id="@+id/bio_form_city"
+        android:paddingTop="16dp"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_city"
+        android:autofillHints="@string/enter_city"
+        />
+
+    <EditText
+        android:id="@+id/bio_form_country"
+        android:paddingTop="16dp"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_country"
+        android:autofillHints="@string/enter_country"
+        />
+
+    <Button
+        android:id="@+id/bio_form_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"
+        />
+
+</LinearLayout>

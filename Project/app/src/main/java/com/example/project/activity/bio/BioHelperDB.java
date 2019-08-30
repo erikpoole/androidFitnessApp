@@ -9,6 +9,7 @@ public class BioHelperDB extends SQLiteOpenHelper {
             "CREATE TABLE IF NOT EXISTS " + BioInfoContract.BioEntry.TABLE_NAME + " (" +
                     BioInfoContract.BioEntry._ID + " INTEGER PRIMARY KEY," +
                     BioInfoContract.BioEntry.USER_NAME + " TEXT," +
+                    BioInfoContract.BioEntry.PASSWORD + " TEXT," +
                     BioInfoContract.BioEntry.CITY + " TEXT," +
                     BioInfoContract.BioEntry.COUNTRY + " TEXT," +
                     BioInfoContract.BioEntry.HEIGHT + " TEXT," +
@@ -16,6 +17,8 @@ public class BioHelperDB extends SQLiteOpenHelper {
                     BioInfoContract.BioEntry.AGE + " INTEGER," +
                     BioInfoContract.BioEntry.SEX + " TEXT," +
                     BioInfoContract.BioEntry.IMG_PATH + " TEXT," +
+                    BioInfoContract.BioEntry.GOAL + " TEXT," +
+                    BioInfoContract.BioEntry.ACTIVE_STATE + " TEXT," +
                     BioInfoContract.BioEntry.IS_LOGGED_IN + " INTEGER)";
 
     private static final String SQL_DELETE_BIO =
@@ -34,8 +37,6 @@ public class BioHelperDB extends SQLiteOpenHelper {
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // This database is only a cache for online data, so its upgrade policy is
-        // to simply to discard the data and start over
         db.execSQL(SQL_DELETE_BIO);
         onCreate(db);
     }

@@ -1,85 +1,54 @@
 package com.example.project.activity.bio;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.BaseColumns;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.TextView;
 
-import com.example.project.activity.bio.BioHelperDB;
-import com.example.project.activity.bio.BioInfoContract;
 import com.example.project.R;
 
 public class BioActivity extends AppCompatActivity {
 
     BioHelperDB dbHelper;
-    TextView nameET, ageET, sexET, heightET, weightET, cityET, countryET;
-    String username, age, sex, height, weight, city, country;
+    TextView nameTV, ageTV, sexTV, heightTV, weightTV, cityTV, countryTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bio);
-        nameET = findViewById(R.id.name);
-        ageET = findViewById(R.id.age);
-        sexET = findViewById(R.id.sex);
-        heightET = findViewById(R.id.height);
-        weightET = findViewById(R.id.weight);
-        cityET = findViewById(R.id.city);
-        countryET = findViewById(R.id.country);
+        nameTV = findViewById(R.id.bio_name);
+        ageTV = findViewById(R.id.bio_age);
+        sexTV = findViewById(R.id.bio_sex);
+        heightTV = findViewById(R.id.bio_height);
+        weightTV = findViewById(R.id.bio_weight);
+        cityTV = findViewById(R.id.bio_city);
+        countryTV = findViewById(R.id.bio_country);
 
-//        Button submitBtn = findViewById(R.id.submit);
-//        submitBtn.setOnClickListener(this);
-//        Button testBtn = findViewById(R.id.test);
-//        testBtn.setOnClickListener(this);
+        Button editBioBtn = findViewById(R.id.edit_bio_btn);
+        editBioBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context ctx = view.getContext();
+                Toast toast = Toast.makeText(ctx, "Start Bio Activity", Toast.LENGTH_SHORT);
+                toast.show();
+//                Intent editBioPage = new Intent(ctx, BioEditActivity.class);
+//                startActivity(editBioPage);
+            }
+        });
 
         dbHelper = new BioHelperDB(getApplicationContext());
-    }
-//
-//    @Override
-//    public void onClick(View view) {
-//        switch(view.getId()) {
-//            case R.id.submit:
-//                assignVariablesToFieldVals();
-//                SQLiteDatabase db = dbHelper.getWritableDatabase();
-//                ContentValues values = new ContentValues();
-//                values.put(BioInfoContract.BioEntry.USER_NAME, username);
-//                values.put(BioInfoContract.BioEntry.AGE, age);
-//                values.put(BioInfoContract.BioEntry.SEX, sex);
-//                values.put(BioInfoContract.BioEntry.HEIGHT, height);
-//                values.put(BioInfoContract.BioEntry.WEIGHT, weight);
-//                values.put(BioInfoContract.BioEntry.CITY, city);
-//                values.put(BioInfoContract.BioEntry.COUNTRY, country);
-//                long newRowId = db.insert(BioInfoContract.BioEntry.TABLE_NAME, null, values);
-//                db.close();
-//                break;
-//            case R.id.test:
-//                getInfoFromDB();
-////                deleteUserFromDB();
-//        }
-//
-//    }
-
-    private void assignVariablesToFieldVals() {
-        username = nameET.getText().toString();
-        age = ageET.getText().toString();
-        sex = sexET.getText().toString();
-        height = heightET.getText().toString();
-        weight = weightET.getText().toString();
-        city = cityET.getText().toString();
-        country = countryET.getText().toString();
+        getInfoFromDB();
     }
 
     private void getInfoFromDB() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        // COMMENTS FROM SQLite ANDROID DOCS
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
         String[] projection = {
-                BaseColumns._ID,
                 BioInfoContract.BioEntry.USER_NAME,
                 BioInfoContract.BioEntry.CITY,
                 BioInfoContract.BioEntry.COUNTRY,
@@ -88,51 +57,36 @@ public class BioActivity extends AppCompatActivity {
                 BioInfoContract.BioEntry.AGE,
                 BioInfoContract.BioEntry.SEX,
         };
+        String selection = BioInfoContract.BioEntry.IS_LOGGED_IN + " = ?";
+        String[] selectionArgs = { "1" };
 
-        // Filter results WHERE "title" = 'My Title'
-        String selection = BioInfoContract.BioEntry.USER_NAME + " = ?";
-        String[] selectionArgs = { "Jordan Higgins" };
-
-        // How you want the results sorted in the resulting Cursor
         String sortOrder =
                 BioInfoContract.BioEntry.USER_NAME + " ASC";
 
         Cursor cursor = db.query(
-                BioInfoContract.BioEntry.TABLE_NAME,   // The table to query
-                projection,             // The array of columns to return (pass null to get all)
-                selection,              // The columns for the WHERE clause
-                selectionArgs,          // The values for the WHERE clause
-                null,                   // don't group the rows
-                null,                   // don't filter by row groups
-                sortOrder               // The sort order
+                BioInfoContract.BioEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
         );
 
-        if(cursor != null) {
-            if (cursor.moveToFirst()) {
-                String id = cursor.getString(0);
-                username = cursor.getString(1);
-                city = cursor.getString(2);
-                country = cursor.getString(3);
-                height = cursor.getString(4);
-                weight = cursor.getString(5);
-                age = cursor.getString(6);
-                sex = cursor.getString(7);
-            }
+        if (cursor.moveToFirst()) {
+            nameTV.setText(cursor.getString(0));
+            cityTV.setText(cursor.getString(1));
+            countryTV.setText(cursor.getString(2));
+            heightTV.setText(cursor.getString(3));
+            weightTV.setText(cursor.getString(4));
+            ageTV.setText(cursor.getString(5));
+            sexTV.setText(cursor.getString(6));
         } else {
-            username = "lame...";
+            Toast toast = Toast.makeText(getApplicationContext(), "Something went wrong...", Toast.LENGTH_SHORT);
+            toast.show();
         }
 
         cursor.close();
         db.close();
-    }
-
-    private void deleteUserFromDB() {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        // Define 'where' part of query.
-        String selection = BioInfoContract.BioEntry.USER_NAME + " LIKE ?";
-        // Specify arguments in placeholder order.
-        String[] selectionArgs = { "Jordan Higgins" };
-        // Issue SQL statement.
-        int deletedRows = db.delete(BioInfoContract.BioEntry.TABLE_NAME, selection, selectionArgs);
     }
 }
