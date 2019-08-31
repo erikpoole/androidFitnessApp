@@ -1,5 +1,6 @@
 package com.example.project.activity;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
         ctx = getApplicationContext();
         dbHelper = new BioHelperDB(getApplicationContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        // If you wanna wipe your data from the database and restart with a clean table, uncomment this:
 //        dbHelper.onUpgrade(db, 1, 1);
 
         // Has to happen after Init SQLite
@@ -91,6 +94,11 @@ public class MainActivity extends AppCompatActivity {
         switch (id) {
             case R.id.settings:
                 Toast.makeText(getApplicationContext(), "Settings page not implemented!", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.logout:
+                logoutUser();
+                Intent mainPage = new Intent(this, MainActivity.class);
+                startActivity(mainPage);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -144,13 +152,13 @@ public class MainActivity extends AppCompatActivity {
                 BioInfoContract.BioEntry.USER_NAME + " ASC";
 
         Cursor cursor = db.query(
-                BioInfoContract.BioEntry.TABLE_NAME,   // The table to query
-                projection,             // The array of columns to return (pass null to get all)
-                selection,              // The columns for the WHERE clause
-                selectionArgs,          // The values for the WHERE clause
-                null,                   // don't group the rows
-                null,                   // don't filter by row groups
-                sortOrder               // The sort order
+                BioInfoContract.BioEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
         );
 
         int rowID, isLoggedIn;
@@ -176,6 +184,26 @@ public class MainActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(ctx, "Welcome Back " + name , Toast.LENGTH_SHORT);
         toast.show();
         cursor.close();
+        db.close();
+    }
+
+    private void logoutUser() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String isLoggedIn = "0";
+        ContentValues values = new ContentValues();
+        values.put(BioInfoContract.BioEntry.IS_LOGGED_IN, isLoggedIn);
+
+        String selection = BioInfoContract.BioEntry.IS_LOGGED_IN + " LIKE ?";
+        String[] selectionArgs = { "1" };
+
+        int count = db.update(
+                BioInfoContract.BioEntry.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+
+        Toast toast = Toast.makeText(ctx, "Count " + count , Toast.LENGTH_SHORT);
+        toast.show();
         db.close();
     }
 }

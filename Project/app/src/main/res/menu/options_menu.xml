@@ -9,7 +9,7 @@
     <!--<item android:id="@+id/Login"-->
         <!--android:icon="@drawable/ic_launcher_foreground"-->
         <!--android:title="@string/login" />-->
-    <item android:id="@+id/Logout"
+    <item android:id="@+id/logout"
         android:icon="@drawable/ic_launcher_foreground"
         android:title="@string/logout" />
 </menu>
