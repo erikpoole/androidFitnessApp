@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
             dialog.show(getSupportFragmentManager(), "SignInFragment");
             return;
         }
-        Toast toast = Toast.makeText(ctx, "Welcome Back " + name , Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(ctx, "Welcome Back " + name , Toast.LENGTH_LONG);
         toast.show();
         cursor.close();
         db.close();
