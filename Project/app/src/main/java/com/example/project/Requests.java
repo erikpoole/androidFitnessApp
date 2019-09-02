@@ -13,7 +13,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.snackbar.Snackbar;
 
 public class Requests {
 
@@ -38,6 +37,7 @@ public class Requests {
         queue.add(request);
     }
 
+    //TODO: not currently being used - remove by end of project if unimportant
     public static void makeImageRequest(String inputURL, Response.Listener<Bitmap> listener, Context context) {
         RequestQueue queue = Volley.newRequestQueue(context);
         ImageRequest request = new ImageRequest(

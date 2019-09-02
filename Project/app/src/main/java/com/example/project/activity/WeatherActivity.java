@@ -5,13 +5,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,9 +21,7 @@ import androidx.core.app.ActivityCompat;
 import com.android.volley.Response;
 import com.example.project.R;
 import com.example.project.Requests;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.github.pwittchen.weathericonview.WeatherIconView;
 
 public class WeatherActivity extends AppCompatActivity implements View.OnClickListener {
     final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -32,7 +30,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     WeatherResponseListener weatherResponseListener;
     WeatherIconListener weatherIconListener;
 
-    ImageView todayIcon;
+    WeatherIconView todayIcon;
 
     TextView cityText;
     TextView summaryText;
@@ -60,6 +58,17 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         windText = findViewById(R.id.windText);
 
         cityText.setOnClickListener(this);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int width = displayMetrics.widthPixels;
+
+        todayIcon = findViewById(R.id.todayIcon);
+        todayIcon.setIconResource(getString(R.string.wi_night_alt_lightning));
+        //custom conversion to interact with WeatherIconView library (100% is default)
+        todayIcon.setIconSize(width/5);
+        todayIcon.setIconColor(Color.DKGRAY);
+
     }
 
     public void onClick(View v) {
@@ -115,7 +124,8 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
 
         String latitude = Double.toString(location.getLatitude());
         String longitude = Double.toString(location.getLongitude());
-        String url = "https://api.openweathermap.org/data/2.5/weather?units=imperial&lat=" +
+//        api.openweathermap.org/data/2.5/forecast?q=London,us&mode=xml
+        String url = "https://api.openweathermap.org/data/2.5/forecast?units=imperial&lat=" +
                 latitude +
                 "&lon=" +
                 longitude +
@@ -132,43 +142,40 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         Requests.makeImageRequest(url, weatherIconListener, this);
     }
 
+    public class WeatherResponseListener implements Response.Listener<String> {
+        @Override
+        public void onResponse(String response) {
+            Log.d("DATA: ", response);
+//            String iconName;
+//            try {
+//                JSONObject json = new JSONObject(response);
+//                iconName = json.getJSONArray("weather").getJSONObject(0).getString("icon");
+//                cityText.setText(json.getString("name"));
+//                summaryText.setText(json.getJSONArray("weather").getJSONObject (0).getString("description"));
+////                maxTempText.setText(json.get("wind").toString());
+////                minTempText.setText(json.get("wind").toString());
+//                humidityText.setText("Humidity: " +
+//                        json.getJSONObject("main").getString("humidity") +
+//                        "%");
+//                windText.setText("Wind Speed: " +
+//                        json.getJSONObject("wind").getString("speed") +
+//                        " mph");
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//                return;
+//            }
+//
+//            getWeatherIcon(iconName);
+        }
+    }
+
     public class WeatherIconListener implements  Response.Listener<Bitmap> {
 
         @Override
         public void onResponse(Bitmap response) {
             Log.d("hit", "hit");
-            todayIcon.setImageBitmap(response);
-
-        }
-    }
-
-
-
-    public class WeatherResponseListener implements Response.Listener<String> {
-        @Override
-        public void onResponse(String response) {
-            Log.d("DATA: ", response);
-            String iconName;
-            try {
-                JSONObject json = new JSONObject(response);
-                iconName = json.getJSONArray("weather").getJSONObject(0).getString("icon");
-                cityText.setText(json.getString("name"));
-                summaryText.setText(json.getJSONArray("weather").getJSONObject (0).getString("description"));
-//                maxTempText.setText(json.get("wind").toString());
-//                minTempText.setText(json.get("wind").toString());
-                humidityText.setText("Humidity: " +
-                        json.getJSONObject("main").getString("humidity") +
-                        "%");
-                windText.setText("Wind Speed: " +
-                        json.getJSONObject("wind").getString("speed") +
-                        " mph");
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return;
-            }
-
-            getWeatherIcon(iconName);
+//            todayIcon.setImageBitmap(response);
 
         }
     }
