@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.project.R;
 import com.example.project.SignInFragment;
 import com.example.project.TileFragment;
+import com.example.project.activity.Weather.WeatherActivity;
 import com.example.project.activity.bio.BioActivity;
 import com.example.project.activity.bio.BioHelperDB;
 import com.example.project.activity.bio.BioInfoContract;

@@ -8,7 +8,7 @@
   "fog": "wi_fog",
   "cloudy": "wi_cloudy",
   "partly-cloudy-day": "wi_day_cloudy",
-  "partly-cloudy-night": "wi_night-cloudy",
+  "partly-cloudy-night": "wi_night_cloudy",
   "hail": "wi_hail",
   "thunderstorm": "wi_thunderstorm",
   "tornado": "wi_tornado"

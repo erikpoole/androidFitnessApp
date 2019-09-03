@@ -17,7 +17,7 @@
         <activity android:name=".activity.bio.BioEditActivity" />
         <activity android:name=".activity.bio.BioActivity" />
         <activity android:name=".activity.HikingActivity" />
-        <activity android:name=".activity.WeatherActivity" />
+        <activity android:name=".activity.Weather.WeatherActivity" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

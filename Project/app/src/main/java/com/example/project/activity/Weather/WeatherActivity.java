@@ -1,4 +1,4 @@
-package com.example.project.activity;
+package com.example.project.activity.Weather;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Response;
 import com.example.project.AssetHandlers;
@@ -45,6 +46,10 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     TextView humidityText;
     TextView windText;
 
+    WeatherFragment day1Fragment;
+    WeatherFragment day2Fragment;
+    WeatherFragment day3Fragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,10 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         cityText.setOnClickListener(this);
 
         todayIcon.setIconSize(getIconSize());
+
+        day1Fragment = new WeatherFragment();
+        day2Fragment = new WeatherFragment();
+        day3Fragment = new WeatherFragment();
 
     }
 
@@ -188,7 +197,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                 temperatureText.setText(
                         "Temperature: " +
                         roundStringWithMultiplier(current.getString("temperature"), 1) +
-                        "\u00B0C");
+                        "\u00B0F");
                 humidityText.setText(
                         "Humidity: " +
                         roundStringWithMultiplier(current.getString("humidity"), 100) +
@@ -203,15 +212,40 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                 maxTempText.setText(
                         "High: " +
                         roundStringWithMultiplier(weatherDays.getJSONObject(0).getString("temperatureHigh"), 1) +
-                        "\u00B0C");
+                        "\u00B0F");
                 minTempText.setText(
                         "Low: " +
                         roundStringWithMultiplier(weatherDays.getJSONObject(0).getString("temperatureLow"), 1) +
-                        "\u00B0C");
+                        "\u00B0F");
 
 
 //                cityText.setText(json.getString("name"));
 
+                Bundle day1Data = new Bundle();
+                day1Data.putString("json", weatherDays.getString(1));
+                day1Fragment.setArguments(day1Data);
+
+                FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
+                transaction1.replace(R.id.day1Icon, day1Fragment);
+                transaction1.commit();
+
+
+                Bundle day2Data = new Bundle();
+                day2Data.putString("json", weatherDays.getString(1));
+                day2Fragment.setArguments(day2Data);
+
+                FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
+                transaction2.replace(R.id.day2Icon, day2Fragment);
+                transaction2.commit();
+
+
+                Bundle day3Data = new Bundle();
+                day3Data.putString("json", weatherDays.getString(1));
+                day3Fragment.setArguments(day3Data);
+
+                FragmentTransaction transaction3 = getSupportFragmentManager().beginTransaction();
+                transaction3.replace(R.id.day3Icon, day3Fragment);
+                transaction3.commit();
 
             } catch (JSONException e) {
                 e.printStackTrace();
