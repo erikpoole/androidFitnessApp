@@ -25,6 +25,7 @@ import com.example.project.SignInFragment;
 import com.example.project.TileFragment;
 import com.example.project.activity.Weather.WeatherActivity;
 import com.example.project.activity.bio.BioActivity;
+import com.example.project.activity.bio.BioEditActivity;
 import com.example.project.activity.bio.BioHelperDB;
 import com.example.project.activity.bio.BioInfoContract;
 import com.google.android.material.navigation.NavigationView;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        NavigationView nav  = findViewById(R.id.nav_view);
+        NavigationView nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Find each frame layout, replace with corresponding fragment
         FragmentTransaction fTrans = getSupportFragmentManager().beginTransaction();
-        fTrans.replace(R.id.fl_test_frag, new TileFragment(),"Frag_1");
+        fTrans.replace(R.id.fl_test_frag, new TileFragment(), "Frag_1");
         fTrans.commit();
 
         //Init SQLite
@@ -93,8 +94,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.settings:
-                Toast.makeText(getApplicationContext(), "Settings page not implemented!", Toast.LENGTH_LONG).show();
+            case R.id.settings: // TODO need to create a settings page
+                Intent settings = new Intent(this, SettingsActivity.class);
+                startActivity(settings);
+                return true;
+            case R.id.edit_profile: // TODO this doesn't quite work yet
+                Intent bioEdit = new Intent(this, BioEditActivity.class);
+                startActivity(bioEdit);
+                Toast.makeText(getApplicationContext(), "This page is still under construction.", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.logout:
                 logoutUser();
@@ -146,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         String selection = BioInfoContract.BioEntry.IS_LOGGED_IN + " = ?";
-        String[] selectionArgs = { "1" };
+        String[] selectionArgs = {"1"};
 
         // How you want the results sorted in the resulting Cursor
         String sortOrder =
@@ -182,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
             dialog.show(getSupportFragmentManager(), "SignInFragment");
             return;
         }
-        Toast toast = Toast.makeText(ctx, "Welcome Back " + name , Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(ctx, "Welcome Back " + name, Toast.LENGTH_LONG);
         toast.show();
         cursor.close();
         db.close();
@@ -195,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
         values.put(BioInfoContract.BioEntry.IS_LOGGED_IN, isLoggedIn);
 
         String selection = BioInfoContract.BioEntry.IS_LOGGED_IN + " LIKE ?";
-        String[] selectionArgs = { "1" };
+        String[] selectionArgs = {"1"};
 
         int count = db.update(
                 BioInfoContract.BioEntry.TABLE_NAME,
@@ -203,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
                 selection,
                 selectionArgs);
 
-        Toast toast = Toast.makeText(ctx, "Count " + count , Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(ctx, "Count " + count, Toast.LENGTH_SHORT);
         toast.show();
         db.close();
     }

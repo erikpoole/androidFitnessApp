@@ -79,7 +79,7 @@ public class HikingActivity extends AppCompatActivity {
     final LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-            Log.d("Location Changes", location.toString());
+            Log.d("Location Changed", location.toString());
             latitude = String.format(Locale.US, "%.4f", location.getLatitude());
             longitude = String.format(Locale.US, "%.4f", location.getLongitude());
         }
