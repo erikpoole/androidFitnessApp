@@ -28,7 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class WeatherActivity extends AppCompatActivity implements View.OnClickListener {
+public class WeatherActivity extends AppCompatActivity {
     final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     final String DARK_SKY_API_URL = "https://api.darksky.net/forecast/";
     final String DARK_SKY_API_KEY = "3ed44328d0b34c77cc6a6ee7ce334c3c";
@@ -51,7 +51,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
 
         weatherResponseListener = new WeatherResponseListener(this);
 
-        cityText = findViewById(R.id.cityText);
         temperatureText = findViewById(R.id.temperatureText);
         summaryText = findViewById(R.id.summaryText);
         maxTempText = findViewById(R.id.maxTempText);
@@ -59,16 +58,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         humidityText = findViewById(R.id.humidityText);
         windText = findViewById(R.id.windText);
 
-        cityText.setOnClickListener(this);
-
         getPermissionsAndWeather();
-    }
-
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.cityText:
-                getPermissionsAndWeather();
-        }
     }
 
     @Override
@@ -195,10 +185,11 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                         roundStringWithMultiplier(weatherDays.getJSONObject(0).getString("temperatureLow"), 1) +
                         "\u00B0F");
 
+                //index 0 is current date
                 initializeWeatherFragment(current.toString(), R.id.todayIcon);
-                initializeWeatherFragment(weatherDays.getString(0), R.id.day1Icon);
-                initializeWeatherFragment(weatherDays.getString(1), R.id.day2Icon);
-                initializeWeatherFragment(weatherDays.getString(2), R.id.day3Icon);
+                initializeWeatherFragment(weatherDays.getString(1), R.id.day1Icon);
+                initializeWeatherFragment(weatherDays.getString(2), R.id.day2Icon);
+                initializeWeatherFragment(weatherDays.getString(3), R.id.day3Icon);
 
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -7,19 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".activity.Weather.WeatherActivity">
 
-    <TextView
-        android:onClick="onClick"
-        android:clickable="true"
-
-        android:id="@+id/cityText"
-        android:text="City"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/todayIcon"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
     <FrameLayout
         android:id="@+id/todayIcon"
         android:layout_width="wrap_content"
@@ -27,10 +14,8 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintBottom_toTopOf="@id/temperatureText"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cityText" />
-
-
+        app:layout_constraintRight_toRightOf="parent" />
+    
     <TextView
         android:id="@+id/temperatureText"
         android:text="Temperature"
@@ -118,8 +103,8 @@
     <LinearLayout
         android:id="@+id/forecastContainer"
         android:orientation="horizontal"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -129,8 +114,8 @@
             android:id="@+id/day1Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/day2Icon"
             app:layout_constraintTop_toTopOf="parent" />
@@ -139,8 +124,8 @@
             android:id="@+id/day2Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/day1Icon"
             app:layout_constraintRight_toLeftOf="@id/day3Icon"
             app:layout_constraintTop_toTopOf="parent" />
@@ -149,8 +134,8 @@
             android:id="@+id/day3Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/day2Icon"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
