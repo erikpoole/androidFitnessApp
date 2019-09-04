@@ -1,4 +1,4 @@
-package com.example.project;
+package com.example.project.activity.login;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -15,10 +15,10 @@ import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 
+import com.example.project.R;
 import com.example.project.activity.MainActivity;
 import com.example.project.activity.bio.BioHelperDB;
 import com.example.project.activity.bio.BioInfoContract;
-import com.example.project.activity.login.SignUpActivity;
 
 public class SignInFragment extends DialogFragment implements View.OnClickListener{
     private EditText nameET, passwordET;
@@ -55,8 +55,8 @@ public class SignInFragment extends DialogFragment implements View.OnClickListen
                 String name = nameET.getText().toString();
                 String password = passwordET.getText().toString();
                 if (loginUser(name, password)) {
-                    Intent mainPage = new Intent(ctx, MainActivity.class);
-                    startActivity(mainPage);
+                    Intent main = new Intent(ctx, MainActivity.class);
+                    startActivity(main);
                     dismiss();
                 } else {
                     nameET.setText("");

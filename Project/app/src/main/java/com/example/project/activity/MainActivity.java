@@ -21,14 +21,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.project.R;
-import com.example.project.SignInFragment;
 import com.example.project.TileFragment;
 import com.example.project.activity.Weather.WeatherActivity;
 import com.example.project.activity.bio.BioActivity;
 import com.example.project.activity.bio.BioEditActivity;
 import com.example.project.activity.bio.BioHelperDB;
 import com.example.project.activity.bio.BioInfoContract;
+import com.example.project.activity.login.SignInFragment;
 import com.google.android.material.navigation.NavigationView;
+
+;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         NavigationView nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -214,4 +217,6 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
         db.close();
     }
+
+
 }
