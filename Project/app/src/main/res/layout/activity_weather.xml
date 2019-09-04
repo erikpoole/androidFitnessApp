@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:weatherIcon="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,11 +20,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <com.github.pwittchen.weathericonview.WeatherIconView
+    <FrameLayout
         android:id="@+id/todayIcon"
-        weatherIcon:weatherIconResource="@string/wi_alien"
-        weatherIcon:weatherIconColor="@android:color/darker_gray"
-        weatherIcon:weatherIconSize="100"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintDimensionRatio="1:1"
@@ -130,35 +127,33 @@
 
         <FrameLayout
             android:id="@+id/day1Icon"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:layout_constraintDimensionRatio="1:1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/day2Icon"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
             android:id="@+id/day2Icon"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:layout_constraintDimensionRatio="1:1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintLeft_toRightOf="@id/day1Icon"
             app:layout_constraintRight_toLeftOf="@id/day3Icon"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
             android:id="@+id/day3Icon"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:layout_constraintDimensionRatio="1:1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintLeft_toRightOf="@id/day2Icon"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </LinearLayout>
 

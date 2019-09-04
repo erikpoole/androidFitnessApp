@@ -30,14 +30,11 @@ import org.json.JSONObject;
 
 public class WeatherActivity extends AppCompatActivity implements View.OnClickListener {
     final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    //TODO: Delete OPEN_WEATHER_API_KEY
-//    final String OPEN_WEATHER_API_KEY = "8a85f0c871ca098af96f9408e91bb57d";
     final String DARK_SKY_API_URL = "https://api.darksky.net/forecast/";
     final String DARK_SKY_API_KEY = "3ed44328d0b34c77cc6a6ee7ce334c3c";
 
     WeatherResponseListener weatherResponseListener;
 
-    WeatherIconView todayIcon;
     TextView cityText;
     TextView temperatureText;
     TextView summaryText;
@@ -45,10 +42,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     TextView minTempText;
     TextView humidityText;
     TextView windText;
-
-    WeatherFragment day1Fragment;
-    WeatherFragment day2Fragment;
-    WeatherFragment day3Fragment;
 
 
     @Override
@@ -58,7 +51,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
 
         weatherResponseListener = new WeatherResponseListener(this);
 
-        todayIcon = findViewById(R.id.todayIcon);
         cityText = findViewById(R.id.cityText);
         temperatureText = findViewById(R.id.temperatureText);
         summaryText = findViewById(R.id.summaryText);
@@ -69,30 +61,13 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
 
         cityText.setOnClickListener(this);
 
-        todayIcon.setIconSize(getIconSize());
-
-        day1Fragment = new WeatherFragment();
-        day2Fragment = new WeatherFragment();
-        day3Fragment = new WeatherFragment();
-
+        getPermissionsAndWeather();
     }
 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.cityText:
-                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                if (ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
-
-                    Toast.makeText(getApplicationContext(), "Requesting Location Access...", Toast.LENGTH_LONG).show();
-                    return;
-                } else {
-                    Location location = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
-                    getWeather(location);
-                    return;
-                }
+                getPermissionsAndWeather();
         }
     }
 
@@ -115,6 +90,22 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                 }
                 return;
             }
+        }
+    }
+
+    public void getPermissionsAndWeather() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+
+            Toast.makeText(getApplicationContext(), "Requesting Location Access...", Toast.LENGTH_LONG).show();
+            return;
+        } else {
+            Location location = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+            getWeather(location);
+            return;
         }
     }
 
@@ -141,15 +132,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         Requests.makeStringRequest(url, weatherResponseListener, this);
     }
 
-    //custom conversion to interact with WeatherIconView library (100% is default)
-    public int getIconSize() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int width = displayMetrics.widthPixels;
-        return (width / 5);
-    }
-
-
     public class WeatherResponseListener implements Response.Listener<String> {
         Context context;
         JSONObject weatherIcons;
@@ -163,24 +145,19 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
 
-        private int getStringIdentifier(String name) {
-            return context.getResources().getIdentifier(name, "string", context.getPackageName());
-        }
-
-        private String getIconCode(JSONObject day) {
-            try {
-                String rawIcon = day.getString("icon");
-                String convertedIcon = weatherIcons.getString(rawIcon);
-                return getString(getStringIdentifier(convertedIcon));
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return null;
-            }
-
-        }
-
         private String roundStringWithMultiplier(String input, int multiplier) {
             return String.valueOf(Math.round(Double.parseDouble(input) * multiplier));
+        }
+
+        private void initializeWeatherFragment(String info, int containerID) {
+            WeatherFragment fragment = new WeatherFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("json", info);
+            fragment.setArguments(bundle);
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(containerID, fragment);
+            transaction.commit();
         }
 
         @Override
@@ -191,9 +168,9 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                 JSONObject current = json.getJSONObject("currently");
                 JSONArray weatherDays = json.getJSONObject("daily").getJSONArray("data");
 
-                //from current forecast
-                todayIcon.setIconResource(getIconCode(current));
+//                cityText.setText(json.getString("name"));
 
+                //from current forecast
                 temperatureText.setText(
                         "Temperature: " +
                         roundStringWithMultiplier(current.getString("temperature"), 1) +
@@ -218,34 +195,10 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                         roundStringWithMultiplier(weatherDays.getJSONObject(0).getString("temperatureLow"), 1) +
                         "\u00B0F");
 
-
-//                cityText.setText(json.getString("name"));
-
-                Bundle day1Data = new Bundle();
-                day1Data.putString("json", weatherDays.getString(1));
-                day1Fragment.setArguments(day1Data);
-
-                FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
-                transaction1.replace(R.id.day1Icon, day1Fragment);
-                transaction1.commit();
-
-
-                Bundle day2Data = new Bundle();
-                day2Data.putString("json", weatherDays.getString(1));
-                day2Fragment.setArguments(day2Data);
-
-                FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
-                transaction2.replace(R.id.day2Icon, day2Fragment);
-                transaction2.commit();
-
-
-                Bundle day3Data = new Bundle();
-                day3Data.putString("json", weatherDays.getString(1));
-                day3Fragment.setArguments(day3Data);
-
-                FragmentTransaction transaction3 = getSupportFragmentManager().beginTransaction();
-                transaction3.replace(R.id.day3Icon, day3Fragment);
-                transaction3.commit();
+                initializeWeatherFragment(current.toString(), R.id.todayIcon);
+                initializeWeatherFragment(weatherDays.getString(0), R.id.day1Icon);
+                initializeWeatherFragment(weatherDays.getString(1), R.id.day2Icon);
+                initializeWeatherFragment(weatherDays.getString(2), R.id.day3Icon);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -253,6 +206,4 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
     }
-
-
 }

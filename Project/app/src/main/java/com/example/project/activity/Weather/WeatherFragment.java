@@ -3,10 +3,17 @@ package com.example.project.activity.Weather;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
@@ -18,12 +25,24 @@ import org.json.JSONObject;
 public class WeatherFragment extends Fragment {
     private JSONObject weatherIcons;
     private WeatherIconView icon;
+    private int containerHeight;
+    private int containerWidth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_weather, container, false);
+        final View view = inflater.inflate(R.layout.fragment_weather, container, false);
+
+//        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                if(view.getWidth() > 0) {
+//                    icon.setIconSize(view.getWidth() / 5);
+//                    view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                }
+//            }
+//        });
 
         icon = view.findViewById(R.id.icon);
 
@@ -43,6 +62,7 @@ public class WeatherFragment extends Fragment {
         }
 
         icon.setIconResource(getIconCode(json));
+//        icon.setIconSize(getIconSize());
 
         return view;
     }
@@ -63,5 +83,10 @@ public class WeatherFragment extends Fragment {
         }
 
     }
+
+    //custom conversion to interact with WeatherIconView library (100% is default)
+//    public int getIconSize() {
+//        return (containerWidth / 5);
+//    }
 
 }
