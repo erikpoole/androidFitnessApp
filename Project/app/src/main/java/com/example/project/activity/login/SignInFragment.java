@@ -29,7 +29,6 @@ public class SignInFragment extends DialogFragment implements View.OnClickListen
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Get the layout inflater
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View signInView = inflater.inflate(R.layout.sign_in_fragment, null);
 
@@ -45,8 +44,6 @@ public class SignInFragment extends DialogFragment implements View.OnClickListen
         ctx = signInView.getContext();
         dbHelper = new BioHelperDB(ctx);
 
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
         builder.setView(signInView);
         return builder.create();
     }
@@ -74,6 +71,7 @@ public class SignInFragment extends DialogFragment implements View.OnClickListen
         }
     }
 
+    // returns true if logged in, false if user not found in db
     private Boolean loginUser(String name, String password) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 

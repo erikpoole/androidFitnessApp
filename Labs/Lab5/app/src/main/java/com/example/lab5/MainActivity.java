@@ -3,6 +3,7 @@ package com.example.lab5;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,25 +20,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Get the recycler view
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_Master);
-
-        //Tell Android that we know the size of the recyclerview
-        //doesn't change
-        mRecyclerView.setHasFixedSize(true);
-
-        //Set the layout manager
-        layoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(layoutManager);
-
         //Populate the list with data
-        List<String> inputList = new ArrayList<>();
+        ArrayList<String> inputList = new ArrayList<>();
         for (int i = 1; i <= 100; i++) {
             inputList.add("Item " + i);
         }
 
-        //Set the adapter
-        mAdapter = new MyRVAdaptor(inputList);
-        mRecyclerView.setAdapter(mAdapter);
+        // pass list as bundle
+        ListFrag fragment = new ListFrag();
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList("listData", inputList);
+        fragment.setArguments(bundle);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frag_temp, fragment);
+        transaction.commit();
     }
 }

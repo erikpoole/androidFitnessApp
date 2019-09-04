@@ -47,7 +47,9 @@ public class MyRVAdaptor extends RecyclerView.Adapter<MyRVAdaptor.ViewHolder> {
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View view) {
-                     Toast.makeText(mContext, "Item removed", Toast.LENGTH_SHORT).show();
+                     TextView data = view.findViewById(R.id.tv_data);
+                     String dataStr = data.getText().toString();
+                     Toast.makeText(mContext, "Item " + dataStr, Toast.LENGTH_SHORT).show();
 //                     remove(position); // Varun said to remove this
                  }
              }
