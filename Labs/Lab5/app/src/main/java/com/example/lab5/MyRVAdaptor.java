@@ -48,8 +48,7 @@ public class MyRVAdaptor extends RecyclerView.Adapter<MyRVAdaptor.ViewHolder> {
                  @Override
                  public void onClick(View view) {
                      Toast.makeText(mContext, "Item removed", Toast.LENGTH_SHORT).show();
-
-                     remove(position);
+//                     remove(position); // Varun said to remove this
                  }
              }
         );
