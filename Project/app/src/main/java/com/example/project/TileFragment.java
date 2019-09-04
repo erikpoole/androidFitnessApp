@@ -47,7 +47,7 @@ public class TileFragment extends Fragment {
     }
 
     public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder> {
-        private static final int LENGTH = 8;
+        private static final int NUM_TILES_TO_DISPLAY = 8;
         private final String[] mPlaces;
         private final Drawable[] mPlacePictures;
 
@@ -75,7 +75,7 @@ public class TileFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return LENGTH;
+            return NUM_TILES_TO_DISPLAY;
         }
     }
 }
