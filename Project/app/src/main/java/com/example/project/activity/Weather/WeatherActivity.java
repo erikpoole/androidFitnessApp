@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
@@ -139,15 +140,31 @@ public class WeatherActivity extends AppCompatActivity {
             return String.valueOf(Math.round(Double.parseDouble(input) * multiplier));
         }
 
-        private void initializeWeatherFragment(String info, int containerID) {
+        private void initializeWeatherFragment(String info, int containerID, int size) {
             WeatherFragment fragment = new WeatherFragment();
             Bundle bundle = new Bundle();
             bundle.putString("json", info);
+            bundle.putInt("size", size);
             fragment.setArguments(bundle);
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(containerID, fragment);
             transaction.commit();
+        }
+
+//        custom conversion to interact with WeatherIconView library (100% is default)
+        public int getIconSize(String stringSize) {
+            int width = Resources.getSystem().getDisplayMetrics().widthPixels;
+            if (stringSize == "small") {
+                return (width / 15);
+            }
+            if (stringSize == "large") {
+                return (width / 6);
+            }
+            //shouldn't hit
+            else {
+                return width/100;
+            }
         }
 
         @Override
@@ -186,10 +203,10 @@ public class WeatherActivity extends AppCompatActivity {
                         "\u00B0F");
 
                 //index 0 is current date
-                initializeWeatherFragment(current.toString(), R.id.todayIcon);
-                initializeWeatherFragment(weatherDays.getString(1), R.id.day1Icon);
-                initializeWeatherFragment(weatherDays.getString(2), R.id.day2Icon);
-                initializeWeatherFragment(weatherDays.getString(3), R.id.day3Icon);
+                initializeWeatherFragment(weatherDays.getString(0), R.id.todayIcon, getIconSize("large"));
+                initializeWeatherFragment(weatherDays.getString(1), R.id.day1Icon, getIconSize("small"));
+                initializeWeatherFragment(weatherDays.getString(2), R.id.day2Icon, getIconSize("small"));
+                initializeWeatherFragment(weatherDays.getString(3), R.id.day3Icon, getIconSize("small"));
 
             } catch (JSONException e) {
                 e.printStackTrace();
