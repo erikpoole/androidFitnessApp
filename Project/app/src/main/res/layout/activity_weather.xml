@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,109 +11,97 @@
         android:id="@+id/todayIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintBottom_toTopOf="@id/temperatureText"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-    
+        android:padding="8dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
     <TextView
         android:id="@+id/temperatureText"
         android:text="Temperature"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/tempContainer"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/todayIcon" />
+        android:padding="8dp"
+        android:layout_below="@id/todayIcon"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/summaryText"
         android:text="Weather Summary"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/tempContainer"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/temperatureText" />
+        android:padding="8dp"
+        android:layout_below="@id/temperatureText"
+        android:layout_centerHorizontal="true" />
 
     <LinearLayout
         android:id="@+id/tempContainer"
         android:orientation="vertical"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/forecastContainer"
-        app:layout_constraintLeft_toRightOf="@id/humidWindContainer"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/summaryText">
+        android:padding="8dp"
+        android:layout_below="@id/summaryText"
+        android:layout_centerHorizontal="true">
 
         <TextView
             android:id="@+id/maxTempText"
             android:text="Max Temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/minTempText"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:padding="8dp"
+            android:layout_centerHorizontal="true"/>
 
         <TextView
             android:id="@+id/minTempText"
             android:text="Min Temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/maxTempText"/>
+            android:padding="8dp"
+            android:layout_below="@id/maxTempText"
+            android:layout_centerHorizontal="true"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/humidWindContainer"
         android:orientation="vertical"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/forecastContainer"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/tempContainer"
-        app:layout_constraintTop_toBottomOf="@id/summaryText">
+        android:padding="8dp"
+        android:layout_below="@id/tempContainer"
+        android:layout_centerHorizontal="true">
 
         <TextView
             android:id="@+id/humidityText"
-            android:text="Temperature"
+            android:text="Humidity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/windText"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:padding="8dp"
+            android:layout_centerHorizontal="true"/>
 
         <TextView
             android:id="@+id/windText"
             android:text="Wind Speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/humidityText"/>
+            android:padding="8dp"
+            android:layout_below="@id/humidityText"
+            android:layout_centerHorizontal="true"/>
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/forecastContainer"
-        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tempContainer">
+        android:padding="8dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
 
         <FrameLayout
             android:id="@+id/day1Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="8dp"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -124,6 +112,7 @@
             android:id="@+id/day2Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="8dp"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/day1Icon"
@@ -134,12 +123,13 @@
             android:id="@+id/day3Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="8dp"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/day2Icon"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

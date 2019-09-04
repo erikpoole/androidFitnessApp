@@ -25,24 +25,12 @@ import org.json.JSONObject;
 public class WeatherFragment extends Fragment {
     private JSONObject weatherIcons;
     private WeatherIconView icon;
-    private int containerHeight;
-    private int containerWidth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.fragment_weather, container, false);
-
-//        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                if(view.getWidth() > 0) {
-//                    icon.setIconSize(view.getWidth() / 5);
-//                    view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//                }
-//            }
-//        });
 
         icon = view.findViewById(R.id.icon);
 
@@ -62,7 +50,7 @@ public class WeatherFragment extends Fragment {
         }
 
         icon.setIconResource(getIconCode(json));
-//        icon.setIconSize(getIconSize());
+        icon.setIconSize(getArguments().getInt("size"));
 
         return view;
     }
@@ -81,12 +69,6 @@ public class WeatherFragment extends Fragment {
             e.printStackTrace();
             return null;
         }
-
     }
-
-    //custom conversion to interact with WeatherIconView library (100% is default)
-//    public int getIconSize() {
-//        return (containerWidth / 5);
-//    }
 
 }
