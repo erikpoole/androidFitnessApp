@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,11 +45,13 @@ public class MyRVAdaptor extends RecyclerView.Adapter<MyRVAdaptor.ViewHolder> {
 
         holder.itemTvData.setText(mListItems.get(position));
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
-                                                 @Override
-                                                 public void onClick(View view) {
-                                                     remove(position);
-                                                 }
-                                             }
+                 @Override
+                 public void onClick(View view) {
+                     Toast.makeText(mContext, "Item removed", Toast.LENGTH_SHORT).show();
+
+                     remove(position);
+                 }
+             }
         );
     }
 
