@@ -95,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.settings: // TODO need to create a settings page
-                Toast.makeText(getApplicationContext(), "Settings page not implemented!", Toast.LENGTH_LONG).show();
+                Intent settings = new Intent(this, SettingsActivity.class);
+                startActivity(settings);
                 return true;
             case R.id.edit_profile: // TODO this doesn't quite work yet
                 Intent bioEdit = new Intent(this, BioEditActivity.class);
