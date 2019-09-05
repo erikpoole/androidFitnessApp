@@ -1,15 +1,15 @@
-package com.example.project.activity.bio;
+package com.example.project.database;
 
 import android.provider.BaseColumns;
 
-public class BioInfoContract {
+public class UserContract {
     // To prevent someone from accidentally instantiating the contract class,
     // make the constructor private.
-    private BioInfoContract() {}
+    private UserContract() {}
 
     /* Inner class that defines the table contents */
-    public static class BioEntry implements BaseColumns {
-        public static final String TABLE_NAME = "bio";
+    public static class UserEntry implements BaseColumns {
+        public static final String TABLE_NAME = "users";
         public static final String USER_NAME = "username";
         public static final String CITY = "city";
         public static final String COUNTRY = "country";
@@ -22,5 +22,6 @@ public class BioInfoContract {
         public static final String ACTIVE_STATE = "activeState";
         public static final String PASSWORD = "password";
         public static final String IS_LOGGED_IN = "isLoggedIn";
+        public static final String IS_IN_DARK_MODE = "isInDarkMode";
     }
 }

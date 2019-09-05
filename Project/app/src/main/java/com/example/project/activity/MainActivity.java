@@ -1,13 +1,9 @@
 package com.example.project.activity;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.BaseColumns;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,29 +21,28 @@ import com.example.project.TileFragment;
 import com.example.project.activity.Weather.WeatherActivity;
 import com.example.project.activity.bio.BioActivity;
 import com.example.project.activity.bio.BioEditActivity;
-import com.example.project.activity.bio.BioHelperDB;
-import com.example.project.activity.bio.BioInfoContract;
 import com.example.project.activity.login.SignInFragment;
+import com.example.project.database.UserProfile;
 import com.google.android.material.navigation.NavigationView;
-
-;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle toggle;
-    private BioHelperDB dbHelper;
     private Context ctx;
+    UserProfile userProfile;
+//    private Boolean isLoggedIn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ctx = getApplicationContext();
 
         // Handle navigation drawer
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+//        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         NavigationView nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -62,16 +57,12 @@ public class MainActivity extends AppCompatActivity {
         fTrans.replace(R.id.fl_test_frag, new TileFragment(), "Frag_1");
         fTrans.commit();
 
-        //Init SQLite
-        ctx = getApplicationContext();
-        dbHelper = new BioHelperDB(getApplicationContext());
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        // If you wanna wipe your data from the database and restart with a clean table, uncomment this:
-//        dbHelper.onUpgrade(db, 1, 1);
-
-        // Has to happen after Init SQLite
-        greetUser();
+        // UserProfile will be our interface for interacting with the database
+        userProfile = new UserProfile(ctx);
+//        userProfile.update();
+        if (!userProfile.isLoggedIn()) {
+            showLoginForm();
+        }
     }
 
     @Override
@@ -107,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "This page is still under construction.", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.logout:
-                logoutUser();
+                userProfile.logout();
                 Intent mainPage = new Intent(this, MainActivity.class);
                 startActivity(mainPage);
                 return true;
@@ -140,83 +131,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void greetUser() {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        // COMMENTS FROM SQLite ANDROID DOCS
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                BaseColumns._ID,
-                BioInfoContract.BioEntry.USER_NAME,
-                BioInfoContract.BioEntry.IMG_PATH,
-                BioInfoContract.BioEntry.ACTIVE_STATE,
-                BioInfoContract.BioEntry.GOAL,
-                BioInfoContract.BioEntry.IS_LOGGED_IN
-        };
-
-        String selection = BioInfoContract.BioEntry.IS_LOGGED_IN + " = ?";
-        String[] selectionArgs = {"1"};
-
-        // How you want the results sorted in the resulting Cursor
-        String sortOrder =
-                BioInfoContract.BioEntry.USER_NAME + " ASC";
-
-        Cursor cursor = db.query(
-                BioInfoContract.BioEntry.TABLE_NAME,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                sortOrder
-        );
-
-        int rowID, isLoggedIn;
-        String name = "";
-        String imgPath, activeState, goal;
-        if (cursor.moveToFirst()) {
-            rowID = cursor.getInt(0);
-            name = cursor.getString(1);
-            imgPath = cursor.getString(2);
-            activeState = cursor.getString(3);
-            goal = cursor.getString(4);
-            isLoggedIn = cursor.getInt(5);
-        } else {
-            cursor.close();
-            db.close();
-//                Toast toast = Toast.makeText(ctx, "Nobody Logged In!" , Toast.LENGTH_SHORT);
-//                toast.show();
-            SignInFragment dialog = new SignInFragment();
-            dialog.setCancelable(false);
-            dialog.show(getSupportFragmentManager(), "SignInFragment");
-            return;
-        }
-        Toast toast = Toast.makeText(ctx, "Welcome Back " + name, Toast.LENGTH_LONG);
-        toast.show();
-        cursor.close();
-        db.close();
+    private void showLoginForm() {
+        SignInFragment dialog = new SignInFragment();
+        dialog.setCancelable(false);
+        dialog.show(getSupportFragmentManager(), "SignInFragment");
     }
-
-    private void logoutUser() {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String isLoggedIn = "0";
-        ContentValues values = new ContentValues();
-        values.put(BioInfoContract.BioEntry.IS_LOGGED_IN, isLoggedIn);
-
-        String selection = BioInfoContract.BioEntry.IS_LOGGED_IN + " LIKE ?";
-        String[] selectionArgs = {"1"};
-
-        int count = db.update(
-                BioInfoContract.BioEntry.TABLE_NAME,
-                values,
-                selection,
-                selectionArgs);
-
-        Toast toast = Toast.makeText(ctx, "Count " + count, Toast.LENGTH_SHORT);
-        toast.show();
-        db.close();
-    }
-
-
 }

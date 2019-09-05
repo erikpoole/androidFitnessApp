@@ -2,10 +2,8 @@ package com.example.project.activity.login;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +15,13 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.project.R;
 import com.example.project.activity.MainActivity;
-import com.example.project.activity.bio.BioHelperDB;
-import com.example.project.activity.bio.BioInfoContract;
+import com.example.project.database.UserHelper;
+import com.example.project.database.UserProfile;
 
 public class SignInFragment extends DialogFragment implements View.OnClickListener{
     private EditText nameET, passwordET;
     private TextView errTV;
-    private BioHelperDB dbHelper;
+    private UserHelper dbHelper;
     private Context ctx;
 
     @Override
@@ -42,7 +40,7 @@ public class SignInFragment extends DialogFragment implements View.OnClickListen
         signUpBtn.setOnClickListener(this);
 
         ctx = signInView.getContext();
-        dbHelper = new BioHelperDB(ctx);
+        dbHelper = new UserHelper(ctx);
 
         builder.setView(signInView);
         return builder.create();
@@ -54,7 +52,8 @@ public class SignInFragment extends DialogFragment implements View.OnClickListen
             case R.id.signInBtn:
                 String name = nameET.getText().toString();
                 String password = passwordET.getText().toString();
-                if (loginUser(name, password)) {
+                UserProfile userProfile = new UserProfile(ctx);
+                if (userProfile.login(name, password)) {
                     Intent main = new Intent(ctx, MainActivity.class);
                     startActivity(main);
                     dismiss();
@@ -69,28 +68,5 @@ public class SignInFragment extends DialogFragment implements View.OnClickListen
                 startActivity(signUpPage);
                 dismiss();
         }
-    }
-
-    // returns true if logged in, false if user not found in db
-    private Boolean loginUser(String name, String password) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        String isLoggedIn = "1";
-        ContentValues values = new ContentValues();
-        values.put(BioInfoContract.BioEntry.IS_LOGGED_IN, isLoggedIn);
-
-        String selection = BioInfoContract.BioEntry.USER_NAME + " LIKE ? AND " + BioInfoContract.BioEntry.PASSWORD + " Like ?";
-        String[] selectionArgs = { name, password };
-
-        int count = db.update(
-                BioInfoContract.BioEntry.TABLE_NAME,
-                values,
-                selection,
-                selectionArgs);
-
-        if (count < 1) {
-            return false;
-        }
-        return true;
     }
 }
