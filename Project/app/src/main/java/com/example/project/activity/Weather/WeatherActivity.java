@@ -39,8 +39,6 @@ public class WeatherActivity extends AppCompatActivity {
     TextView cityText;
     TextView temperatureText;
     TextView summaryText;
-    TextView maxTempText;
-    TextView minTempText;
     TextView humidityText;
     TextView windText;
 
@@ -54,8 +52,6 @@ public class WeatherActivity extends AppCompatActivity {
 
         temperatureText = findViewById(R.id.temperatureText);
         summaryText = findViewById(R.id.summaryText);
-        maxTempText = findViewById(R.id.maxTempText);
-        minTempText = findViewById(R.id.minTempText);
         humidityText = findViewById(R.id.humidityText);
         windText = findViewById(R.id.windText);
 
@@ -162,9 +158,7 @@ public class WeatherActivity extends AppCompatActivity {
                 return (width / 6);
             }
             //shouldn't hit
-            else {
-                return width/100;
-            }
+            return -1;
         }
 
         @Override
@@ -178,29 +172,18 @@ public class WeatherActivity extends AppCompatActivity {
 //                cityText.setText(json.getString("name"));
 
                 //from current forecast
-                temperatureText.setText(
-                        "Temperature: " +
-                        roundStringWithMultiplier(current.getString("temperature"), 1) +
-                        "\u00B0F");
+                temperatureText.setText(roundStringWithMultiplier(current.getString("temperature"), 1));
                 humidityText.setText(
-                        "Humidity: " +
+                        "Humidity:\n" +
                         roundStringWithMultiplier(current.getString("humidity"), 100) +
                         "%");
                 windText.setText(
-                        "Wind Speed: " +
+                        "Wind Speed:\n" +
                                 roundStringWithMultiplier(current.getString("windSpeed"), 1) +
                         " mph");
 
                 //from weekly forcast
                 summaryText.setText(weatherDays.getJSONObject(0).getString("summary"));
-                maxTempText.setText(
-                        "High: " +
-                        roundStringWithMultiplier(weatherDays.getJSONObject(0).getString("temperatureHigh"), 1) +
-                        "\u00B0F");
-                minTempText.setText(
-                        "Low: " +
-                        roundStringWithMultiplier(weatherDays.getJSONObject(0).getString("temperatureLow"), 1) +
-                        "\u00B0F");
 
                 //index 0 is current date
                 initializeWeatherFragment(weatherDays.getString(0), R.id.todayIcon, getIconSize("large"));

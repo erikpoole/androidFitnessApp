@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.TextView;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
@@ -24,15 +25,24 @@ import org.json.JSONObject;
 
 public class WeatherFragment extends Fragment {
     private JSONObject weatherIcons;
+
     private WeatherIconView icon;
+    private TextView maxTempText;
+    private TextView minTempText;
+
+    private int size;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        size = getArguments().getInt("size");
+
         final View view = inflater.inflate(R.layout.fragment_weather, container, false);
 
         icon = view.findViewById(R.id.icon);
+        maxTempText = view.findViewById(R.id.maxTempText);
+        minTempText = view.findViewById(R.id.minTempText);
 
         try {
             weatherIcons = new JSONObject(AssetHandlers.readAsset("weatherIcons.json", getActivity()));
@@ -45,12 +55,16 @@ public class WeatherFragment extends Fragment {
 
         try {
             json = new JSONObject(jsonRaw);
+            maxTempText.setText(roundStringWithMultiplier(json.getString("temperatureHigh"), 1));
+            maxTempText.setTextSize(size/5);
+            minTempText.setText(roundStringWithMultiplier(json.getString("temperatureLow"), 1));
+            minTempText.setTextSize(size/5);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         icon.setIconResource(getIconCode(json));
-        icon.setIconSize(getArguments().getInt("size"));
+        icon.setIconSize(size);
 
         return view;
     }
@@ -69,6 +83,10 @@ public class WeatherFragment extends Fragment {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private String roundStringWithMultiplier(String input, int multiplier) {
+        return String.valueOf(Math.round(Double.parseDouble(input) * multiplier));
     }
 
 }

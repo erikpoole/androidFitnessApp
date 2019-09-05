@@ -18,6 +18,7 @@
     <TextView
         android:id="@+id/temperatureText"
         android:text="Temperature"
+        android:textSize="60dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
@@ -27,15 +28,17 @@
     <TextView
         android:id="@+id/summaryText"
         android:text="Weather Summary"
+        android:textSize="16dp"
+        android:textAlignment="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:layout_below="@id/temperatureText"
         android:layout_centerHorizontal="true" />
 
-    <LinearLayout
-        android:id="@+id/tempContainer"
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/humidWindContainer"
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
@@ -43,51 +46,32 @@
         android:layout_centerHorizontal="true">
 
         <TextView
-            android:id="@+id/maxTempText"
-            android:text="Max Temp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:layout_centerHorizontal="true"/>
-
-        <TextView
-            android:id="@+id/minTempText"
-            android:text="Min Temp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:layout_below="@id/maxTempText"
-            android:layout_centerHorizontal="true"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/humidWindContainer"
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:layout_below="@id/tempContainer"
-        android:layout_centerHorizontal="true">
-
-        <TextView
             android:id="@+id/humidityText"
             android:text="Humidity"
+            android:textSize="16dp"
+            android:textAlignment="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:layout_centerHorizontal="true"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/windText"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/windText"
             android:text="Wind Speed"
+            android:textSize="16dp"
+            android:textAlignment="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:layout_below="@id/humidityText"
-            android:layout_centerHorizontal="true"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/humidityText"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/forecastContainer"
