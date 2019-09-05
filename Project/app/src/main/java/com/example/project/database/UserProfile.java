@@ -119,7 +119,7 @@ public class UserProfile {
         values.put(UserContract.UserEntry.GOAL, _goal);
         values.put(UserContract.UserEntry.ACTIVE_STATE, _activeState);
 
-        String selection = BioInfoContract.BioEntry.IS_LOGGED_IN + " LIKE ?";
+        String selection = UserContract.UserEntry.IS_LOGGED_IN + " LIKE ?";
         String[] selectionArgs = {"1"};
 
         db.update(
@@ -160,7 +160,7 @@ public class UserProfile {
         ContentValues values = new ContentValues();
         values.put(UserContract.UserEntry.IS_LOGGED_IN, isLoggedIn);
 
-        String selection = BioInfoContract.BioEntry.USER_NAME + " LIKE ? AND " + UserContract.UserEntry.PASSWORD + " Like ?";
+        String selection = UserContract.UserEntry.USER_NAME + " LIKE ? AND " + UserContract.UserEntry.PASSWORD + " Like ?";
         String[] selectionArgs = { name, password };
 
         int count = db.update(
