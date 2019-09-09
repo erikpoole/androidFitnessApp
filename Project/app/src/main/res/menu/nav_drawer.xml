@@ -24,6 +24,10 @@
             android:id="@+id/nav_bmi"
             android:icon="@drawable/ic_bmi"
             android:title="@string/bmi" />
+        <item
+            android:id="@+id/nav_calorie"
+            android:icon="@drawable/ic_food_24px"
+            android:title="@string/calorie_calculator" />
     </group>
 
 </menu>
