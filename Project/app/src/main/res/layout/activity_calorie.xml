@@ -1,33 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.bio.CalorieActivity">
+    tools:context=".activity.Weather.WeatherActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+    <TextView
+        android:id="@+id/calorieText"
+        android:text="Calories"
+        android:textSize="60dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:padding="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/seekBarContainer"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <include layout="@layout/content_calorie" />
+    <RelativeLayout
+        android:id="@+id/seekBarContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/calorieText">
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <TextView
+            android:id="@+id/goalText"
+            android:text="Weight Goal"
+            android:textAlignment="center"
+            android:textSize="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"/>
+
+        <RelativeLayout
+            android:id="@+id/goalContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_below="@id/goalText">
+
+            <androidx.appcompat.widget.AppCompatSeekBar
+                android:id="@+id/goalSeekBar"
+                android:theme="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:max="4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_toLeftOf="@id/goalValueText"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/goalValueText"
+                android:text="Value"
+                android:textSize="24dp"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/activityText"
+            android:text="Activity Level"
+            android:textAlignment="center"
+            android:textSize="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="32dp"
+            android:layout_below="@id/goalContainer"
+            android:layout_centerInParent="true"/>
+
+        <RelativeLayout
+            android:id="@+id/activityContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_below="@id/activityText">
+
+            <androidx.appcompat.widget.AppCompatSeekBar
+                android:id="@+id/activitySeekBar"
+                android:theme="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:max="2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_toLeftOf="@id/activityValueText"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:id="@+id/activityValueText"
+                android:text="Value"
+                android:textSize="24dp"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
