@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/your_bmi_is_tv"
             android:layout_centerHorizontal="true"
-            android:text="22.5"
+            android:text="0.0"
             android:textColor="@color/black"
             android:textSize="100dp" />
 
