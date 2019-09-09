@@ -29,16 +29,16 @@ public class BmiActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("BMI");
 
-        //The formula for BMI is weight in kilograms divided by height in meters squared
         user = new UserProfile(getApplicationContext());
         if (user != null) {
-            float kilogramsToPounds = 0.453592F; // 0.453592F kg / 1 lb
-            float weight = (float) user.getWeight() * kilogramsToPounds;
-            float feetToMeters = 0.3048F; // 1 ft / 0.3048 meters
-            float height = Float.parseFloat(user.getHeight()) * feetToMeters;
-            float bmi = weight / height;
+            float feet = Float.parseFloat(user.getHeight().split("'")[0]);
+            float inches = Float.parseFloat(user.getHeight().split("'")[1].split("\"")[0]);
+            float height = (feet * 12) + inches; // 1 foot / 12 inches
+            float weight = user.getWeight();
+            float bmi = (weight / (height * height)) * 703;
             TextView bmiTextView = findViewById(R.id.bmi_tv);
             bmiTextView.setText(String.format(java.util.Locale.US, "%.1f", bmi));
+            Toast.makeText(getApplicationContext(), weight + " " + height, Toast.LENGTH_LONG).show();
         }
 
         SeekBar simpleSeekBar = findViewById(R.id.seek_bar);
