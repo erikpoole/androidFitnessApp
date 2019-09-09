@@ -35,9 +35,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Your BMI is"
+            android:text="@string/your_bmi_is"
             android:textColor="@color/dark_gray"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/bmi_tv"
@@ -45,9 +45,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/your_bmi_is_tv"
             android:layout_centerHorizontal="true"
-            android:text="0.0"
+            android:text="@string/default_bmi"
             android:textColor="@color/black"
-            android:textSize="100dp" />
+            android:textSize="100sp" />
 
         <TextView
             android:id="@+id/what_if_you_weighed_tv"
@@ -56,9 +56,9 @@
             android:layout_below="@+id/bmi_tv"
             android:layout_centerHorizontal="true"
             android:paddingTop="100dp"
-            android:text="What if you weighed"
+            android:text="@string/what_if_you_weighed"
             android:textColor="@color/dark_gray"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <SeekBar
             android:id="@+id/seek_bar"

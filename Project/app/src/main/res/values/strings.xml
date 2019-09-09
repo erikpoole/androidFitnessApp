@@ -32,5 +32,8 @@
     <string name="title_activity_bmi_calculator">BmiCalculator</string>
     <string name="bmi">BMI</string>
     <string name="title_activity_calorie">CalorieActivity</string>
-    <string name="calorie_calculator">Calorie Calculator</string>/>
+    <string name="calorie_calculator">Calorie Calculator</string>
+    <string name="what_if_you_weighed">What if you weighed</string>
+    <string name="default_bmi">0.0</string>
+    <string name="your_bmi_is">Your BMI is</string>/>
 </resources>

@@ -29,7 +29,6 @@ public class BmiActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("BMI");
 
-
         //The formula for BMI is weight in kilograms divided by height in meters squared
         user = new UserProfile(getApplicationContext());
         if (user != null) {
