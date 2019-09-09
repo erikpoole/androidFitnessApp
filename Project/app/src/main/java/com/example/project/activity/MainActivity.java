@@ -3,10 +3,14 @@ package com.example.project.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +30,8 @@ import com.example.project.activity.bio.CalorieActivity;
 import com.example.project.activity.login.SignInFragment;
 import com.example.project.database.UserProfile;
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
 
         // UserProfile will be our interface for interacting with the database
         userProfile = new UserProfile(ctx);
-//        userProfile.update();
+        // UNCOMMENT THIS TO ERASE CONTENTS OF DB
+//        userProfile.upgrade();
         if (!userProfile.isLoggedIn()) {
             showLoginForm();
         }
@@ -69,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
+
         super.onPostCreate(savedInstanceState);
         toggle.syncState();
     }
@@ -83,6 +91,20 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
+
+        ImageView drawerImg = findViewById(R.id.nav_header_imageView);
+        TextView drawerTv = findViewById(R.id.nav_header_textView);
+
+//        File sd = Environment.getExternalStorageDirectory();
+        File imgFile = new File(userProfile.getImgPath());
+        if(imgFile.exists()){
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            drawerImg.setImageBitmap(myBitmap);
+            drawerTv.setText(userProfile.getName());
+        } else {
+            Toast.makeText(getApplicationContext(), "img path not found... " + userProfile.getImgPath(), Toast.LENGTH_LONG).show();
+        }
+
         return true;
     }
 

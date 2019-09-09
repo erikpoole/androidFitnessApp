@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -163,8 +164,7 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
         if (requestCode==REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK){
             Bundle extras = data.getExtras();
             Bitmap thumbnailImage = (Bitmap) extras.get("data");
-
-            if (isExternalStorateWritable()) {
+            if (isExternalStorageWritable()) {
                 PATH_TO_IMAGE = saveImage(thumbnailImage);
                 profileIV.setImageBitmap(thumbnailImage);
             }
@@ -174,19 +174,22 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
     private String saveImage(Bitmap finalBitmap) {
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/saved_images");
-        myDir.mkdirs();
+        if (myDir.mkdirs()) {
+            Log.d("saveImage", "saveImage: dirs CREATED");
+        } else {
+            Toast.makeText(ctx, "mkdirs failed!", Toast.LENGTH_SHORT).show();
+        }
 
         String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         String fname = "Thumbnail" + timeStamp + ".jpg";
 
         File file = new File(myDir, fname);
-        if (file.exists()) file.delete();
         try {
             FileOutputStream out = new FileOutputStream(file);
             finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
             out.flush();
             out.close();
-            Toast.makeText(ctx, "file saved!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ctx, "image saved!", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -194,7 +197,7 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
         return file.getAbsolutePath();
     }
 
-    private boolean isExternalStorateWritable() {
+    private boolean isExternalStorageWritable() {
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             return true;
         }
