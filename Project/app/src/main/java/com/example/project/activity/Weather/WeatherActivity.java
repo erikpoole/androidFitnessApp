@@ -5,13 +5,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +20,6 @@ import com.android.volley.Response;
 import com.example.project.AssetHandlers;
 import com.example.project.R;
 import com.example.project.Requests;
-import com.github.pwittchen.weathericonview.WeatherIconView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,9 +60,12 @@ public class WeatherActivity extends AppCompatActivity {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                    @SuppressLint("MissingPermission")
-                    Location location = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+//                    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//                    @SuppressLint("MissingPermission")
+//                    Location location = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+                    Location location = new Location("");
+                    location.setLongitude(-111.89);
+                    location.setLatitude(40.76);
                     getWeather(location);
                 } else {
                     Toast.makeText(
