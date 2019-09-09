@@ -1,6 +1,7 @@
 package com.example.project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -15,6 +16,12 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.project.activity.HikingActivity;
+import com.example.project.activity.MainActivity;
+import com.example.project.activity.Weather.WeatherActivity;
+import com.example.project.activity.bio.BioActivity;
+import com.example.project.activity.bio.BmiActivity;
 
 /*
  * This class was based on a demo class from the Android Design Library.
@@ -69,14 +76,43 @@ public class TileFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
             holder.picture.setImageDrawable(mPlacePictures[position % mPlacePictures.length]);
             holder.name.setText(mPlaces[position % mPlaces.length]);
 
             holder.picture.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(holder.picture.getContext(), "Clicked!", Toast.LENGTH_LONG).show();
+                    switch (position) {
+                        case 0:
+                            Intent profilePage = new Intent(view.getContext(), BioActivity.class);
+                            view.getContext().startActivity(profilePage);
+                            return;
+                        case 1:
+                            Intent weatherPage = new Intent(view.getContext(), WeatherActivity.class);
+                            view.getContext().startActivity(weatherPage);
+                            return;
+                        case 2:
+                            Intent hikingPage = new Intent(view.getContext(), HikingActivity.class);
+                            view.getContext().startActivity(hikingPage);
+                            return;
+                        case 3:
+                            Intent bmiPage = new Intent(view.getContext(), BmiActivity.class);
+                            view.getContext().startActivity(bmiPage);
+                            return;
+                        case 4:
+//                            Intent caloriePage = new Intent(view.getContext(), CalorieActivity.class);
+//                            view.getContext().startActivity(caloriePage);
+                            Toast.makeText(holder.picture.getContext(), "Calorie Activity not yet implemented!", Toast.LENGTH_LONG).show();
+                            return;
+                        case 5:
+//                            Intent additionalPage = new Intent(view.getContext(), BmiActivity.class);
+//                            view.getContext().startActivity(additionalPage);
+                            Toast.makeText(holder.picture.getContext(), "Additional info not yet implemented!", Toast.LENGTH_LONG).show();
+                            return;
+                        default:
+                            return;
+                    }
                 }
             });
         }
