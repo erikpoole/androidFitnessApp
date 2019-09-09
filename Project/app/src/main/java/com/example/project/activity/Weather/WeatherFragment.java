@@ -85,7 +85,7 @@ public class WeatherFragment extends Fragment {
         }
     }
 
-    private String roundStringWithMultiplier(String input, int multiplier) {
+    public static String roundStringWithMultiplier(String input, int multiplier) {
         return String.valueOf(Math.round(Double.parseDouble(input) * multiplier));
     }
 
