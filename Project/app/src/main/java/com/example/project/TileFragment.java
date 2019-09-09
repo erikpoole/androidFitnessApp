@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.example.project.activity.MainActivity;
 import com.example.project.activity.Weather.WeatherActivity;
 import com.example.project.activity.bio.BioActivity;
 import com.example.project.activity.bio.BmiActivity;
+import com.example.project.activity.bio.CalorieActivity;
 
 /*
  * This class was based on a demo class from the Android Design Library.
@@ -101,14 +103,14 @@ public class TileFragment extends Fragment {
                             view.getContext().startActivity(bmiPage);
                             return;
                         case 4:
-//                            Intent caloriePage = new Intent(view.getContext(), CalorieActivity.class);
-//                            view.getContext().startActivity(caloriePage);
-                            Toast.makeText(holder.picture.getContext(), "Calorie Activity not yet implemented!", Toast.LENGTH_LONG).show();
+                            Intent caloriePage = new Intent(view.getContext(), CalorieActivity.class);
+                            view.getContext().startActivity(caloriePage);
                             return;
                         case 5:
-//                            Intent additionalPage = new Intent(view.getContext(), BmiActivity.class);
-//                            view.getContext().startActivity(additionalPage);
-                            Toast.makeText(holder.picture.getContext(), "Additional info not yet implemented!", Toast.LENGTH_LONG).show();
+                            String url = "https://www.cdc.gov/healthyweight/tools/index.html";
+                            Intent i = new Intent(Intent.ACTION_VIEW);
+                            i.setData(Uri.parse(url));
+                            view.getContext().startActivity(i);
                             return;
                         default:
                             return;
