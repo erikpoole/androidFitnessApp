@@ -28,5 +28,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_settings">SettingsActivity</string>/>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_bmi_calculator">BmiCalculator</string>
+    <string name="bmi">BMI</string>/>
 </resources>
