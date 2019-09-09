@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -68,9 +69,16 @@ public class TileFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.picture.setImageDrawable(mPlacePictures[position % mPlacePictures.length]);
             holder.name.setText(mPlaces[position % mPlaces.length]);
+
+            holder.picture.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(holder.picture.getContext(), "Clicked!", Toast.LENGTH_LONG).show();
+                }
+            });
         }
 
         @Override
