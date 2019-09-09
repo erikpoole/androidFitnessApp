@@ -71,6 +71,16 @@
             android:paddingTop="32dp"
             android:max="150"/>
 
+        <TextView
+            android:id="@+id/seek_bar_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/seek_bar"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:textColor="@color/dark_gray"
+            android:textSize="20sp" />
+
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

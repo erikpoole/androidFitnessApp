@@ -20,6 +20,9 @@ import com.example.project.R;
 public class BmiActivity extends AppCompatActivity {
 
     private UserProfile user;
+    private TextView bmiTextView;
+    private float height;
+    private float weight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,21 +32,48 @@ public class BmiActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("BMI");
 
-        //The formula for BMI is weight in kilograms divided by height in meters squared
         user = new UserProfile(getApplicationContext());
         if (user != null) {
-            float kilogramsToPounds = 0.453592F; // 0.453592F kg / 1 lb
-            float weight = (float) user.getWeight() * kilogramsToPounds;
-            float feetToMeters = 0.3048F; // 1 ft / 0.3048 meters
-            float height = Float.parseFloat(user.getHeight()) * feetToMeters;
-            float bmi = weight / height;
-            TextView bmiTextView = findViewById(R.id.bmi_tv);
+            float feet = Float.parseFloat(user.getHeight().split("'")[0]);
+            float inches = Float.parseFloat(user.getHeight().split("'")[1].split("\"")[0]);
+            height = (feet * 12) + inches; // 1 foot / 12 inches
+            weight = user.getWeight();
+            float bmi = (weight / (height * height)) * 703;
+            bmiTextView = findViewById(R.id.bmi_tv);
             bmiTextView.setText(String.format(java.util.Locale.US, "%.1f", bmi));
         }
 
-        SeekBar simpleSeekBar = findViewById(R.id.seek_bar);
-        simpleSeekBar.setMax(100);
-        simpleSeekBar.setProgress(33);
+        SeekBar seekBar = findViewById(R.id.seek_bar);
+        seekBar.setMax(100);
+        seekBar.setProgress(33);
+        final TextView seekTextView = findViewById(R.id.seek_bar_value);
+
+        SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+
+            float adjustedWeight;
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                adjustedWeight = weight;
+                int change = progress - 50;
+                seekTextView.setText(change + " lbs");
+                adjustedWeight += change;
+                float bmi = (adjustedWeight / (height * height)) * 703;
+                bmiTextView.setText(String.format(java.util.Locale.US, "%.1f", bmi));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // called when the user first touches the SeekBar
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // called after the user finishes moving the SeekBar
+            }
+        };
+
+        seekBar.setOnSeekBarChangeListener(seekBarChangeListener);
     }
 
 }
