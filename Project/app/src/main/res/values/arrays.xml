@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="activities">
-        <item>Bio</item>
+        <item>Profile</item>
         <item>Weather</item>
         <item>Hiking</item>
-        <item>Fitness</item>
+        <item>BMI</item>
+        <item>Calorie Calculator</item>
+        <item>Additional Resources</item>
     </string-array>
     <array name="activity_pictures">
-        <item>@drawable/bio_photo</item>
+        <item>@drawable/profile_photo</item>
         <item>@drawable/weather_photo</item>
         <item>@drawable/hiking_photo</item>
-        <item>@drawable/fitness_photo</item>
+        <item>@drawable/bmi_photo</item>
+        <item>@drawable/calorie_photo</item>
+        <item>@drawable/resources_photo</item>
     </array>
 </resources>
