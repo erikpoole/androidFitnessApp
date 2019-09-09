@@ -20,6 +20,9 @@ import com.example.project.R;
 public class BmiActivity extends AppCompatActivity {
 
     private UserProfile user;
+    private TextView bmiTextView;
+    private float height;
+    private float weight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +36,10 @@ public class BmiActivity extends AppCompatActivity {
         if (user != null) {
             float feet = Float.parseFloat(user.getHeight().split("'")[0]);
             float inches = Float.parseFloat(user.getHeight().split("'")[1].split("\"")[0]);
-            float height = (feet * 12) + inches; // 1 foot / 12 inches
-            float weight = user.getWeight();
+            height = (feet * 12) + inches; // 1 foot / 12 inches
+            weight = user.getWeight();
             float bmi = (weight / (height * height)) * 703;
-            TextView bmiTextView = findViewById(R.id.bmi_tv);
+            bmiTextView = findViewById(R.id.bmi_tv);
             bmiTextView.setText(String.format(java.util.Locale.US, "%.1f", bmi));
         }
 
@@ -47,9 +50,16 @@ public class BmiActivity extends AppCompatActivity {
 
         SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
 
+            float adjustedWeight;
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                seekTextView.setText("Weight: " + progress + " lbs.");
+                adjustedWeight = weight;
+                int change = progress - 50;
+                seekTextView.setText(change + " lbs");
+                adjustedWeight += change;
+                float bmi = (adjustedWeight / (height * height)) * 703;
+                bmiTextView.setText(String.format(java.util.Locale.US, "%.1f", bmi));
             }
 
             @Override
