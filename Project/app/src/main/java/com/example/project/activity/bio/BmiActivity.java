@@ -38,12 +38,32 @@ public class BmiActivity extends AppCompatActivity {
             float bmi = (weight / (height * height)) * 703;
             TextView bmiTextView = findViewById(R.id.bmi_tv);
             bmiTextView.setText(String.format(java.util.Locale.US, "%.1f", bmi));
-            Toast.makeText(getApplicationContext(), weight + " " + height, Toast.LENGTH_LONG).show();
         }
 
-        SeekBar simpleSeekBar = findViewById(R.id.seek_bar);
-        simpleSeekBar.setMax(100);
-        simpleSeekBar.setProgress(33);
+        SeekBar seekBar = findViewById(R.id.seek_bar);
+        seekBar.setMax(100);
+        seekBar.setProgress(33);
+        final TextView seekTextView = findViewById(R.id.seek_bar_value);
+
+        SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                seekTextView.setText("Weight: " + progress + " lbs.");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // called when the user first touches the SeekBar
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // called after the user finishes moving the SeekBar
+            }
+        };
+
+        seekBar.setOnSeekBarChangeListener(seekBarChangeListener);
     }
 
 }
