@@ -17,7 +17,6 @@ public class UserProfile {
         _name = _city = _country = _height = _age = _sex = _imgPath = _goal = _activeState = "";
         _rowID = _weight = 0;
         _isLoggedIn = _isInDarkMode = false;
-
         _ctx = ctx;
         _dbHelper = new UserHelper(_ctx);
         SQLiteDatabase db = _dbHelper.getReadableDatabase();
@@ -83,7 +82,10 @@ public class UserProfile {
     public String getAge() { return _age; }
     public String getSex() { return _sex; }
     public int getWeight() { return _weight; }
-    public String getHeight() {return _height; }
+    public String getHeight() {
+        String[] heightVals = _height.split(" ");
+        return heightVals[0] + "'" +  heightVals[1] + "\"";
+    }
     public String getCity() { return _city; }
     public String getCountry() { return _country; }
     public String getImgPath() { return _imgPath; }

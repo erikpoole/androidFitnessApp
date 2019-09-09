@@ -97,7 +97,8 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
                     cityET.getText().toString(),
                     countryET.getText().toString(),
             feetSpinner.getSelectedItem().toString() + " " + inchSpinner.getSelectedItem().toString(),
-                    seekBar.getProgress()
+                    seekBar.getProgress(),
+                    PATH_TO_IMAGE
                 );
             }
         });
@@ -105,10 +106,10 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
         Button uploadImgBtn = view.findViewById(R.id.bio_form_upload_img);
         uploadImgBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (cameraIntent.resolveActivity(ctx.getPackageManager()) != null) {
-                    startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
-                }
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (cameraIntent.resolveActivity(ctx.getPackageManager()) != null) {
+                startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
+            }
             }
         });
 
@@ -116,7 +117,7 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
     }
 
     public interface onSubmitFormListener {
-        public void onSubmitForm(String age, String sex, String city, String country, String height, int weight);
+        public void onSubmitForm(String age, String sex, String city, String country, String height, int weight, String imgPath);
     }
 
     @Override
