@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -96,13 +97,17 @@ public class MainActivity extends AppCompatActivity {
         TextView drawerTv = findViewById(R.id.nav_header_textView);
 
 //        File sd = Environment.getExternalStorageDirectory();
-        File imgFile = new File(userProfile.getImgPath());
-        if(imgFile.exists()){
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            drawerImg.setImageBitmap(myBitmap);
-            drawerTv.setText(userProfile.getName());
-        } else {
-            Toast.makeText(getApplicationContext(), "img path not found... " + userProfile.getImgPath(), Toast.LENGTH_LONG).show();
+        String imgPath = userProfile.getImgPath();
+        Log.d("image", "onCreateOptionsMenu: " + imgPath);
+        if (imgPath != null) {
+            File imgFile = new File(userProfile.getImgPath());
+            if(imgFile.exists()){
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                drawerImg.setImageBitmap(myBitmap);
+                drawerTv.setText(userProfile.getName());
+            } else {
+                Toast.makeText(getApplicationContext(), "img path not found... " + userProfile.getImgPath(), Toast.LENGTH_LONG).show();
+            }
         }
 
         return true;

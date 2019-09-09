@@ -1,19 +1,13 @@
 package com.example.project.activity.bio;
 
 import android.os.Bundle;
-
-import com.example.project.database.UserProfile;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.project.R;
+import com.example.project.database.UserProfile;
 
 public class CalorieActivity extends AppCompatActivity {
 
@@ -50,5 +44,6 @@ public class CalorieActivity extends AppCompatActivity {
     private int getActivityLevelInt() {
         String activityLevelString = user.getActiveState();
 //        if (get )
+        return 0;
     }
 }
