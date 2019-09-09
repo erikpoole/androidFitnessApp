@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,9 +107,10 @@ public class TileFragment extends Fragment {
                             Toast.makeText(holder.picture.getContext(), "Calorie Activity not yet implemented!", Toast.LENGTH_LONG).show();
                             return;
                         case 5:
-//                            Intent additionalPage = new Intent(view.getContext(), BmiActivity.class);
-//                            view.getContext().startActivity(additionalPage);
-                            Toast.makeText(holder.picture.getContext(), "Additional info not yet implemented!", Toast.LENGTH_LONG).show();
+                            String url = "https://www.cdc.gov/healthyweight/tools/index.html";
+                            Intent i = new Intent(Intent.ACTION_VIEW);
+                            i.setData(Uri.parse(url));
+                            view.getContext().startActivity(i);
                             return;
                         default:
                             return;
