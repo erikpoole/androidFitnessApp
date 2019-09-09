@@ -19,12 +19,9 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.example.project.R;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -82,7 +79,7 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
         inchSpinner.setOnItemSelectedListener(this);
 
         // set a change listener on the SeekBar
-        SeekBar seekBar = view.findViewById(R.id.bio_form_weight);
+        final SeekBar seekBar = view.findViewById(R.id.bio_form_weight);
         seekBar.setOnSeekBarChangeListener(seekBarChangeListener);
 
         int progress = seekBar.getProgress();
@@ -94,14 +91,14 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
             public void onClick(View v) {
                 String height = feetSpinner.getSelectedItem().toString() + " " + inchSpinner.getSelectedItem().toString();
                 Toast.makeText(ctx, height, Toast.LENGTH_LONG).show();
-//                submitListener.onSubmitForm(
-//                    ageET.getText().toString(),
-//                    sexET.getText().toString(),
-//                    cityET.getText().toString(),
-//                    countryET.getText().toString(),
-//                    heightET.getText().toString(),
-//                    weightET.getText().toString()
-//                );
+                submitListener.onSubmitForm(
+                    ageSpinner.getSelectedItem().toString(),
+                    sexSpinner.getSelectedItem().toString(),
+                    cityET.getText().toString(),
+                    countryET.getText().toString(),
+            feetSpinner.getSelectedItem().toString() + " " + inchSpinner.getSelectedItem().toString(),
+                    seekBar.getProgress()
+                );
             }
         });
 
@@ -119,7 +116,7 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
     }
 
     public interface onSubmitFormListener {
-        public void onSubmitForm(String age, String sex, String city, String country, String height, String weight);
+        public void onSubmitForm(String age, String sex, String city, String country, String height, int weight);
     }
 
     @Override
