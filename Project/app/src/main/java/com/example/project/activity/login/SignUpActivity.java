@@ -35,14 +35,10 @@ public class SignUpActivity extends AppCompatActivity implements BioFormFragment
     }
 
     // Fragment onSubmitForm interface method definition
-    public void onSubmitForm(String age, String sex, String city, String country, String height, String weight) {
+    public void onSubmitForm(String age, String sex, String city, String country, String height, int weight, String imgPath) {
         String name = nameET.getText().toString();
         String password = psswdET.getText().toString();
         String confirmPassword = psswdConfirmET.getText().toString();
-        int weightAsInt = 0;
-        if (!weight.equals("")) {
-            weightAsInt = Integer.parseInt(weight);
-        }
         if (name.equals("") || password.equals("") || confirmPassword.equals("")) {
             Toast toast = Toast.makeText(getApplicationContext(), "Please fill out all required fields", Toast.LENGTH_SHORT);
             toast.show();
@@ -53,11 +49,12 @@ public class SignUpActivity extends AppCompatActivity implements BioFormFragment
             userProfile = new UserProfile(ctx);
             userProfile.setName(name);
             userProfile.setAge(age);
-            userProfile.setWeight(weightAsInt);
+            userProfile.setWeight(weight);
             userProfile.setHeight(height);
             userProfile.setSex(sex);
             userProfile.setCity(city);
             userProfile.setCountry(country);
+            userProfile.setImgPath(imgPath);
             if (!userProfile.signUp(password)) {
                 Toast toast = Toast.makeText(ctx, "Something went wrong...", Toast.LENGTH_SHORT);
                 toast.show();
