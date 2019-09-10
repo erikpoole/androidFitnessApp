@@ -40,6 +40,12 @@
         android:hint="@string/confirm_password"
         android:autofillHints="@string/confirm_password"
         />
+    <TextView
+        android:id="@+id/bio_form_age"
+        android:text="@string/enter_age"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        />
 
     <fragment android:name="com.example.project.activity.bio.BioFormFragment"
         android:id="@+id/bio_form_sign_up"

@@ -20,9 +20,12 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import com.example.project.R;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -51,12 +54,13 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
 
         profileIV = view.findViewById(R.id.bio_form_img);
 
-        final Spinner ageSpinner = view.findViewById(R.id.bio_form_age);
-        ArrayAdapter<CharSequence> ageAdapter = ArrayAdapter.createFromResource(ctx,
-                R.array.age_array, android.R.layout.simple_spinner_item);
-        ageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ageSpinner.setAdapter(ageAdapter);
-        ageSpinner.setOnItemSelectedListener(this);
+//        final Spinner ageSpinner = view.findViewById(R.id.bio_form_age);
+//        ArrayAdapter<CharSequence> ageAdapter = ArrayAdapter.createFromResource(ctx,
+//                R.array.age_array, android.R.layout.simple_spinner_item);
+//        ageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        ageSpinner.setAdapter(ageAdapter);
+//        ageSpinner.setOnItemSelectedListener(this);
+
 
         final Spinner sexSpinner = view.findViewById(R.id.bio_form_sex);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(ctx,
@@ -93,7 +97,7 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
                 String height = feetSpinner.getSelectedItem().toString() + " " + inchSpinner.getSelectedItem().toString();
                 Toast.makeText(ctx, height, Toast.LENGTH_LONG).show();
                 submitListener.onSubmitForm(
-                    ageSpinner.getSelectedItem().toString(),
+                    "12",
                     sexSpinner.getSelectedItem().toString(),
                     cityET.getText().toString(),
                     countryET.getText().toString(),
@@ -118,7 +122,7 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
     }
 
     public interface onSubmitFormListener {
-        public void onSubmitForm(String age, String sex, String city, String country, String height, int weight, String imgPath);
+        void onSubmitForm(String age, String sex, String city, String country, String height, int weight, String imgPath);
     }
 
     @Override

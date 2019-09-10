@@ -68,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
 
         // UserProfile will be our interface for interacting with the database
         userProfile = new UserProfile(ctx);
+
         // UNCOMMENT THIS TO ERASE CONTENTS OF DB
 //        userProfile.upgrade();
+
         if (!userProfile.isLoggedIn()) {
             showLoginForm();
         }
