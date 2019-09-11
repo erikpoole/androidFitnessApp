@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -82,29 +83,29 @@ public class UserProfile {
 
     // GETTERS
     public String getName() { return _name; }
-    public String getAge(Context ctx) {
+    public String getAge() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
         String formattedDate = sdf.format(new Date());
         String[] currentDate = formattedDate.split("\\.");
-//        int year = Integer.parseInt(currentDate[0]);
-//        int month = Integer.parseInt(currentDate[1]);
-//        int day = Integer.parseInt(currentDate[2]);
-//        String[] dob = _age.split("/");
-//        int dobYear = Integer.parseInt(dob[0]);
-//        int dobMonth = Integer.parseInt(dob[1]);
-//        int dobDay = Integer.parseInt(dob[2]);
-//
-//        int age = year - dobYear;
-//
-//        if (month > dobMonth) {
-//            age++;
-//        } else if (month == dobMonth) {
-//            if (dobDay <= day) {
-//                age++;
-//            }
-//        }
-//        return String.valueOf(age);
-        return currentDate[0];
+        int year = Integer.parseInt(currentDate[0]);
+        int month = Integer.parseInt(currentDate[1]);
+        int day = Integer.parseInt(currentDate[2]);
+        String[] dob = _age.split("/");
+        int dobMonth = Integer.parseInt(dob[0]);
+        int dobDay = Integer.parseInt(dob[1]);
+        int dobYear = Integer.parseInt(dob[2]);
+
+        int age = year - dobYear;
+        Log.d("age", "getAge: " + age);
+
+        if (month > dobMonth) {
+            age++;
+        } else if (month == dobMonth) {
+            if (dobDay <= day) {
+                age++;
+            }
+        }
+        return String.valueOf(age);
     }
     public String getSex() { return _sex; }
     public int getWeight() { return _weight; }

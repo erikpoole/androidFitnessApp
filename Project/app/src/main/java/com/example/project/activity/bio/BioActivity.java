@@ -52,7 +52,7 @@ public class BioActivity extends AppCompatActivity {
         countryTV.setText(userProfile.getCountry());
         heightTV.setText(userProfile.getHeight());
         weightTV.setText(Integer.toString(userProfile.getWeight()));
-        ageTV.setText(userProfile.getAge(getApplicationContext()));
+        ageTV.setText(userProfile.getAge());
         sexTV.setText(userProfile.getSex());
     }
 }

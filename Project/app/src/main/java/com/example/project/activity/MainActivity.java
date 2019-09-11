@@ -116,6 +116,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        // UserProfile will be our interface for interacting with the database
+        userProfile = new UserProfile(ctx);
+        if (!userProfile.isLoggedIn()) {
+            showLoginForm();
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
