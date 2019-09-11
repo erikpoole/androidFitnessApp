@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,8 +20,7 @@ import com.example.project.database.UserProfile;
 
 public class SignUpActivity extends AppCompatActivity implements BioFormFragment.onSubmitFormListener, DatePicker.onDateSetListener {
 
-    EditText nameET, psswdET, psswdConfirmET;
-    TextView ageTV;
+    EditText nameET, psswdET, psswdConfirmET, ageET;
     Button calendarBtn;
     UserHelper dbHelper;
     UserProfile userProfile;
@@ -37,9 +35,8 @@ public class SignUpActivity extends AppCompatActivity implements BioFormFragment
         dbHelper = new UserHelper(getApplicationContext());
         ctx = getApplicationContext();
 
-        ageTV = findViewById(R.id.bio_form_age);
-        calendarBtn = findViewById(R.id.bio_form_calendar_btn);
-        calendarBtn.setOnClickListener(new View.OnClickListener() {
+        ageET = findViewById(R.id.bio_form_age);
+        ageET.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 showDatePickerDialog(v);
             }
@@ -69,6 +66,8 @@ public class SignUpActivity extends AppCompatActivity implements BioFormFragment
             userProfile.setDOB(DOB);
             userProfile.setSex(sex);
             userProfile.setImgPath(imgPath);
+            userProfile.setActiveState(1);
+            userProfile.setGoal(0);
             if (!userProfile.signUp(password)) {
                 Toast toast = Toast.makeText(ctx, "Something went wrong...", Toast.LENGTH_SHORT);
                 toast.show();
@@ -87,6 +86,6 @@ public class SignUpActivity extends AppCompatActivity implements BioFormFragment
     public void onDateSetEvent(int year, int month, int day) {
 //        Toast.makeText(ctx, "Date: " + year + ", " + month + ", " + day, Toast.LENGTH_SHORT).show();
         DOB = month + "/" + day + "/" + year;
-        ageTV.setText(DOB);
+        ageET.setText(DOB);
     }
 }
