@@ -13,13 +13,14 @@ import java.util.Date;
 public class UserProfile {
     private UserHelper _dbHelper;
     private Context _ctx;
-    private String _name, _city, _country, _height, _age, _sex, _imgPath, _goal, _activeState;
-    private int _rowID, _weight;
+    private String _name, _city, _country, _height, _age, _sex, _imgPath;
+    private int _rowID, _goal, _weight,  _activeState;
     private Boolean _isLoggedIn, _isInDarkMode;
 
     public UserProfile(Context ctx) {
-        _name = _city = _country = _height = _age = _sex = _imgPath = _goal = _activeState = "";
-        _rowID = _weight = 0;
+        _name = _city = _country = _height = _age = _sex = _imgPath = "";
+        _rowID = _weight = _goal = 0;
+        _activeState = 1;
         _isLoggedIn = _isInDarkMode = false;
         _ctx = ctx;
         _dbHelper = new UserHelper(_ctx);
@@ -71,8 +72,8 @@ public class UserProfile {
             _age = cursor.getString(6);
             _sex = cursor.getString(7);
             _imgPath = cursor.getString(8);
-            _goal = cursor.getString(9);
-            _activeState = cursor.getString(10);
+            _goal = cursor.getInt(9);
+            _activeState = cursor.getInt(10);
             _isLoggedIn = cursor.getInt(11) == 1;
             _isInDarkMode = cursor.getInt(12) == 1;
         }
@@ -116,8 +117,8 @@ public class UserProfile {
     public String getCity() { return _city; }
     public String getCountry() { return _country; }
     public String getImgPath() { return _imgPath; }
-    public String getGoal() { return _goal; }
-    public String getActiveState() { return _activeState; }
+    public int getGoal() { return _goal; }
+    public int getActiveState() { return _activeState; }
     public Boolean isLoggedIn() { return _isLoggedIn; }
     public Boolean isInDarkMode() { return _isInDarkMode; }
 
@@ -130,8 +131,8 @@ public class UserProfile {
     public void setCity(String city) { _city = city; }
     public void setCountry(String country) { _country = country; }
     public void setImgPath(String imgPath) { _imgPath = imgPath; }
-    public void setGoal(String goal) {_goal = goal; }
-    public void setActiveState(String activeState) { _activeState = activeState; }
+    public void setGoal(int goal) {_goal = goal; }
+    public void setActiveState(int activeState) { _activeState = activeState; }
 
     // UPDATE PROFILE
     public void update() {

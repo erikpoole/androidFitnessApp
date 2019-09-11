@@ -13,14 +13,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center">
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="32sp"
                 android:text="@string/sign_up"
                 />
-
             <EditText
                 android:id="@+id/name_sign_up"
                 android:paddingTop="16dp"
@@ -51,47 +49,17 @@
                 android:hint="@string/confirm_password"
                 android:autofillHints="@string/confirm_password"
                 />
-
-            <RelativeLayout
+            <EditText
+                android:id="@+id/bio_form_age"
+                android:paddingTop="16dp"
+                android:textSize="16sp"
+                android:inputType="text"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                >
-
-                <TextView
-                    android:layout_marginLeft="3dp"
-                    android:textSize="16sp"
-                    android:id="@+id/bio_form_age_label"
-                    android:text="@string/enter_age"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerInParent="true"
-                    />
-                <TextView
-                    android:id="@+id/bio_form_age"
-                    android:textSize="20sp"
-                    android:textColor="@color/black"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_centerInParent="true"
-                    android:layout_toRightOf="@id/bio_form_age_label"
-                    />
-                <Button
-                    android:id="@+id/bio_form_calendar_btn"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="@string/open_calendar"
-                    android:background="@color/pale_orange"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:gravity="center"
-                    android:layout_marginRight="5dp"
-                    android:layout_centerInParent="true"
-                    android:layout_alignParentRight="true"
-                    />
-
-            </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_age"
+                android:autofillHints="@string/confirm_password"
+                android:focusable="false"
+                />
 
             <fragment android:name="com.example.project.activity.bio.BioFormFragment"
                 android:id="@+id/bio_form_sign_up"

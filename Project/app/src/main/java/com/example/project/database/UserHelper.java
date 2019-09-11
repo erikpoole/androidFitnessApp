@@ -17,8 +17,8 @@ public class UserHelper extends SQLiteOpenHelper {
                     UserContract.UserEntry.AGE + " INTEGER," +
                     UserContract.UserEntry.SEX + " TEXT," +
                     UserContract.UserEntry.IMG_PATH + " TEXT," +
-                    UserContract.UserEntry.GOAL + " TEXT," +
-                    UserContract.UserEntry.ACTIVE_STATE + " TEXT," +
+                    UserContract.UserEntry.GOAL + " INTEGER," +
+                    UserContract.UserEntry.ACTIVE_STATE + " INTEGER," +
                     UserContract.UserEntry.IS_LOGGED_IN + " INTEGER," +
                     UserContract.UserEntry.IS_IN_DARK_MODE + " INTEGER)";
 
