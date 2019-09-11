@@ -133,7 +133,7 @@
             android:textAlignment="center"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:layout_margin="8dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"/>
 
@@ -145,7 +145,7 @@
             android:textAlignment="center"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:layout_margin="8dp"
             android:layout_toRightOf="@id/resetButton"/>
     </RelativeLayout>
 
