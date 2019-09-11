@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,9 +23,11 @@ public class SignUpActivity extends AppCompatActivity implements BioFormFragment
 
     EditText nameET, psswdET, psswdConfirmET;
     TextView ageTV;
+    Button calendarBtn;
     UserHelper dbHelper;
     UserProfile userProfile;
     Context ctx;
+    String DOB;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,8 @@ public class SignUpActivity extends AppCompatActivity implements BioFormFragment
         ctx = getApplicationContext();
 
         ageTV = findViewById(R.id.bio_form_age);
-        ageTV.setOnClickListener(new View.OnClickListener() {
+        calendarBtn = findViewById(R.id.bio_form_calendar_btn);
+        calendarBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 showDatePickerDialog(v);
             }
@@ -47,7 +51,7 @@ public class SignUpActivity extends AppCompatActivity implements BioFormFragment
     }
 
     // Fragment onSubmitForm interface method definition
-    public void onSubmitForm(String age, String sex, String city, String country, String height, int weight, String imgPath) {
+    public void onSubmitForm(String sex, String height, int weight, String imgPath) {
         String name = nameET.getText().toString();
         String password = psswdET.getText().toString();
         String confirmPassword = psswdConfirmET.getText().toString();
@@ -60,12 +64,10 @@ public class SignUpActivity extends AppCompatActivity implements BioFormFragment
         } else {
             userProfile = new UserProfile(ctx);
             userProfile.setName(name);
-            userProfile.setAge(age);
             userProfile.setWeight(weight);
             userProfile.setHeight(height);
+            userProfile.setDOB(DOB);
             userProfile.setSex(sex);
-            userProfile.setCity(city);
-            userProfile.setCountry(country);
             userProfile.setImgPath(imgPath);
             if (!userProfile.signUp(password)) {
                 Toast toast = Toast.makeText(ctx, "Something went wrong...", Toast.LENGTH_SHORT);
@@ -83,7 +85,8 @@ public class SignUpActivity extends AppCompatActivity implements BioFormFragment
     }
 
     public void onDateSetEvent(int year, int month, int day) {
-        Toast.makeText(ctx, "Date: " + year + ", " + month + ", " + day, Toast.LENGTH_SHORT).show();
-        ageTV.setText("Date" + year + ", " + month + ", " + day);
+//        Toast.makeText(ctx, "Date: " + year + ", " + month + ", " + day, Toast.LENGTH_SHORT).show();
+        DOB = month + "/" + day + "/" + year;
+        ageTV.setText(DOB);
     }
 }

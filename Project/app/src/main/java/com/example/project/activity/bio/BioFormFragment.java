@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -35,7 +34,6 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private String PATH_TO_IMAGE;
-    EditText ageET, sexET, cityET, countryET, heightET, weightET;
     ImageView profileIV;
     TextView weightTV;
     onSubmitFormListener submitListener;
@@ -45,22 +43,7 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
         View view = inflater.inflate(R.layout.bio_form_fragment, vg,false);
         ctx = view.getContext();
 
-//        ageET = view.findViewById(R.id.bio_form_age);
-//        sexET = view.findViewById(R.id.bio_form_sex);
-        cityET = view.findViewById(R.id.bio_form_city);
-        countryET = view.findViewById(R.id.bio_form_country);
-//        heightET = view.findViewById(R.id.bio_form_height);
-//        weightET = view.findViewById(R.id.bio_form_weight);
-
         profileIV = view.findViewById(R.id.bio_form_img);
-
-//        final Spinner ageSpinner = view.findViewById(R.id.bio_form_age);
-//        ArrayAdapter<CharSequence> ageAdapter = ArrayAdapter.createFromResource(ctx,
-//                R.array.age_array, android.R.layout.simple_spinner_item);
-//        ageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        ageSpinner.setAdapter(ageAdapter);
-//        ageSpinner.setOnItemSelectedListener(this);
-
 
         final Spinner sexSpinner = view.findViewById(R.id.bio_form_sex);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(ctx,
@@ -75,6 +58,7 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         feetSpinner.setAdapter(feetAdapter);
         feetSpinner.setOnItemSelectedListener(this);
+        feetSpinner.setSelection(2);
 
         final Spinner inchSpinner = view.findViewById(R.id.bio_form_inch);
         ArrayAdapter<CharSequence> inchAdapter = ArrayAdapter.createFromResource(ctx,
@@ -89,7 +73,7 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
 
         int progress = seekBar.getProgress();
         weightTV = view.findViewById(R.id.bio_form_weight_label);
-        weightTV.setText("Weight: " + progress);
+        weightTV.setText(" " + progress + " lbs.");
 
         Button submitBtn = view.findViewById(R.id.bio_form_submit);
         submitBtn.setOnClickListener(new View.OnClickListener() {
@@ -97,10 +81,7 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
                 String height = feetSpinner.getSelectedItem().toString() + " " + inchSpinner.getSelectedItem().toString();
                 Toast.makeText(ctx, height, Toast.LENGTH_LONG).show();
                 submitListener.onSubmitForm(
-                    "12",
                     sexSpinner.getSelectedItem().toString(),
-                    cityET.getText().toString(),
-                    countryET.getText().toString(),
             feetSpinner.getSelectedItem().toString() + " " + inchSpinner.getSelectedItem().toString(),
                     seekBar.getProgress(),
                     PATH_TO_IMAGE
@@ -122,7 +103,7 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
     }
 
     public interface onSubmitFormListener {
-        void onSubmitForm(String age, String sex, String city, String country, String height, int weight, String imgPath);
+        void onSubmitForm(String sex, String height, int weight, String imgPath);
     }
 
     @Override
@@ -149,7 +130,7 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             // updated continuously as the user slides the thumb
-            weightTV.setText("Weight: " + progress + " lbs.");
+            weightTV.setText(" " + progress + " lbs.");
         }
 
         @Override

@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class UserProfile {
     private UserHelper _dbHelper;
     private Context _ctx;
@@ -79,7 +82,30 @@ public class UserProfile {
 
     // GETTERS
     public String getName() { return _name; }
-    public String getAge() { return _age; }
+    public String getAge(Context ctx) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+        String formattedDate = sdf.format(new Date());
+        String[] currentDate = formattedDate.split("\\.");
+//        int year = Integer.parseInt(currentDate[0]);
+//        int month = Integer.parseInt(currentDate[1]);
+//        int day = Integer.parseInt(currentDate[2]);
+//        String[] dob = _age.split("/");
+//        int dobYear = Integer.parseInt(dob[0]);
+//        int dobMonth = Integer.parseInt(dob[1]);
+//        int dobDay = Integer.parseInt(dob[2]);
+//
+//        int age = year - dobYear;
+//
+//        if (month > dobMonth) {
+//            age++;
+//        } else if (month == dobMonth) {
+//            if (dobDay <= day) {
+//                age++;
+//            }
+//        }
+//        return String.valueOf(age);
+        return currentDate[0];
+    }
     public String getSex() { return _sex; }
     public int getWeight() { return _weight; }
     public String getHeight() {
@@ -96,7 +122,7 @@ public class UserProfile {
 
     // SETTERS - used to change values, won't be reflected in db until update() is called.
     public void setName(String name) { _name = name; }
-    public void setAge(String age) { _age = age; }
+    public void setDOB(String age) { _age = age; }
     public void setSex(String sex) { _sex = sex; }
     public void setWeight(int weight) { _weight = weight; }
     public void setHeight(String height) { _height = height; }
