@@ -1,6 +1,7 @@
 package com.example.project.activity.bio;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -35,5 +36,7 @@ public class BioEditActivity extends AppCompatActivity implements BioFormFragmen
         userProfile.setSex(sex);
         userProfile.setImgPath(imgPath);
         userProfile.update();
+        Intent bio = new Intent(this, BioActivity.class);
+        startActivity(bio);
     }
 }
