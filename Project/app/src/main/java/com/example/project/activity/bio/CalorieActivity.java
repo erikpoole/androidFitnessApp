@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.project.R;
@@ -38,7 +39,10 @@ public class CalorieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_calorie);
 
         user = new UserProfile(getApplicationContext());
-        Log.d("DATA:", user.getActiveState());
+        activityLevel = getActivityLevelInt();
+//        weightGoal = user.getGoal();
+        weightGoal = 0;
+        isMale = user.getSex() == "male" ? true : false;
     }
 
     private int calculateCalories() {
@@ -47,8 +51,18 @@ public class CalorieActivity extends AppCompatActivity {
                 activityLevel * (isMale ? MALE_ACTIVITY_MODIFIER: FEMALE_ACTIVITY_MODIFIER);
     }
 
+    //TODO what if null?
     private int getActivityLevelInt() {
         String activityLevelString = user.getActiveState();
-//        if (get )
+        switch (activityLevelString) {
+            case "active":
+                return 1;
+            case "standard":
+                return 0;
+            case "sedentary":
+                return -1;
+            default:
+                return 0;
+        }
     }
 }
