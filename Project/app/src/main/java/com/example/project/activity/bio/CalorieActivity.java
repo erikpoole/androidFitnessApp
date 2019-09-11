@@ -43,59 +43,82 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         user = new UserProfile(getApplicationContext());
 
         caloriesText = findViewById(R.id.calorieText);
-        caloriesText.setText(calculateCalories());
         goalText = findViewById(R.id.goalValueText);
-        goalText.setText(user.getGoal() + "lbs");
         activityText = findViewById(R.id.activityValueText);
-        activityText.setText(user.getActiveState());
-
         goalSeekBar = findViewById(R.id.goalSeekBar);
-        goalSeekBar.setOnSeekBarChangeListener(this);
-
         activitySeekBar = findViewById(R.id.activitySeekBar);
-        activitySeekBar.setOnSeekBarChangeListener(this);
-
         resetButton = findViewById(R.id.resetButton);
-        resetButton.setOnClickListener(this);
-
         saveButton = findViewById(R.id.saveButton);
+
+        setDefaultValues();
+
+        goalSeekBar.setOnSeekBarChangeListener(this);
+        activitySeekBar.setOnSeekBarChangeListener(this);
+        resetButton.setOnClickListener(this);
         saveButton.setOnClickListener(this);
     }
 
+    private void setDefaultValues() {
+        caloriesText.setText(calculateCalories());
+        goalText.setText(getGoalText(user.getGoal()));
+        activityText.setText(getActivityText(user.getActiveState()));
+        goalSeekBar.setProgress(user.getGoal() + 2);
+        activitySeekBar.setProgress(user.getActiveState() + 1);
+    }
 
 
     private String calculateCalories() {
         String sex = user.getSex();
         switch (sex) {
-            case "male":
-                return (MALE_CALORIES +
+            case "Male":
+                return MALE_CALORIES +
                         user.getGoal() * CALORIES_PER_POUND +
-                        getActivityLevelInt() * MALE_ACTIVITY_MODIFIER);
-            case "female:":
-                return (FEMALE_CALORIES +
+                        user.getActiveState() * MALE_ACTIVITY_MODIFIER
+                        + "\nCalories";
+            case "Female:":
+                return FEMALE_CALORIES +
                         user.getGoal() * CALORIES_PER_POUND +
-                        getActivityLevelInt() * FEMALE_ACTIVITY_MODIFIER);
+                        user.getActiveState() * FEMALE_ACTIVITY_MODIFIER
+                        + "\nCalories";
             default:
-                return (NONBINARY_CALORIES +
+                return NONBINARY_CALORIES +
                         user.getGoal() * CALORIES_PER_POUND +
-                        getActivityLevelInt() * NONBINARY_ACTIVITY_MODIFER);
+                        user.getActiveState() * NONBINARY_ACTIVITY_MODIFER
+                        + "\nCalories";
+        }
+    }
+
+    private String getGoalText(int value) {
+        if (value < 0) {
+            return "Lose " + (value * - 1) + " Pounds";
+        } else if (value > 0) {
+            return "Gain " + value + " Pounds";
+        } else {
+            return "Maintain Weight";
         }
     }
 
     private String getActivityText(int value) {
         switch (value) {
-            case 0:
+            case -1:
                 return "Low Activity";
             case 1:
-                return "Moderate Activity";
-            case 2:
                 return "High Activity";
+            default:
+                return "Moderate Activity";
         }
     }
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.saveButton:
+                user.update();
+                break;
+            case R.id.resetButton:
+                user = new UserProfile(getApplicationContext());
+                setDefaultValues();
+        }
     }
 
     @Override
@@ -103,16 +126,15 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         switch (seekBar.getId()) {
             case R.id.goalSeekBar:
                 int pounds = progress - 2;
-                if (pounds < 0) {
-                    goalText.setText("Lose " + pounds + " Pounds");
-                } else if (pounds > 0) {
-                    goalText.setText("Gain " + pounds + " Pounds");
-                } else {
-                    goalText.setText("Maintain Weight");
-                }
+                    user.setGoal(pounds);
+                    caloriesText.setText(calculateCalories());
+                    goalText.setText(getGoalText(pounds));
                 break;
             case R.id.activitySeekBar:
-                activityText.setText(getActivityText(progress));
+                int activityState = progress - 1;
+                user.setActiveState(activityState);
+                caloriesText.setText(calculateCalories());
+                activityText.setText(getActivityText(activityState));
                 break;
         }
     }

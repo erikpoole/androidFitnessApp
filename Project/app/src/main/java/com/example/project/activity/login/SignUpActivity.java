@@ -64,7 +64,7 @@ public class SignUpActivity extends AppCompatActivity implements BioFormFragment
             userProfile.setDOB(DOB);
             userProfile.setSex(sex);
             userProfile.setImgPath(imgPath);
-            userProfile.setActiveState(1);
+            userProfile.setActiveState(0);
             userProfile.setGoal(0);
             if (!userProfile.signUp(password)) {
                 Toast toast = Toast.makeText(ctx, "Something went wrong...", Toast.LENGTH_SHORT);
