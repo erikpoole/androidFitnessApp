@@ -31,8 +31,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/pale_orange"
                 android:text="@string/upload_image"
+                android:backgroundTint="@color/pale_orange"
                 />
         </LinearLayout>
         <LinearLayout
@@ -131,7 +131,7 @@
         android:id="@+id/bio_form_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/weather_blue"
+        android:backgroundTint="@color/weather_blue"
         android:text="@string/submit"
         />
 </LinearLayout>
