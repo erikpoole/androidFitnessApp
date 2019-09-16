@@ -3,11 +3,13 @@ package com.example.project.activity.bio;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -88,6 +90,7 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         });
 
         setDefaultValues();
+        disableButtons();
 
         goalSeekBar.setOnSeekBarChangeListener(this);
         activitySeekBar.setOnSeekBarChangeListener(this);
@@ -209,6 +212,20 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         }
     }
 
+    private void enableButtons() {
+        saveButton.setEnabled(true);
+        resetButton.setEnabled(true);
+        saveButton.setAlpha(1f);
+        resetButton.setAlpha(1f);
+    }
+
+    private void disableButtons() {
+        saveButton.setEnabled(false);
+        resetButton.setEnabled(false);
+        saveButton.setAlpha(.5f);
+        resetButton.setAlpha(.5f);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -216,40 +233,38 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
                 user.update();
                 originalGoal = user.getGoal();
                 originalActivity = user.getActiveState();
-                saveButton.setEnabled(false);
-                resetButton.setEnabled(false);
+                disableButtons();
+                Toast.makeText(getApplicationContext(), "Goals Saved!", Toast.LENGTH_LONG).show();
                 break;
             case R.id.resetButton:
                 user = new UserProfile(getApplicationContext());
                 setDefaultValues();
-                saveButton.setEnabled(false);
-                resetButton.setEnabled(false);
+                disableButtons();
                 break;
         }
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        int pounds = progress - 2;
-        int activityState = progress - 1;
-        if (originalGoal != pounds || originalActivity != activityState) {
-            saveButton.setEnabled(true);
-            resetButton.setEnabled(true);
-        } else {
-            saveButton.setEnabled(false);
-            resetButton.setEnabled(false);
-        }
         switch (seekBar.getId()) {
             case R.id.goalSeekBar:
+                int pounds = progress - 2;
                 user.setGoal(pounds);
                 calorieText.setText(calculateCalories());
                 goalText.setText(getGoalText(pounds));
                 break;
             case R.id.activitySeekBar:
+                int activityState = progress - 1;
                 user.setActiveState(activityState);
                 calorieText.setText(calculateCalories());
                 activityText.setText(getActivityText(activityState));
                 break;
+        }
+        if (originalGoal != goalSeekBar.getProgress() - 2 ||
+                originalActivity != activitySeekBar.getProgress() - 1) {
+            enableButtons();
+        } else {
+            disableButtons();
         }
     }
 

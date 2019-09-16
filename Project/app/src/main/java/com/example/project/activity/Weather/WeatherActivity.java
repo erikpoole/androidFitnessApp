@@ -6,17 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,14 +31,12 @@ import com.example.project.activity.MainActivity;
 import com.example.project.activity.bio.BioActivity;
 import com.example.project.activity.bio.BmiActivity;
 import com.example.project.activity.bio.CalorieActivity;
-import com.example.project.database.UserProfile;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 
 public class WeatherActivity extends AppCompatActivity {
     final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
