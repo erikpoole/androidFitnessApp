@@ -11,6 +11,8 @@
 
     <!--    fonts-->
     <dimen name="small_font_size">20sp</dimen>
+    <dimen name="medium_small_font_size">40sp</dimen>
     <dimen name="medium_font_size">60sp</dimen>
+    <dimen name="medium_large_font_size">80sp</dimen>
     <dimen name="large_font_size">100sp</dimen>
 </resources>
