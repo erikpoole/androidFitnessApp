@@ -16,4 +16,6 @@
     <dimen name="medium_large_font_size">64sp</dimen>
     <dimen name="large_font_size">80sp</dimen>
 
+    <!--    profile image-->
+    <dimen name="profile_img">350dp</dimen>
 </resources>
