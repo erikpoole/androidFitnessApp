@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="start">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -16,24 +16,18 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="32sp"
+                android:textSize="40sp"
                 android:text="Edit Profile"
                 />
+
             <TextView
                 android:id="@+id/bio_edit_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
+                android:textSize="32sp"
                 android:layout_marginTop="8dp"
-                android:text="@string/enter_age"
-                />
-            <TextView
-                android:id="@+id/bio_edit_age"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:layout_marginTop="8dp"
-                android:text="@string/enter_age"
+                android:gravity="center"
+                android:layout_gravity="center"
                 />
 
             <fragment android:name="com.example.project.activity.bio.BioFormFragment"

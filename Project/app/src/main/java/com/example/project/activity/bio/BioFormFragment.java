@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -24,6 +25,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.project.R;
+import com.example.project.database.UserProfile;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -79,7 +81,7 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
         submitBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String height = feetSpinner.getSelectedItem().toString() + " " + inchSpinner.getSelectedItem().toString();
-                Toast.makeText(ctx, height, Toast.LENGTH_LONG).show();
+//                Toast.makeText(ctx, height, Toast.LENGTH_LONG).show();
                 submitListener.onSubmitForm(
                     sexSpinner.getSelectedItem().toString(),
             feetSpinner.getSelectedItem().toString() + " " + inchSpinner.getSelectedItem().toString(),
@@ -98,6 +100,37 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
             }
             }
         });
+
+        UserProfile userProfile = new UserProfile(ctx);
+        if (!userProfile.getName().equals("")) {
+            Toast.makeText(ctx, "user logged in", Toast.LENGTH_LONG).show();
+            PATH_TO_IMAGE = userProfile.getImgPath();
+            if (PATH_TO_IMAGE != null) {
+                File imgFile = new File(userProfile.getImgPath());
+                if(imgFile.exists()){
+                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                    profileIV.setImageBitmap(myBitmap);
+                } else {
+                    Toast.makeText(ctx, "img path not found... " + userProfile.getImgPath(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            seekBar.setProgress(userProfile.getWeight());
+
+            String sex = userProfile.getSex();
+            if (sex.equals("Non-binary")) {
+                sexSpinner.setSelection(2);
+            } else if (sex.equals("Female")) {
+                sexSpinner.setSelection(1);
+            }
+
+            String height = userProfile.getHeight();
+            height = height.substring(0, height.length() - 1);
+            String[] heightDimensions = height.split("'");
+            Toast.makeText(ctx, heightDimensions[1], Toast.LENGTH_LONG).show();
+            feetSpinner.setSelection(Integer.parseInt(heightDimensions[0]) - 3);
+            inchSpinner.setSelection(Integer.parseInt(heightDimensions[1]));
+        }
 
         return view;
     }
