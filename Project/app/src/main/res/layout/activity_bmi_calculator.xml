@@ -20,66 +20,81 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
+        android:id="@+id/rel_layout"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="100dp"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:id="@+id/rel_layout"
-        android:layout_gravity="bottom|center">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_gravity="center|center">
 
         <TextView
             android:id="@+id/your_bmi_is_tv"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="@string/your_bmi_is"
             android:textColor="@color/dark_gray"
-            android:textSize="20sp" />
+            android:textSize="@dimen/small_font_size" />
 
         <TextView
             android:id="@+id/bmi_tv"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/your_bmi_is_tv"
             android:layout_centerHorizontal="true"
+            android:layout_below="@+id/your_bmi_is_tv"
             android:text="@string/default_bmi"
             android:textColor="@color/black"
-            android:textSize="100sp" />
+            android:textSize="@dimen/large_font_size" />
 
         <TextView
             android:id="@+id/what_if_you_weighed_tv"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/bmi_tv"
             android:layout_centerHorizontal="true"
-            android:paddingTop="100dp"
+            android:layout_below="@+id/bmi_tv"
             android:text="@string/what_if_you_weighed"
             android:textColor="@color/dark_gray"
-            android:textSize="20sp" />
+            android:textSize="@dimen/small_font_size" />
 
         <SeekBar
             android:id="@+id/seek_bar"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/bmi_seekbar_horizontal_padding"
+            android:paddingRight="@dimen/bmi_seekbar_horizontal_padding"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/what_if_you_weighed_tv"
             android:layout_centerHorizontal="true"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
-            android:paddingTop="32dp"
+            android:layout_below="@+id/what_if_you_weighed_tv"
             android:max="150"/>
 
         <TextView
             android:id="@+id/seek_bar_value"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/seek_bar"
             android:layout_centerHorizontal="true"
-            android:paddingTop="@dimen/activity_vertical_margin"
+            android:layout_below="@+id/seek_bar"
             android:textColor="@color/dark_gray"
-            android:textSize="20sp" />
+            android:textSize="@dimen/small_font_size" />
 
     </RelativeLayout>
 

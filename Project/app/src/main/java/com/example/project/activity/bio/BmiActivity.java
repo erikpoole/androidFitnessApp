@@ -1,5 +1,6 @@
 package com.example.project.activity.bio;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.example.project.database.UserProfile;
@@ -59,6 +60,11 @@ public class BmiActivity extends AppCompatActivity {
                 seekTextView.setText(change + " lbs");
                 adjustedWeight += change;
                 float bmi = (adjustedWeight / (height * height)) * 703;
+                if (bmi < 18.5 || bmi > 25.0) {
+                    bmiTextView.setTextColor(Color.RED);
+                } else {
+                    bmiTextView.setTextColor(Color.parseColor("#29A100"));
+                }
                 bmiTextView.setText(String.format(java.util.Locale.US, "%.1f", bmi));
             }
 
