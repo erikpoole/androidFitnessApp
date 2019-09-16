@@ -56,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationView nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                return handleNavigationEvent(item);
+            public boolean onNavigationItemSelected(MenuItem item) { return handleNavigationEvent(item);
             }
         });
 
