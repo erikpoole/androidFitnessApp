@@ -1,5 +1,4 @@
 package com.example.project.activity.login;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -15,13 +14,12 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.project.R;
 import com.example.project.activity.MainActivity;
-import com.example.project.database.UserHelper;
 import com.example.project.database.UserProfile;
 
-public class SignInFragment extends DialogFragment implements View.OnClickListener{
+public class SignInFragment extends DialogFragment implements View.OnClickListener {
     private EditText nameET, passwordET;
+    private String name, password;
     private TextView errTV;
-    private UserHelper dbHelper;
     private Context ctx;
 
     @Override
@@ -34,13 +32,19 @@ public class SignInFragment extends DialogFragment implements View.OnClickListen
         passwordET = signInView.findViewById(R.id.password_login);
         errTV = signInView.findViewById(R.id.err_login);
 
+//        if (savedInstanceState != null) {
+//            name = savedInstanceState.getString("name");
+//            password = savedInstanceState.getString("password");
+//            nameET.setText(name);
+//            passwordET.setText(name);
+//        }
+
         Button signInBtn = signInView.findViewById(R.id.signInBtn);
         Button signUpBtn = signInView.findViewById(R.id.signUpBtn);
         signInBtn.setOnClickListener(this);
         signUpBtn.setOnClickListener(this);
 
         ctx = signInView.getContext();
-        dbHelper = new UserHelper(ctx);
 
         builder.setView(signInView);
         return builder.create();
@@ -68,5 +72,14 @@ public class SignInFragment extends DialogFragment implements View.OnClickListen
                 startActivity(signUpPage);
                 dismiss();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle sis) {
+        super.onSaveInstanceState(sis);
+        name = nameET.getText().toString();
+        password = passwordET.getText().toString();
+        sis.putString("name", name);
+        sis.putString("password", password);
     }
 }

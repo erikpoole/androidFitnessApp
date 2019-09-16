@@ -105,8 +105,6 @@ public class MainActivity extends AppCompatActivity {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 drawerImg.setImageBitmap(myBitmap);
                 drawerTv.setText(userProfile.getName());
-            } else {
-                Toast.makeText(getApplicationContext(), "img path not found... " + userProfile.getImgPath(), Toast.LENGTH_LONG).show();
             }
         }
 
