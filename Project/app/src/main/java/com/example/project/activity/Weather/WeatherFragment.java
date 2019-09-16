@@ -23,13 +23,13 @@ public class WeatherFragment extends Fragment {
     private TextView maxTempText;
     private TextView minTempText;
 
-    private int size;
+    private String size;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        size = getArguments().getInt("size");
+        size = getArguments().getString("size");
 
         final View view = inflater.inflate(R.layout.fragment_weather, container, false);
 
@@ -49,15 +49,22 @@ public class WeatherFragment extends Fragment {
         try {
             json = new JSONObject(jsonRaw);
             maxTempText.setText(roundStringWithMultiplier(json.getString("temperatureHigh"), 1));
-            maxTempText.setTextSize(size/5);
             minTempText.setText(roundStringWithMultiplier(json.getString("temperatureLow"), 1));
-            minTempText.setTextSize(size/5);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        //        custom conversion to interact with WeatherIconView library (100 is default)
+        if (size == "small") {
+            icon.setIconSize(55);
+        }
+        if (size == "large") {
+            icon.setIconSize(165);
+            minTempText.setTextSize(48);
+            maxTempText.setTextSize(48);
+        }
+
         icon.setIconResource(getIconCode(json));
-        icon.setIconSize(size);
 
         return view;
     }
