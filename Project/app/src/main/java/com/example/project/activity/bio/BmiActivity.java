@@ -57,8 +57,8 @@ public class BmiActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 adjustedWeight = weight;
                 int change = progress - 50;
-                seekTextView.setText(change + " lbs");
                 adjustedWeight += change;
+                seekTextView.setText(adjustedWeight + " lbs");
                 float bmi = (adjustedWeight / (height * height)) * 703;
                 if (bmi < 18.5 || bmi > 25.0) {
                     bmiTextView.setTextColor(Color.RED);
