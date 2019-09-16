@@ -4,24 +4,21 @@
     android:padding="16dp"
     android:orientation="vertical"
     android:gravity="start">
-
     <TextView
         android:id="@+id/bio_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="42dp"
+        android:textSize="@dimen/small_font_size"
         android:gravity="center"
         android:text="Personal Profile"
         />
-
     <TextView
         android:id="@+id/bio_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
+        android:textSize="@dimen/medium_font_size"
         android:gravity="center"
         />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,8 +28,8 @@
         <ImageView
             android:id="@+id/bio_img"
             android:padding="8dp"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="@dimen/profile_img"
+            android:layout_height="@dimen/profile_img"
             android:src="@drawable/profile_placeholder"
             android:scaleType="centerCrop"
             android:layout_gravity="center"
@@ -55,13 +52,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:text="Age:"
+                    android:textSize="@dimen/small_font_size"
                     />
                 <TextView
                     android:id="@+id/bio_age"
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/small_font_size"
                     android:gravity="center"
                     />
             </LinearLayout>
@@ -78,6 +76,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:gravity="start"
+                    android:textSize="@dimen/small_font_size"
                     android:text="Sex:"
                     />
                 <TextView
@@ -85,7 +84,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/small_font_size"
                     android:gravity="center"
                     />
             </LinearLayout>
@@ -103,14 +102,16 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:text="Height:"
+                    android:textSize="@dimen/small_font_size"
                     />
                 <TextView
                     android:id="@+id/bio_height"
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/small_font_size"
                     android:gravity="center"
+
                     />
             </LinearLayout>
             <LinearLayout
@@ -127,13 +128,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:text="Weight:"
+                    android:textSize="@dimen/small_font_size"
                     />
                 <TextView
                     android:id="@+id/bio_weight"
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/small_font_size"
                     android:gravity="center"
                     />
             </LinearLayout>
@@ -144,7 +146,7 @@
         android:id="@+id/edit_bio_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/small_font_size"
         android:text="@string/edit_profile"
         />
-
 </LinearLayout>

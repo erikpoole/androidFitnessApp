@@ -14,4 +14,6 @@
     <dimen name="medium_font_size">120sp</dimen>
     <dimen name="large_font_size">200sp</dimen>
 
+    <!--    profile image-->
+    <dimen name="profile_img">350dp</dimen>
 </resources>
