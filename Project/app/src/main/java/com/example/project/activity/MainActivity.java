@@ -34,11 +34,12 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SignInFragment.inputPersist {
 
     private ActionBarDrawerToggle toggle;
     private Context ctx;
     UserProfile userProfile;
+    static String _name, _password = "";
 //    private Boolean isLoggedIn = false;
 
     @Override
@@ -80,6 +81,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         toggle.syncState();
+    }
+
+    @Override
+    public void onSaveSnapshot(String name, String password) {
+        _name = name;
+        _password = password;
     }
 
     @Override
@@ -135,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.logout:
                 userProfile.logout();
+                _name = "";
+                _password = "";
                 Intent mainPage = new Intent(this, MainActivity.class);
                 startActivity(mainPage);
                 return true;
@@ -177,6 +186,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void showLoginForm() {
         SignInFragment dialog = new SignInFragment();
+        Bundle args = new Bundle();
+        args.putString("name", _name);
+        args.putString("password", _password);
+        dialog.setArguments(args);
         dialog.setCancelable(false);
         dialog.show(getSupportFragmentManager(), "SignInFragment");
     }

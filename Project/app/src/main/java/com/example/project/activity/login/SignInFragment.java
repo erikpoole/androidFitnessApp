@@ -18,26 +18,29 @@ import com.example.project.database.UserProfile;
 
 public class SignInFragment extends DialogFragment implements View.OnClickListener {
     private EditText nameET, passwordET;
-    private String name, password;
     private TextView errTV;
+    private View vw;
     private Context ctx;
+    private inputPersist persist;
+
+    public interface inputPersist {
+        void onSaveSnapshot(String name, String password);
+    }
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View signInView = inflater.inflate(R.layout.sign_in_fragment, null);
+        vw = signInView;
 
         nameET = signInView.findViewById(R.id.username_login);
         passwordET = signInView.findViewById(R.id.password_login);
         errTV = signInView.findViewById(R.id.err_login);
 
-//        if (savedInstanceState != null) {
-//            name = savedInstanceState.getString("name");
-//            password = savedInstanceState.getString("password");
-//            nameET.setText(name);
-//            passwordET.setText(name);
-//        }
+        nameET.setText(getArguments().getString("name"));
+        passwordET.setText(getArguments().getString("password"));
 
         Button signInBtn = signInView.findViewById(R.id.signInBtn);
         Button signUpBtn = signInView.findViewById(R.id.signUpBtn);
@@ -75,11 +78,18 @@ public class SignInFragment extends DialogFragment implements View.OnClickListen
     }
 
     @Override
+    public void onAttach(Context ctx) {
+        super.onAttach(ctx);
+        try {
+            persist = (inputPersist) ctx;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(ctx.toString() + " must implement OnArticleSelectedListener");
+        }
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle sis) {
         super.onSaveInstanceState(sis);
-        name = nameET.getText().toString();
-        password = passwordET.getText().toString();
-        sis.putString("name", name);
-        sis.putString("password", password);
+        persist.onSaveSnapshot(nameET.getText().toString(), passwordET.getText().toString());
     }
 }
