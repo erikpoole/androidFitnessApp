@@ -54,7 +54,7 @@ public class WeatherFragment extends Fragment {
             e.printStackTrace();
         }
 
-        //        custom conversion to interact with WeatherIconView library (100 is default)
+        //custom conversion to interact with WeatherIconView library (100 is default)
         if (size == "small") {
             icon.setIconSize(55);
         }
