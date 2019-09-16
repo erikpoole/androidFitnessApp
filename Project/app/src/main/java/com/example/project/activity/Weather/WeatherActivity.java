@@ -3,27 +3,48 @@ package com.example.project.activity.Weather;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Response;
 import com.example.project.AssetHandlers;
 import com.example.project.R;
 import com.example.project.Requests;
+import com.example.project.activity.HikingActivity;
+import com.example.project.activity.MainActivity;
+import com.example.project.activity.bio.BioActivity;
+import com.example.project.activity.bio.BmiActivity;
+import com.example.project.activity.bio.CalorieActivity;
+import com.example.project.database.UserProfile;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
 
 public class WeatherActivity extends AppCompatActivity {
     final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -38,6 +59,8 @@ public class WeatherActivity extends AppCompatActivity {
     TextView humidityText;
     TextView windText;
 
+    private ActionBarDrawerToggle toggle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +74,64 @@ public class WeatherActivity extends AppCompatActivity {
         humidityText = findViewById(R.id.humidityText);
         windText = findViewById(R.id.windText);
 
+        // Handle navigation drawer
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        NavigationView nav = findViewById(R.id.nav_view);
+        nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                return handleNavigationEvent(item);
+            }
+        });
+
         getPermissionsAndWeather();
+    }
+
+    public boolean handleNavigationEvent(@NonNull MenuItem menuItem) {
+        int id = menuItem.getItemId();
+        switch (id) {
+            case R.id.nav_home:
+                Intent mainPage = new Intent(this, MainActivity.class);
+                startActivity(mainPage);
+                return true;
+            case R.id.nav_weather:
+                Intent weatherPage = new Intent(this, WeatherActivity.class);
+                startActivity(weatherPage);
+                return true;
+            case R.id.nav_hiking:
+                Intent hikingPage = new Intent(this, HikingActivity.class);
+                startActivity(hikingPage);
+                return true;
+            case R.id.nav_bio:
+                Intent bioPage = new Intent(this, BioActivity.class);
+                startActivity(bioPage);
+                return true;
+            case R.id.nav_bmi:
+                Intent bmiPage = new Intent(this, BmiActivity.class);
+                startActivity(bmiPage);
+                return true;
+            case R.id.nav_calorie:
+                Intent caloriePage = new Intent(this, CalorieActivity.class);
+                startActivity(caloriePage);
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        toggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        toggle.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -60,12 +140,9 @@ public class WeatherActivity extends AppCompatActivity {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//                    @SuppressLint("MissingPermission")
-//                    Location location = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
-                    Location location = new Location("");
-                    location.setLongitude(-111.89);
-                    location.setLatitude(40.76);
+                    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                    @SuppressLint("MissingPermission")
+                    Location location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
                     getWeather(location);
                 } else {
                     Toast.makeText(
@@ -96,13 +173,12 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     public void getWeather(Location location) {
+        //handles first time access if getLastKnownLocation doesn't exist
         if (location == null) {
-            Toast.makeText(
-                    getApplicationContext(),
-                    "Can't get location, try again later",
-                    Toast.LENGTH_LONG)
-                    .show();
-            return;
+            Log.d("DATA:", "getWeather: default value used...");
+            location = new Location("");
+            location.setLongitude(-111.89);
+            location.setLatitude(40.76);
         }
 
         String latitude = Double.toString(location.getLatitude());
@@ -135,29 +211,16 @@ public class WeatherActivity extends AppCompatActivity {
             return String.valueOf(Math.round(Double.parseDouble(input) * multiplier));
         }
 
-        private void initializeWeatherFragment(String info, int containerID, int size) {
+        private void initializeWeatherFragment(String info, int containerID, String size) {
             WeatherFragment fragment = new WeatherFragment();
             Bundle bundle = new Bundle();
             bundle.putString("json", info);
-            bundle.putInt("size", size);
+            bundle.putString("size", size);
             fragment.setArguments(bundle);
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(containerID, fragment);
             transaction.commit();
-        }
-
-//        custom conversion to interact with WeatherIconView library (100% is default)
-        public int getIconSize(String stringSize) {
-            int width = Resources.getSystem().getDisplayMetrics().widthPixels;
-            if (stringSize == "small") {
-                return (width / 15);
-            }
-            if (stringSize == "large") {
-                return (width / 6);
-            }
-            //shouldn't hit
-            return -1;
         }
 
         @Override
@@ -171,7 +234,10 @@ public class WeatherActivity extends AppCompatActivity {
 //                cityText.setText(json.getString("name"));
 
                 //from current forecast
-                temperatureText.setText(roundStringWithMultiplier(current.getString("temperature"), 1));
+                temperatureText.setText(
+                        roundStringWithMultiplier(current.getString("temperature"), 1) +
+                        "\u00B0F"
+                );
                 humidityText.setText(
                         "Humidity:\n" +
                         roundStringWithMultiplier(current.getString("humidity"), 100) +
@@ -185,10 +251,10 @@ public class WeatherActivity extends AppCompatActivity {
                 summaryText.setText(weatherDays.getJSONObject(0).getString("summary"));
 
                 //index 0 is current date
-                initializeWeatherFragment(weatherDays.getString(0), R.id.todayIcon, getIconSize("large"));
-                initializeWeatherFragment(weatherDays.getString(1), R.id.day1Icon, getIconSize("small"));
-                initializeWeatherFragment(weatherDays.getString(2), R.id.day2Icon, getIconSize("small"));
-                initializeWeatherFragment(weatherDays.getString(3), R.id.day3Icon, getIconSize("small"));
+                initializeWeatherFragment(weatherDays.getString(0), R.id.todayIcon, "large");
+                initializeWeatherFragment(weatherDays.getString(1), R.id.day1Icon, "small");
+                initializeWeatherFragment(weatherDays.getString(2), R.id.day2Icon, "small");
+                initializeWeatherFragment(weatherDays.getString(3), R.id.day3Icon, "small");
 
             } catch (JSONException e) {
                 e.printStackTrace();

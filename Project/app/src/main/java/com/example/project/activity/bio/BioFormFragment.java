@@ -81,7 +81,6 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
         submitBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String height = feetSpinner.getSelectedItem().toString() + " " + inchSpinner.getSelectedItem().toString();
-//                Toast.makeText(ctx, height, Toast.LENGTH_LONG).show();
                 submitListener.onSubmitForm(
                     sexSpinner.getSelectedItem().toString(),
             feetSpinner.getSelectedItem().toString() + " " + inchSpinner.getSelectedItem().toString(),
@@ -103,15 +102,12 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
 
         UserProfile userProfile = new UserProfile(ctx);
         if (!userProfile.getName().equals("")) {
-            Toast.makeText(ctx, "user logged in", Toast.LENGTH_LONG).show();
             PATH_TO_IMAGE = userProfile.getImgPath();
             if (PATH_TO_IMAGE != null) {
                 File imgFile = new File(userProfile.getImgPath());
                 if(imgFile.exists()){
                     Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                     profileIV.setImageBitmap(myBitmap);
-                } else {
-                    Toast.makeText(ctx, "img path not found... " + userProfile.getImgPath(), Toast.LENGTH_LONG).show();
                 }
             }
 
