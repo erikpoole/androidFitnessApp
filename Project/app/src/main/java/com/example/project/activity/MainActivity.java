@@ -34,11 +34,12 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SignInFragment.inputPersist {
 
     private ActionBarDrawerToggle toggle;
     private Context ctx;
     UserProfile userProfile;
+    static String _name, _password = "";
 //    private Boolean isLoggedIn = false;
 
     @Override
@@ -83,6 +84,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onSaveSnapshot(String name, String password) {
+        _name = name;
+        _password = password;
+    }
+
+    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         toggle.onConfigurationChanged(newConfig);
@@ -105,8 +112,6 @@ public class MainActivity extends AppCompatActivity {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 drawerImg.setImageBitmap(myBitmap);
                 drawerTv.setText(userProfile.getName());
-            } else {
-                Toast.makeText(getApplicationContext(), "img path not found... " + userProfile.getImgPath(), Toast.LENGTH_LONG).show();
             }
         }
 
@@ -137,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.logout:
                 userProfile.logout();
+                _name = "";
+                _password = "";
                 Intent mainPage = new Intent(this, MainActivity.class);
                 startActivity(mainPage);
                 return true;
@@ -179,6 +186,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void showLoginForm() {
         SignInFragment dialog = new SignInFragment();
+        Bundle args = new Bundle();
+        args.putString("name", _name);
+        args.putString("password", _password);
+        dialog.setArguments(args);
         dialog.setCancelable(false);
         dialog.show(getSupportFragmentManager(), "SignInFragment");
     }
