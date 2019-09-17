@@ -38,6 +38,7 @@ public class BmiActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bmi_calculator);
 
         // Handle navigation drawer
+        isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle("BMI");
         setSupportActionBar(toolbar);
@@ -52,7 +53,6 @@ public class BmiActivity extends AppCompatActivity {
                 return handleNavigationEvent(item);
             }
         });
-        isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
 
         user = new UserProfile(getApplicationContext());
         if (user.getHeight() != null && user.getWeight() > 0) {

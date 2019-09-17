@@ -102,7 +102,6 @@
         <item>39</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_bmi_calculator">BmiCalculator</string>
@@ -118,7 +117,11 @@
     <string name="weather_summary">Weather Summary</string>
     <string name="wind_speed">Wind Speed</string>
     <string name="humidity">Humidity</string>
+    <string name="profile">Profile</string>
+    <string name="calories">Calories</string>
+    <string name="weight_goal">Weight Goal</string>
     <string name="activity_level">Activity Level</string>
     <string name="value">Value</string>
-    <string name="weight_goal">Weight Goal</string>/>
+    <string name="reset">Reset</string>
+    <string name="save">Save</string>/>
 </resources>

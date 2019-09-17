@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
     private Context ctx;
     UserProfile userProfile;
     static String _name, _password = "";
+    private boolean isDrawerFixed;
 //    private Boolean isLoggedIn = false;
 
     @Override
@@ -47,15 +48,18 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
         ctx = getApplicationContext();
 
         // Handle navigation drawer
+        isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-//        drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
-        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        if (!isDrawerFixed) {
+            toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        }
         NavigationView nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem item) { return handleNavigationEvent(item);
+            public boolean onNavigationItemSelected(MenuItem item) {
+                return handleNavigationEvent(item);
             }
         });
 
@@ -78,7 +82,9 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        toggle.syncState();
+        if (!isDrawerFixed) {
+            toggle.syncState();
+        }
     }
 
     @Override
@@ -106,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
         Log.d("image", "onCreateOptionsMenu: " + imgPath);
         if (imgPath != null) {
             File imgFile = new File(userProfile.getImgPath());
-            if(imgFile.exists()){
+            if (imgFile.exists()) {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 drawerImg.setImageBitmap(myBitmap);
                 drawerTv.setText(userProfile.getName());

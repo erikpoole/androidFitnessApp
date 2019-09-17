@@ -75,6 +75,7 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         saveButton = findViewById(R.id.saveButton);
 
         // Handle navigation drawer
+        isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -88,7 +89,6 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
                 return handleNavigationEvent(item);
             }
         });
-        isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
 
         setDefaultValues();
         disableButtons();
@@ -161,8 +161,8 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
             case "Male":
                 calories =
                         MALE_CALORIES +
-                        user.getGoal() * CALORIES_PER_POUND +
-                        user.getActiveState() * MALE_ACTIVITY_MODIFIER;
+                                user.getGoal() * CALORIES_PER_POUND +
+                                user.getActiveState() * MALE_ACTIVITY_MODIFIER;
                 if (calories < MALE_MIN_CALORIES) {
                     calorieWarningText.setText("You are below your recommended minimum calorie limit!");
                 } else {
@@ -172,8 +172,8 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
             case "Female:":
                 calories =
                         FEMALE_CALORIES +
-                        user.getGoal() * CALORIES_PER_POUND +
-                        user.getActiveState() * FEMALE_ACTIVITY_MODIFIER;
+                                user.getGoal() * CALORIES_PER_POUND +
+                                user.getActiveState() * FEMALE_ACTIVITY_MODIFIER;
                 if (calories < FEMALE_MIN_CALORIES) {
                     calorieWarningText.setText("You are below your recommended minimum calorie limit!");
                 } else {
@@ -183,8 +183,8 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
             default:
                 calories =
                         NONBINARY_CALORIES +
-                         user.getGoal() * CALORIES_PER_POUND +
-                         user.getActiveState() * NONBINARY_ACTIVITY_MODIFER;
+                                user.getGoal() * CALORIES_PER_POUND +
+                                user.getActiveState() * NONBINARY_ACTIVITY_MODIFER;
                 if (calories < NONBINARY_MIN_CALORIES) {
                     calorieWarningText.setText("You are below your recommended minimum calorie limit!");
                 } else {
@@ -196,7 +196,7 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
 
     private String getGoalText(int value) {
         if (value < 0) {
-            return "Lose " + (value * - 1) + " Pounds";
+            return "Lose " + (value * -1) + " Pounds";
         } else if (value > 0) {
             return "Gain " + value + " Pounds";
         } else {
