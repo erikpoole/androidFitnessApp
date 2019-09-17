@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--    padding-->
-    <dimen name="tile_height">344dp</dimen>
+    <dimen name="tile_height">340dp</dimen>
     <dimen name="tile_padding">16dp</dimen>
     <dimen name="seekbar_horizontal_padding">80dp</dimen>
 
     <!--    margins-->
-    <dimen name="activity_horizontal_margin">48dp</dimen>
-    <dimen name="activity_vertical_margin">48dp</dimen>
+    <dimen name="activity_horizontal_margin">32dp</dimen>
+    <dimen name="activity_vertical_margin">32dp</dimen>
 
     <!--    fonts-->
+    <dimen name="tiny_font_size_bmi">10sp</dimen>
+    <dimen name="small_font_size_bmi">20sp</dimen>
+    <dimen name="medium_font_size_bmi">40sp</dimen>
+    <dimen name="medium_large_font_size_bmi">120sp</dimen>
+    <dimen name="large_font_size_bmi">200sp</dimen>
+    <dimen name="jumbo_font_size_bmi">300sp</dimen>
+
     <dimen name="small_font_size">16sp</dimen>
     <dimen name="medium_small_font_size">32sp</dimen>
     <dimen name="medium_font_size">48sp</dimen>

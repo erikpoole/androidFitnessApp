@@ -24,6 +24,7 @@ public class BmiActivity extends AppCompatActivity {
     private TextView bmiTextView;
     private float height;
     private float weight;
+    private int range;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +46,9 @@ public class BmiActivity extends AppCompatActivity {
         }
 
         SeekBar seekBar = findViewById(R.id.seek_bar);
-        seekBar.setMax(100);
-        seekBar.setProgress(33);
+        range = 200;
+        seekBar.setMax(range);
+        seekBar.setProgress(range / 2);
         final TextView seekTextView = findViewById(R.id.seek_bar_value);
 
         SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
@@ -56,9 +58,13 @@ public class BmiActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 adjustedWeight = weight;
-                int change = progress - 50;
+                int change = progress - (range / 2);
                 adjustedWeight += change;
-                seekTextView.setText(adjustedWeight + " lbs");
+                String difference = String.valueOf(change) + " lbs";
+                if (change > 0) {
+                    difference = "+" + difference;
+                }
+                seekTextView.setText(difference);
                 float bmi = (adjustedWeight / (height * height)) * 703;
                 if (bmi < 18.5 || bmi > 25.0) {
                     bmiTextView.setTextColor(Color.RED);
