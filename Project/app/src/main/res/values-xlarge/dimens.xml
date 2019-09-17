@@ -10,18 +10,14 @@
     <dimen name="activity_vertical_margin">32dp</dimen>
 
     <!--    fonts-->
-    <dimen name="tiny_font_size_bmi">10sp</dimen>
-    <dimen name="small_font_size_bmi">20sp</dimen>
-    <dimen name="medium_font_size_bmi">40sp</dimen>
-    <dimen name="medium_large_font_size_bmi">120sp</dimen>
-    <dimen name="large_font_size_bmi">200sp</dimen>
-    <dimen name="jumbo_font_size_bmi">300sp</dimen>
+    <dimen name="bmi_font_size">40sp</dimen>
 
     <dimen name="small_font_size">16sp</dimen>
     <dimen name="medium_small_font_size">32sp</dimen>
     <dimen name="medium_font_size">48sp</dimen>
     <dimen name="medium_large_font_size">64sp</dimen>
     <dimen name="large_font_size">80sp</dimen>
+    <dimen name="xlarge_font_size">200sp</dimen>
 
     <!--    profile image-->
     <dimen name="profile_img">350dp</dimen>

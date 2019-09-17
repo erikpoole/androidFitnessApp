@@ -33,7 +33,7 @@
             android:layout_centerHorizontal="true"
             android:text="@string/your_bmi_is"
             android:textColor="@color/dark_gray"
-            android:textSize="@dimen/medium_font_size_bmi" />
+            android:textSize="@dimen/bmi_font_size" />
 
         <TextView
             android:id="@+id/bmi_tv"
@@ -46,7 +46,7 @@
             android:layout_below="@+id/your_bmi_is_tv"
             android:text="@string/default_bmi"
             android:textColor="@color/black"
-            android:textSize="@dimen/large_font_size_bmi" />
+            android:textSize="@dimen/xlarge_font_size" />
 
         <TextView
             android:id="@+id/what_if_you_weighed_tv"
@@ -59,7 +59,7 @@
             android:layout_below="@+id/bmi_tv"
             android:text="@string/what_if_you_weighed"
             android:textColor="@color/dark_gray"
-            android:textSize="@dimen/medium_font_size_bmi" />
+            android:textSize="@dimen/bmi_font_size" />
 
         <SeekBar
             android:id="@+id/seek_bar"
@@ -81,7 +81,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/seek_bar"
             android:textColor="@color/dark_gray"
-            android:textSize="@dimen/medium_font_size_bmi" />
+            android:textSize="@dimen/bmi_font_size" />
 
     </RelativeLayout>
 

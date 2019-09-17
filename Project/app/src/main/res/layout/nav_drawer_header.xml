@@ -23,6 +23,6 @@
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:text=""
-        android:textSize="@dimen/small_font_size_bmi"
+        android:textSize="@dimen/small_font_size"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 </LinearLayout>

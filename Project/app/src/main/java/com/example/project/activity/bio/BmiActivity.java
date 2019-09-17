@@ -44,6 +44,7 @@ public class BmiActivity extends AppCompatActivity {
 
         // Handle navigation drawer
         Toolbar toolbar = findViewById(R.id.toolbar_main);
+        toolbar.setTitle("BMI");
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -86,7 +87,7 @@ public class BmiActivity extends AppCompatActivity {
                 adjustedWeight = weight;
                 int change = progress - (range / 2);
                 adjustedWeight += change;
-                String difference = String.valueOf(change) + " lbs";
+                String difference = change + " lbs";
                 if (change > 0) {
                     difference = "+" + difference;
                 }

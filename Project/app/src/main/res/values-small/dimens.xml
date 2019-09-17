@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--    padding-->
-    <dimen name="tile_height">210dp</dimen>
+    <dimen name="tile_height">150dp</dimen>
     <dimen name="tile_padding">8dp</dimen>
     <dimen name="seekbar_horizontal_padding">40dp</dimen>
 
@@ -10,18 +10,14 @@
     <dimen name="activity_vertical_margin">8dp</dimen>
 
     <!--    fonts-->
-    <dimen name="tiny_font_size_bmi">5sp</dimen>
-    <dimen name="small_font_size_bmi">10sp</dimen>
-    <dimen name="medium_font_size_bmi">20sp</dimen>
-    <dimen name="medium_large_font_size_bmi">60sp</dimen>
-    <dimen name="large_font_size_bmi">100sp</dimen>
-    <dimen name="jumbo_font_size_bmi">150sp</dimen>
+    <dimen name="bmi_font_size">20sp</dimen>
 
     <dimen name="small_font_size">16sp</dimen>
     <dimen name="medium_small_font_size">32sp</dimen>
     <dimen name="medium_font_size">48sp</dimen>
     <dimen name="medium_large_font_size">64sp</dimen>
     <dimen name="large_font_size">80sp</dimen>
+    <dimen name="xlarge_font_size">100sp</dimen>
 
     <!--    profile image-->
     <dimen name="profile_img">200dp</dimen>
