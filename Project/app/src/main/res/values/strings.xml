@@ -116,6 +116,9 @@
     <string name="max_temp">Max Temp</string>
     <string name="temperature">Temperature</string>
     <string name="weather_summary">Weather Summary</string>
+    <string name="wind_speed">Wind Speed</string>
     <string name="humidity">Humidity</string>
-    <string name="wind_speed">Wind Speed</string>/>
+    <string name="activity_level">Activity Level</string>
+    <string name="value">Value</string>
+    <string name="weight_goal">Weight Goal</string>/>
 </resources>

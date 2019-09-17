@@ -52,6 +52,7 @@ public class WeatherActivity extends AppCompatActivity {
     TextView windText;
 
     private ActionBarDrawerToggle toggle;
+    private boolean isDrawerFixed;
 
 
     @Override
@@ -70,7 +71,9 @@ public class WeatherActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        if (!isDrawerFixed) {
+            toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        }
         NavigationView nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -78,6 +81,7 @@ public class WeatherActivity extends AppCompatActivity {
                 return handleNavigationEvent(item);
             }
         });
+        isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
 
         getPermissionsAndWeather();
     }
@@ -117,7 +121,9 @@ public class WeatherActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        toggle.syncState();
+        if (!isDrawerFixed) {
+            toggle.syncState();
+        }
     }
 
     @Override

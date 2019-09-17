@@ -53,7 +53,7 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
     private Button saveButton;
 
     private ActionBarDrawerToggle toggle;
-
+    private boolean isDrawerFixed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +78,9 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        if (!isDrawerFixed) {
+            toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        }
         NavigationView nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -86,6 +88,7 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
                 return handleNavigationEvent(item);
             }
         });
+        isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
 
         setDefaultValues();
         disableButtons();
@@ -131,7 +134,9 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        toggle.syncState();
+        if (!isDrawerFixed) {
+            toggle.syncState();
+        }
     }
 
     @Override
