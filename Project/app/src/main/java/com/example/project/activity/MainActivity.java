@@ -26,8 +26,6 @@ import com.example.project.TileFragment;
 import com.example.project.activity.Weather.WeatherActivity;
 import com.example.project.activity.bio.BioActivity;
 import com.example.project.activity.bio.BioEditActivity;
-import com.example.project.activity.bio.BmiActivity;
-import com.example.project.activity.bio.CalorieActivity;
 import com.example.project.activity.login.SignInFragment;
 import com.example.project.database.UserProfile;
 import com.google.android.material.navigation.NavigationView;

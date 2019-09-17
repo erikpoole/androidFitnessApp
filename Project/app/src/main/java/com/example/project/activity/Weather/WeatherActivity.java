@@ -29,8 +29,8 @@ import com.example.project.Requests;
 import com.example.project.activity.HikingActivity;
 import com.example.project.activity.MainActivity;
 import com.example.project.activity.bio.BioActivity;
-import com.example.project.activity.bio.BmiActivity;
-import com.example.project.activity.bio.CalorieActivity;
+import com.example.project.activity.BmiActivity;
+import com.example.project.activity.CalorieActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;

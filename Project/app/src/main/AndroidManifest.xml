@@ -12,11 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.bio.CalorieActivity"
+            android:name=".activity.CalorieActivity"
             android:label="@string/title_activity_calorie"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".activity.bio.BmiActivity"
+            android:name=".activity.BmiActivity"
             android:label="@string/title_activity_bmi_calculator"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

@@ -1,9 +1,8 @@
-package com.example.project.activity.bio;
+package com.example.project.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,9 +17,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.project.R;
-import com.example.project.activity.HikingActivity;
-import com.example.project.activity.MainActivity;
 import com.example.project.activity.Weather.WeatherActivity;
+import com.example.project.activity.bio.BioActivity;
 import com.example.project.database.UserProfile;
 import com.google.android.material.navigation.NavigationView;
 

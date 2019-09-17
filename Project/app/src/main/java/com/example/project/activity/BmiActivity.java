@@ -1,17 +1,14 @@
-package com.example.project.activity.bio;
+package com.example.project.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import com.example.project.activity.HikingActivity;
-import com.example.project.activity.MainActivity;
 import com.example.project.activity.Weather.WeatherActivity;
+import com.example.project.activity.bio.BioActivity;
 import com.example.project.database.UserProfile;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -20,11 +17,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.project.R;
 
