@@ -30,6 +30,7 @@ public class BmiActivity extends AppCompatActivity {
     private float weight;
     private int range;
     private ActionBarDrawerToggle toggle;
+    private boolean isDrawerFixed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,9 @@ public class BmiActivity extends AppCompatActivity {
         toolbar.setTitle("BMI");
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        if (!isDrawerFixed) {
+            toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        }
         NavigationView nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -49,9 +52,10 @@ public class BmiActivity extends AppCompatActivity {
                 return handleNavigationEvent(item);
             }
         });
+        isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
 
         user = new UserProfile(getApplicationContext());
-        if (user != null) {
+        if (user.getHeight() != null && user.getWeight() > 0) {
             float feet = Float.parseFloat(user.getHeight().split("'")[0]);
             float inches = Float.parseFloat(user.getHeight().split("'")[1].split("\"")[0]);
             height = (feet * 12) + inches; // 1 foot / 12 inches
@@ -145,7 +149,9 @@ public class BmiActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        toggle.syncState();
+        if (!isDrawerFixed) {
+            toggle.syncState();
+        }
     }
 
     @Override
