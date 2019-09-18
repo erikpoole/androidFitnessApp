@@ -141,7 +141,7 @@ public class WeatherActivity extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                     @SuppressLint("MissingPermission")
-                    Location location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
+                    Location location = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
                     getWeather(location);
                 } else {
                     Toast.makeText(
