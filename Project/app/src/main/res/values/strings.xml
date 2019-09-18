@@ -123,5 +123,7 @@
     <string name="activity_level">Activity Level</string>
     <string name="value">Value</string>
     <string name="reset">Reset</string>
-    <string name="save">Save</string>/>
+    <string name="save">Save</string>
+    <string name="profile">Profile</string>
+    <string name="calories">Calories</string>/>
 </resources>

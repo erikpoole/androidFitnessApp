@@ -77,7 +77,7 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         // Handle navigation drawer
         isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        toolbar.setTitle("Calorie Calculator");
+        toolbar.setTitle("Calories");
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (!isDrawerFixed) {
