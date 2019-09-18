@@ -19,20 +19,20 @@
             >
             <ImageView
                 android:id="@+id/bio_form_img"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="@dimen/profile_img"
+                android:layout_height="@dimen/profile_img"
                 android:src="@drawable/profile_placeholder"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center"
                 />
-
             <Button
                 android:id="@+id/bio_form_upload_img"
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/upload_image"
-                android:backgroundTint="@color/pale_orange"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/holo_orange_light"
                 />
         </LinearLayout>
         <LinearLayout
@@ -46,11 +46,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="@dimen/small_font_size"
+                android:textColor="@color/navy"
                 android:text="@string/enter_sex"
                 />
             <Spinner
                 android:id="@+id/bio_form_sex"
+                android:textSize="@dimen/medium_small_font_size"
                 android:paddingTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,8 +61,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/enter_height"
+                android:textColor="@color/navy"
                 android:paddingTop="16dp"
-                android:textSize="16sp"
+                android:textSize="@dimen/small_font_size"
                 />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -75,8 +78,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
+                    android:textSize="@dimen/small_font_size"
+                    android:textColor="@color/navy"
                     android:text="@string/enter_feet"
                     />
             </LinearLayout>
@@ -93,8 +96,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
+                    android:textSize="@dimen/small_font_size"
+                    android:textColor="@color/navy"
                     android:text="@string/enter_inches"
                     />
             </LinearLayout>
@@ -104,15 +107,15 @@
                 android:orientation="horizontal"
                 android:paddingTop="16dp">
                 <TextView
-                    android:textSize="16sp"
+                    android:textSize="@dimen/small_font_size"
                     android:text="@string/weight_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
                 <TextView
                     android:id="@+id/bio_form_weight_label"
-                    android:textColor="@color/pale_orange"
-                    android:textSize="20sp"
+                    android:textColor="@color/navy"
+                    android:textSize="@dimen/small_medium_font_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -124,6 +127,8 @@
                 android:progress="150"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:thumbTint="@color/navy"
+                android:progressTint="@color/navy"
                 />
         </LinearLayout>
     </LinearLayout>
@@ -131,6 +136,7 @@
         android:id="@+id/bio_form_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         android:backgroundTint="@color/holo_blue_light"
         android:text="@string/submit"
         />

@@ -28,5 +28,4 @@
     <style name="Button.Blue" parent="ThemeOverlay.AppCompat">
         <item name="colorAccent">@color/pale_orange</item>
     </style>
-
 </resources>
