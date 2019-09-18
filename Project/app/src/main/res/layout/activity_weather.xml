@@ -24,7 +24,6 @@
 
         <TextView
             android:id="@+id/temperatureText"
-            android:text="Temperature"
             android:textSize="@dimen/large_font_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +32,6 @@
 
         <TextView
             android:id="@+id/summaryText"
-            android:text="Weather Summary"
             android:textSize="@dimen/small_font_size"
             android:textAlignment="center"
             android:layout_width="wrap_content"
@@ -52,7 +50,6 @@
 
             <TextView
                 android:id="@+id/humidityText"
-                android:text="Humidity"
                 android:textSize="@dimen/small_font_size"
                 android:textAlignment="center"
                 android:layout_width="wrap_content"
@@ -65,7 +62,6 @@
 
             <TextView
                 android:id="@+id/windText"
-                android:text="Wind Speed"
                 android:textSize="@dimen/small_font_size"
                 android:textAlignment="center"
                 android:layout_width="wrap_content"
