@@ -8,10 +8,6 @@
     tools:openDrawer="start">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activity.Weather.WeatherActivity">
@@ -28,8 +24,8 @@
 
             <TextView
                 android:id="@+id/calorieText"
-                android:text="Calories"
-                android:textSize="@dimen/medium_font_size"
+                android:text="@string/calories"
+                android:textSize="@dimen/medium_large_font_size"
                 android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -62,9 +58,9 @@
 
             <TextView
                 android:id="@+id/goalText"
-                android:text="Weight Goal"
+                android:text="@string/weight_goal"
                 android:textAlignment="center"
-                android:textSize="@dimen/medium_small_font_size"
+                android:textSize="@dimen/medium_font_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -84,8 +80,8 @@
 
             <TextView
                 android:id="@+id/goalValueText"
-                android:text="Value"
-                android:textSize="@dimen/small_font_size"
+                android:text="@string/value"
+                android:textSize="@dimen/medium_small_font_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -94,9 +90,9 @@
 
             <TextView
                 android:id="@+id/activityText"
-                android:text="Activity Level"
+                android:text="@string/activity_level"
                 android:textAlignment="center"
-                android:textSize="@dimen/medium_small_font_size"
+                android:textSize="@dimen/medium_font_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
@@ -118,8 +114,8 @@
 
             <TextView
                 android:id="@+id/activityValueText"
-                android:text="Value"
-                android:textSize="@dimen/small_font_size"
+                android:text="@string/value"
+                android:textSize="@dimen/medium_small_font_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -142,11 +138,10 @@
 
             <Button
                 android:id="@+id/resetButton"
-                android:text="Reset"
+                android:text="@string/reset"
                 android:textSize="@dimen/small_font_size"
                 android:backgroundTint="@android:color/darker_gray"
                 android:textColor="@android:color/black"
-                android:enabled="false"
                 android:textAlignment="center"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -156,11 +151,10 @@
 
             <Button
                 android:id="@+id/saveButton"
-                android:text="Save"
+                android:text="@string/save"
                 android:textSize="@dimen/small_font_size"
                 android:backgroundTint="@android:color/holo_blue_light"
                 android:textColor="@android:color/white"
-                android:enabled="false"
                 android:textAlignment="center"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"

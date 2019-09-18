@@ -6,17 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,16 +29,14 @@ import com.example.project.Requests;
 import com.example.project.activity.HikingActivity;
 import com.example.project.activity.MainActivity;
 import com.example.project.activity.bio.BioActivity;
-import com.example.project.activity.bio.BmiActivity;
-import com.example.project.activity.bio.CalorieActivity;
-import com.example.project.database.UserProfile;
+import com.example.project.activity.BmiActivity;
+import com.example.project.activity.CalorieActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 
 public class WeatherActivity extends AppCompatActivity {
     final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -60,6 +52,7 @@ public class WeatherActivity extends AppCompatActivity {
     TextView windText;
 
     private ActionBarDrawerToggle toggle;
+    private boolean isDrawerFixed;
 
 
     @Override
@@ -76,9 +69,12 @@ public class WeatherActivity extends AppCompatActivity {
 
         // Handle navigation drawer
         Toolbar toolbar = findViewById(R.id.toolbar_main);
+        toolbar.setTitle("Weather");
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        if (!isDrawerFixed) {
+            toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        }
         NavigationView nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -86,6 +82,7 @@ public class WeatherActivity extends AppCompatActivity {
                 return handleNavigationEvent(item);
             }
         });
+        isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
 
         getPermissionsAndWeather();
     }
@@ -125,7 +122,9 @@ public class WeatherActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        toggle.syncState();
+        if (!isDrawerFixed) {
+            toggle.syncState();
+        }
     }
 
     @Override

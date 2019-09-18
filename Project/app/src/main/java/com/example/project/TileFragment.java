@@ -12,18 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project.activity.HikingActivity;
-import com.example.project.activity.MainActivity;
 import com.example.project.activity.Weather.WeatherActivity;
 import com.example.project.activity.bio.BioActivity;
-import com.example.project.activity.bio.BmiActivity;
-import com.example.project.activity.bio.CalorieActivity;
+import com.example.project.activity.BmiActivity;
+import com.example.project.activity.CalorieActivity;
 
 /*
  * This class was based on a demo class from the Android Design Library.

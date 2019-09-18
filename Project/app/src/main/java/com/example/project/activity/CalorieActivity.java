@@ -1,4 +1,4 @@
-package com.example.project.activity.bio;
+package com.example.project.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -16,9 +17,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.project.R;
-import com.example.project.activity.HikingActivity;
-import com.example.project.activity.MainActivity;
 import com.example.project.activity.Weather.WeatherActivity;
+import com.example.project.activity.bio.BioActivity;
 import com.example.project.database.UserProfile;
 import com.google.android.material.navigation.NavigationView;
 
@@ -53,7 +53,7 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
     private Button saveButton;
 
     private ActionBarDrawerToggle toggle;
-
+    private boolean isDrawerFixed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +75,14 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         saveButton = findViewById(R.id.saveButton);
 
         // Handle navigation drawer
+        isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
         Toolbar toolbar = findViewById(R.id.toolbar_main);
+        toolbar.setTitle("Calorie Calculator");
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        if (!isDrawerFixed) {
+            toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        }
         NavigationView nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -88,6 +92,7 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         });
 
         setDefaultValues();
+        disableButtons();
 
         goalSeekBar.setOnSeekBarChangeListener(this);
         activitySeekBar.setOnSeekBarChangeListener(this);
@@ -130,7 +135,9 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        toggle.syncState();
+        if (!isDrawerFixed) {
+            toggle.syncState();
+        }
     }
 
     @Override
@@ -155,8 +162,8 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
             case "Male":
                 calories =
                         MALE_CALORIES +
-                        user.getGoal() * CALORIES_PER_POUND +
-                        user.getActiveState() * MALE_ACTIVITY_MODIFIER;
+                                user.getGoal() * CALORIES_PER_POUND +
+                                user.getActiveState() * MALE_ACTIVITY_MODIFIER;
                 if (calories < MALE_MIN_CALORIES) {
                     calorieWarningText.setText("You are below your recommended minimum calorie limit!");
                 } else {
@@ -166,8 +173,8 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
             case "Female:":
                 calories =
                         FEMALE_CALORIES +
-                        user.getGoal() * CALORIES_PER_POUND +
-                        user.getActiveState() * FEMALE_ACTIVITY_MODIFIER;
+                                user.getGoal() * CALORIES_PER_POUND +
+                                user.getActiveState() * FEMALE_ACTIVITY_MODIFIER;
                 if (calories < FEMALE_MIN_CALORIES) {
                     calorieWarningText.setText("You are below your recommended minimum calorie limit!");
                 } else {
@@ -177,8 +184,8 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
             default:
                 calories =
                         NONBINARY_CALORIES +
-                         user.getGoal() * CALORIES_PER_POUND +
-                         user.getActiveState() * NONBINARY_ACTIVITY_MODIFER;
+                                user.getGoal() * CALORIES_PER_POUND +
+                                user.getActiveState() * NONBINARY_ACTIVITY_MODIFER;
                 if (calories < NONBINARY_MIN_CALORIES) {
                     calorieWarningText.setText("You are below your recommended minimum calorie limit!");
                 } else {
@@ -190,7 +197,7 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
 
     private String getGoalText(int value) {
         if (value < 0) {
-            return "Lose " + (value * - 1) + " Pounds";
+            return "Lose " + (value * -1) + " Pounds";
         } else if (value > 0) {
             return "Gain " + value + " Pounds";
         } else {
@@ -209,6 +216,20 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         }
     }
 
+    private void enableButtons() {
+        saveButton.setEnabled(true);
+        resetButton.setEnabled(true);
+        saveButton.setAlpha(1f);
+        resetButton.setAlpha(1f);
+    }
+
+    private void disableButtons() {
+        saveButton.setEnabled(false);
+        resetButton.setEnabled(false);
+        saveButton.setAlpha(.5f);
+        resetButton.setAlpha(.5f);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -216,40 +237,38 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
                 user.update();
                 originalGoal = user.getGoal();
                 originalActivity = user.getActiveState();
-                saveButton.setEnabled(false);
-                resetButton.setEnabled(false);
+                disableButtons();
+                Toast.makeText(getApplicationContext(), "Goals Saved!", Toast.LENGTH_LONG).show();
                 break;
             case R.id.resetButton:
                 user = new UserProfile(getApplicationContext());
                 setDefaultValues();
-                saveButton.setEnabled(false);
-                resetButton.setEnabled(false);
+                disableButtons();
                 break;
         }
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        int pounds = progress - 2;
-        int activityState = progress - 1;
-        if (originalGoal != pounds || originalActivity != activityState) {
-            saveButton.setEnabled(true);
-            resetButton.setEnabled(true);
-        } else {
-            saveButton.setEnabled(false);
-            resetButton.setEnabled(false);
-        }
         switch (seekBar.getId()) {
             case R.id.goalSeekBar:
+                int pounds = progress - 2;
                 user.setGoal(pounds);
                 calorieText.setText(calculateCalories());
                 goalText.setText(getGoalText(pounds));
                 break;
             case R.id.activitySeekBar:
+                int activityState = progress - 1;
                 user.setActiveState(activityState);
                 calorieText.setText(calculateCalories());
                 activityText.setText(getActivityText(activityState));
                 break;
+        }
+        if (originalGoal != goalSeekBar.getProgress() - 2 ||
+                originalActivity != activitySeekBar.getProgress() - 1) {
+            enableButtons();
+        } else {
+            disableButtons();
         }
     }
 
