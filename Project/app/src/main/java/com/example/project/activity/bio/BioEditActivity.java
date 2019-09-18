@@ -51,6 +51,7 @@ public class BioEditActivity extends AppCompatActivity implements BioFormFragmen
         if (!isDrawerFixed) {
             toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         }
+
         NavigationView nav = findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

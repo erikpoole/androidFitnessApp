@@ -19,19 +19,11 @@
             android:layout_marginTop="?attr/actionBarSize"
             android:orientation="vertical"
             android:gravity="start">
-
-            <TextView
-                android:id="@+id/bio_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/small_font_size"
-                android:gravity="center"
-                android:text="Personal Profile" />
             <TextView
                 android:id="@+id/bio_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/medium_font_size"
+                android:textSize="@dimen/medium_large_font_size"
                 android:gravity="center" />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,100 +36,69 @@
                     android:layout_width="@dimen/profile_img"
                     android:layout_height="@dimen/profile_img"
                     android:src="@drawable/profile_placeholder"
-                    android:scaleType="centerCrop"
-                    android:layout_gravity="center" />
+                    android:scaleType="centerCrop" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_marginTop="16dp">
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    >
                         <TextView
                             android:id="@+id/bio_age_label"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="start"
                             android:text="Age:"
+                            android:textColor="@color/pale_orange"
                             android:textSize="@dimen/small_font_size" />
                         <TextView
                             android:id="@+id/bio_age"
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/small_font_size"
+                            android:textSize="@dimen/medium_small_font_size"
                             android:gravity="center" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_marginTop="16dp">
                         <TextView
                             android:id="@+id/bio_sex_label"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="start"
                             android:textSize="@dimen/small_font_size"
+                            android:textColor="@color/pale_orange"
                             android:text="Sex:" />
                         <TextView
                             android:id="@+id/bio_sex"
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/small_font_size"
+                            android:textSize="@dimen/medium_small_font_size"
                             android:gravity="center" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_marginTop="16dp">
                         <TextView
                             android:id="@+id/bio_height_label"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="start"
                             android:text="Height:"
+                            android:textColor="@color/pale_orange"
                             android:textSize="@dimen/small_font_size" />
                         <TextView
                             android:id="@+id/bio_height"
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/small_font_size"
+                            android:textSize="@dimen/medium_small_font_size"
                             android:gravity="center" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_marginTop="16dp">
                         <TextView
                             android:id="@+id/bio_weight_label"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="start"
+                            android:textColor="@color/pale_orange"
                             android:text="Weight:"
                             android:textSize="@dimen/small_font_size" />
                         <TextView
                             android:id="@+id/bio_weight"
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/small_font_size"
+                            android:textSize="@dimen/medium_small_font_size"
                             android:gravity="center" />
-                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
             <Button
