@@ -69,6 +69,7 @@ public class WeatherActivity extends AppCompatActivity {
 
         // Handle navigation drawer
         Toolbar toolbar = findViewById(R.id.toolbar_main);
+        toolbar.setTitle("Weather");
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (!isDrawerFixed) {
