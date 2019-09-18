@@ -45,7 +45,7 @@ public class BioEditActivity extends AppCompatActivity implements BioFormFragmen
         // Handle navigation drawer
         isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        toolbar.setTitle("Profile");
+        toolbar.setTitle("Edit Profile");
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (!isDrawerFixed) {
