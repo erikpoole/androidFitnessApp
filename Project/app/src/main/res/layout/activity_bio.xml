@@ -107,6 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/small_font_size"
+                android:backgroundTint="@color/pale_orange"
                 android:text="@string/edit_profile" />
         </LinearLayout>
 
