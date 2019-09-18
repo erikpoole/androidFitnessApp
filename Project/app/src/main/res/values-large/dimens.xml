@@ -20,5 +20,5 @@
     <dimen name="xlarge_font_size">100sp</dimen>
 
     <!--    profile image-->
-    <dimen name="profile_img">300dp</dimen>
+    <dimen name="profile_img">275dp</dimen>
 </resources>
