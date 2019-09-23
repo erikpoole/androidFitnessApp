@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <TextView
         android:layout_width="match_parent"
@@ -11,7 +15,8 @@
         android:textAlignment="center"
         android:text="@string/sign_in"
         android:textFontWeight="500"
-        android:textSize="42dp"
+        android:textColor="@color/navy"
+        android:textSize="@dimen/medium_large_font_size"
         />
 
     <EditText
@@ -20,14 +25,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:textSize="@dimen/small_font_size"
+        android:backgroundTint="@color/navy"
         android:autofillHints="@string/enter_name"
         android:hint="@string/enter_name" />
+
     <EditText
         android:id="@+id/password_login"
         android:inputType="textPassword"
+        android:textSize="@dimen/small_font_size"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:backgroundTint="@color/navy"
         android:autofillHints="@string/enter_password"
         android:hint="@string/enter_password"
         />
@@ -37,15 +47,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/pale_orange"
+        android:textSize="@dimen/small_font_size"
+        android:textColor="@color/holo_orange_light"
         />
 
     <Button
         android:id="@+id/signInBtn"
-        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/sign_in"
+        android:textSize="@dimen/small_font_size"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/holo_blue_light"
         />
 
     <TextView
@@ -55,14 +68,19 @@
         android:textAlignment="center"
         android:text="You don't have a profile?"
         android:textFontWeight="300"
-        android:textSize="18dp"
+        android:textColor="@color/navy"
+        android:textSize="@dimen/small_medium_font_size"
         />
 
     <Button
         android:id="@+id/signUpBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/small_font_size"
         android:text="@string/sign_up"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/navy"
         />
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
