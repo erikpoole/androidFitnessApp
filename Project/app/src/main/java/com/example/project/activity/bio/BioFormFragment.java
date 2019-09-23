@@ -1,10 +1,13 @@
 package com.example.project.activity.bio;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -22,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.project.R;
@@ -33,7 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class BioFormFragment extends Fragment implements AdapterView.OnItemSelectedListener {
-
+    final int MY_PERMISSIONS_REQUEST_STORAGE = 88;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private String PATH_TO_IMAGE;
     ImageView profileIV;
@@ -93,10 +98,15 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
         Button uploadImgBtn = view.findViewById(R.id.bio_form_upload_img);
         uploadImgBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (cameraIntent.resolveActivity(ctx.getPackageManager()) != null) {
-                startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
-            }
+                requestAppPermissions();
+                if (hasReadPermissions() && hasWritePermissions()) {
+                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    if (cameraIntent.resolveActivity(ctx.getPackageManager()) != null) {
+                        startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
+                    }
+                } else {
+                    Toast.makeText(ctx, "storage permissions denied", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -123,7 +133,7 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
             String height = userProfile.getHeight();
             height = height.substring(0, height.length() - 1);
             String[] heightDimensions = height.split("'");
-            Toast.makeText(ctx, heightDimensions[1], Toast.LENGTH_LONG).show();
+//            Toast.makeText(ctx, heightDimensions[1], Toast.LENGTH_LONG).show();
             feetSpinner.setSelection(Integer.parseInt(heightDimensions[0]) - 3);
             inchSpinner.setSelection(Integer.parseInt(heightDimensions[1]));
         }
@@ -191,7 +201,7 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
         if (myDir.mkdirs()) {
             Log.d("saveImage", "saveImage: dirs CREATED");
         } else {
-            Toast.makeText(ctx, "mkdirs failed!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(ctx, "mkdirs failed!", Toast.LENGTH_SHORT).show();
         }
 
         String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
@@ -216,6 +226,30 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
             return true;
         }
         return false;
+    }
+
+    private void requestAppPermissions() {
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return;
+        }
+
+        if (hasReadPermissions() && hasWritePermissions()) {
+            return;
+        }
+
+        ActivityCompat.requestPermissions((Activity) ctx,
+                new String[] {
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                }, MY_PERMISSIONS_REQUEST_STORAGE); // your request code
+    }
+
+    private boolean hasReadPermissions() {
+        return (ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    private boolean hasWritePermissions() {
+        return (ContextCompat.checkSelfPermission(ctx, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
     }
 
 }

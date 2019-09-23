@@ -33,7 +33,6 @@ import com.google.android.material.navigation.NavigationView;
 import java.io.File;
 
 public class MainActivity extends AppCompatActivity implements SignInFragment.inputPersist {
-
     private ActionBarDrawerToggle toggle;
     private Context ctx;
     UserProfile userProfile;
