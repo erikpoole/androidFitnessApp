@@ -19,13 +19,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="16dp"
-                android:layout_marginTop="?attr/actionBarSize"
                 android:orientation="vertical"
                 android:gravity="start">
                 <TextView
                     android:id="@+id/bio_name"
+                    android:paddingTop="?attr/actionBarSize"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/navy"
                     android:textSize="@dimen/medium_large_font_size"
                     android:gravity="center" />
                 <LinearLayout
@@ -47,61 +48,36 @@
                         android:padding="8dp"
                         >
                         <TextView
-                            android:id="@+id/bio_age_label"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="start"
-                            android:text="Age:"
-                            android:textColor="@color/pale_orange"
-                            android:textSize="@dimen/small_font_size" />
-                        <TextView
                             android:id="@+id/bio_age"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/medium_small_font_size"
-                            android:gravity="center" />
-                        <TextView
-                            android:id="@+id/bio_sex_label"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="start"
-                            android:textSize="@dimen/small_font_size"
-                            android:textColor="@color/pale_orange"
-                            android:text="Sex:" />
+                            android:gravity="left"
+                            />
                         <TextView
                             android:id="@+id/bio_sex"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
                             android:textSize="@dimen/medium_small_font_size"
-                            android:gravity="center" />
-                        <TextView
-                            android:id="@+id/bio_height_label"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="start"
-                            android:text="Height:"
-                            android:textColor="@color/pale_orange"
-                            android:textSize="@dimen/small_font_size" />
+                            android:gravity="left"
+                            />
                         <TextView
                             android:id="@+id/bio_height"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
                             android:textSize="@dimen/medium_small_font_size"
-                            android:gravity="center" />
-                        <TextView
-                            android:id="@+id/bio_weight_label"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="start"
-                            android:textColor="@color/pale_orange"
-                            android:text="Weight:"
-                            android:textSize="@dimen/small_font_size" />
+                            android:gravity="left"
+                            />
                         <TextView
                             android:id="@+id/bio_weight"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
                             android:textSize="@dimen/medium_small_font_size"
-                            android:gravity="center" />
+                            android:gravity="left"
+                            />
                     </LinearLayout>
                 </LinearLayout>
                 <Button
@@ -110,7 +86,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/small_font_size"
-                    android:backgroundTint="@color/pale_orange"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/holo_blue_light"
                     android:text="@string/edit_profile" />
             </LinearLayout>
         </ScrollView>
