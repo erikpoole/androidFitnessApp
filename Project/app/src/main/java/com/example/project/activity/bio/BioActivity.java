@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.project.AssetHandlers;
 import com.example.project.R;
 import com.example.project.activity.BmiActivity;
 import com.example.project.activity.CalorieActivity;
@@ -82,6 +84,12 @@ public class BioActivity extends AppCompatActivity {
                 return handleNavigationEvent(item);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        AssetHandlers.loadProfileImage(this, menu, userProfile);
+        return true;
     }
 
     private void populateInfo() {

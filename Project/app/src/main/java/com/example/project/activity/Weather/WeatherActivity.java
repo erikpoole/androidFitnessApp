@@ -10,6 +10,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ import com.example.project.activity.MainActivity;
 import com.example.project.activity.bio.BioActivity;
 import com.example.project.activity.BmiActivity;
 import com.example.project.activity.CalorieActivity;
+import com.example.project.database.UserProfile;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -45,11 +47,12 @@ public class WeatherActivity extends AppCompatActivity {
 
     WeatherResponseListener weatherResponseListener;
 
-    TextView cityText;
     TextView temperatureText;
     TextView summaryText;
     TextView humidityText;
     TextView windText;
+
+    UserProfile user;
 
     private ActionBarDrawerToggle toggle;
     private boolean isDrawerFixed;
@@ -66,6 +69,8 @@ public class WeatherActivity extends AppCompatActivity {
         summaryText = findViewById(R.id.summaryText);
         humidityText = findViewById(R.id.humidityText);
         windText = findViewById(R.id.windText);
+
+        user = new UserProfile(getApplicationContext());
 
         // Handle navigation drawer
         Toolbar toolbar = findViewById(R.id.toolbar_main);
@@ -85,6 +90,12 @@ public class WeatherActivity extends AppCompatActivity {
         isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
 
         getPermissionsAndWeather();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        AssetHandlers.loadProfileImage(this, menu, user);
+        return true;
     }
 
     public boolean handleNavigationEvent(@NonNull MenuItem menuItem) {

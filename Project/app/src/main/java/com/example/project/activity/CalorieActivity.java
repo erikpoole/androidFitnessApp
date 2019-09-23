@@ -3,6 +3,7 @@ package com.example.project.activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.project.AssetHandlers;
 import com.example.project.R;
 import com.example.project.activity.Weather.WeatherActivity;
 import com.example.project.activity.bio.BioActivity;
@@ -98,6 +100,12 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         activitySeekBar.setOnSeekBarChangeListener(this);
         resetButton.setOnClickListener(this);
         saveButton.setOnClickListener(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        AssetHandlers.loadProfileImage(this, menu, user);
+        return true;
     }
 
     public boolean handleNavigationEvent(@NonNull MenuItem menuItem) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.project.AssetHandlers;
 import com.example.project.R;
 import com.example.project.activity.BmiActivity;
 import com.example.project.activity.CalorieActivity;
@@ -59,6 +61,12 @@ public class BioEditActivity extends AppCompatActivity implements BioFormFragmen
                 return handleNavigationEvent(item);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        AssetHandlers.loadProfileImage(this, menu, userProfile);
+        return true;
     }
 
     public void onSubmitForm(String sex, String height, int weight, String imgPath) {

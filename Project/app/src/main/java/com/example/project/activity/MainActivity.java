@@ -21,6 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.project.AssetHandlers;
 import com.example.project.R;
 import com.example.project.TileFragment;
 import com.example.project.activity.Weather.WeatherActivity;
@@ -101,24 +102,7 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_menu, menu);
-
-        ImageView drawerImg = findViewById(R.id.nav_header_imageView);
-        TextView drawerTv = findViewById(R.id.nav_header_textView);
-
-//        File sd = Environment.getExternalStorageDirectory();
-        String imgPath = userProfile.getImgPath();
-        Log.d("image", "onCreateOptionsMenu: " + imgPath);
-        if (imgPath != null) {
-            File imgFile = new File(userProfile.getImgPath());
-            if (imgFile.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                drawerImg.setImageBitmap(myBitmap);
-                drawerTv.setText(userProfile.getName());
-            }
-        }
-
+        AssetHandlers.loadProfileImage(this, menu, userProfile);
         return true;
     }
 

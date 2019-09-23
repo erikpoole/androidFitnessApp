@@ -3,6 +3,7 @@ package com.example.project.activity.login;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.project.AssetHandlers;
 import com.example.project.R;
 import com.example.project.activity.MainActivity;
 import com.example.project.activity.bio.BioFormFragment;
@@ -43,6 +45,12 @@ public class SignUpActivity extends AppCompatActivity implements BioFormFragment
         nameET = findViewById(R.id.name_sign_up);
         psswdET = findViewById(R.id.password_sign_up);
         psswdConfirmET = findViewById(R.id.confirm_password_sign_up);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        AssetHandlers.loadProfileImage(this, menu, userProfile);
+        return true;
     }
 
     // Fragment onSubmitForm interface method definition
