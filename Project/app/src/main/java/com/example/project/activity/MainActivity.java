@@ -3,20 +3,14 @@ package com.example.project.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
@@ -30,8 +24,6 @@ import com.example.project.activity.bio.BioEditActivity;
 import com.example.project.activity.login.SignInFragment;
 import com.example.project.database.UserProfile;
 import com.google.android.material.navigation.NavigationView;
-
-import java.io.File;
 
 public class MainActivity extends AppCompatActivity implements SignInFragment.inputPersist {
     private ActionBarDrawerToggle toggle;
@@ -118,14 +110,14 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.settings: // TODO need to create a settings page
-                Intent settings = new Intent(this, SettingsActivity.class);
-                startActivity(settings);
+            case R.id.night_mode:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                finish();
+                startActivity(getIntent());
                 return true;
-            case R.id.edit_profile: // TODO this doesn't quite work yet
+            case R.id.edit_profile:
                 Intent bioEdit = new Intent(this, BioEditActivity.class);
                 startActivity(bioEdit);
-                Toast.makeText(getApplicationContext(), "This page is still under construction.", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.logout:
                 userProfile.logout();
