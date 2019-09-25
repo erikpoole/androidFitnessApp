@@ -133,9 +133,11 @@ public class UserProfile {
     public void setImgPath(String imgPath) { _imgPath = imgPath; }
     public void setGoal(int goal) {_goal = goal; }
     public void setActiveState(int activeState) { _activeState = activeState; }
+    public void toggleDarkMode() { _isInDarkMode = !_isInDarkMode; }
 
     // UPDATE PROFILE
     public void update() {
+        int darkMode = _isInDarkMode ? 1 : 0;
         SQLiteDatabase db = _dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(UserContract.UserEntry.USER_NAME, _name);
@@ -148,7 +150,7 @@ public class UserProfile {
         values.put(UserContract.UserEntry.IMG_PATH, _imgPath);
         values.put(UserContract.UserEntry.GOAL, _goal);
         values.put(UserContract.UserEntry.ACTIVE_STATE, _activeState);
-
+        values.put(UserContract.UserEntry.IS_IN_DARK_MODE, darkMode);
         String selection = UserContract.UserEntry.IS_LOGGED_IN + " LIKE ?";
         String[] selectionArgs = {"1"};
 
