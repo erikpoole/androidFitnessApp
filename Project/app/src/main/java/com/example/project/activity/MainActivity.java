@@ -62,6 +62,11 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
 
         // UserProfile will be our interface for interacting with the database
         userProfile = new UserProfile(ctx);
+        if (!userProfile.isInDarkMode()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
 
 //         UNCOMMENT THIS TO ERASE CONTENTS OF DB
 //        userProfile.upgrade();
@@ -101,6 +106,11 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
     public void onResume() {
         super.onResume();
         userProfile = new UserProfile(ctx);
+        if (!userProfile.isInDarkMode()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
         if (!userProfile.isLoggedIn()) {
             showLoginForm();
         }
@@ -111,13 +121,13 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
         int id = item.getItemId();
         switch (id) {
             case R.id.night_mode:
-                UserProfile user = new UserProfile(getApplicationContext());
-                boolean nightModeOn = user.isInDarkMode();
-                if (!nightModeOn) {
+                if (!userProfile.isInDarkMode()) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
+                userProfile.toggleDarkMode();
+                userProfile.update();
                 finish();
                 startActivity(getIntent());
                 return true;

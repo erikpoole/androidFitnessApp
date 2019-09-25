@@ -135,9 +135,16 @@ public class UserProfile {
     public void setActiveState(int activeState) { _activeState = activeState; }
     public void toggleDarkMode() { _isInDarkMode = !_isInDarkMode; }
 
+    int convertDark() {
+        if (_isInDarkMode) {
+            return 1;
+        }
+        return 0;
+    }
     // UPDATE PROFILE
     public void update() {
-        int darkMode = _isInDarkMode ? 1 : 0;
+        int darkMode = convertDark();
+        Log.d("darkMode", String.valueOf(darkMode));
         SQLiteDatabase db = _dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(UserContract.UserEntry.USER_NAME, _name);

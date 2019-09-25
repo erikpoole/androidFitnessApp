@@ -115,13 +115,13 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         int id = item.getItemId();
         switch (id) {
             case R.id.night_mode:
-                UserProfile user = new UserProfile(getApplicationContext());
-                boolean nightModeOn = user.isInDarkMode();
-                if (!nightModeOn) {
+                if (!user.isInDarkMode()) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
+                user.toggleDarkMode();
+                user.update();
                 finish();
                 startActivity(getIntent());
                 return true;

@@ -4,13 +4,10 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import com.example.project.AssetHandlers;
-import com.example.project.activity.Weather.WeatherActivity;
-import com.example.project.activity.bio.BioActivity;
-import com.example.project.activity.bio.BioEditActivity;
-import com.example.project.database.UserProfile;
-import com.google.android.material.navigation.NavigationView;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -19,12 +16,13 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.SeekBar;
-import android.widget.TextView;
-
+import com.example.project.AssetHandlers;
 import com.example.project.R;
+import com.example.project.activity.Weather.WeatherActivity;
+import com.example.project.activity.bio.BioActivity;
+import com.example.project.activity.bio.BioEditActivity;
+import com.example.project.database.UserProfile;
+import com.google.android.material.navigation.NavigationView;
 
 public class BmiActivity extends AppCompatActivity {
 
@@ -128,13 +126,13 @@ public class BmiActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.night_mode:
-                UserProfile user = new UserProfile(getApplicationContext());
-                boolean nightModeOn = user.isInDarkMode();
-                if (!nightModeOn) {
+                if (!user.isInDarkMode()) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
+                user.toggleDarkMode();
+                user.update();
                 finish();
                 startActivity(getIntent());
                 return true;

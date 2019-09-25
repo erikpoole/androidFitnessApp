@@ -105,6 +105,8 @@ public class BioActivity extends AppCompatActivity {
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
+                user.toggleDarkMode();
+                user.update();
                 finish();
                 startActivity(getIntent());
                 return true;
