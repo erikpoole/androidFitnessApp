@@ -128,7 +128,13 @@ public class BmiActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.night_mode:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                UserProfile user = new UserProfile(getApplicationContext());
+                boolean nightModeOn = user.isInDarkMode();
+                if (!nightModeOn) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
                 finish();
                 startActivity(getIntent());
                 return true;

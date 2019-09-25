@@ -9,7 +9,7 @@
     <string name="take_picture">Take Picture</string>
     <string name="find_hike">Find Hike</string>
     <string name="bio">Bio</string>
-    <string name="night_mode">Night Mode</string>
+    <string name="night_mode">Toggle Night Mode</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>
