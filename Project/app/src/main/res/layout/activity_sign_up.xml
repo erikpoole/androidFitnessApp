@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/enter_name"
-                android:backgroundTint="@color/navy"
+                android:backgroundTint="?android:attr/colorPrimary"
                 android:autofillHints="@string/enter_name"
                 />
             <EditText
@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/enter_password"
-                android:backgroundTint="@color/navy"
+                android:backgroundTint="?android:attr/colorPrimary"
                 android:autofillHints="@string/enter_password"
                 />
             <EditText
@@ -52,7 +52,7 @@
                 android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/navy"
+                android:backgroundTint="?android:attr/colorPrimary"
                 android:hint="@string/confirm_password"
                 android:autofillHints="@string/confirm_password"
                 />
@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/enter_age"
-                android:backgroundTint="@color/navy"
+                android:backgroundTint="?android:attr/colorPrimary"
                 android:autofillHints="@string/confirm_password"
                 android:focusable="false"
                 />

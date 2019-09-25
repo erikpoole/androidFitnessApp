@@ -15,7 +15,7 @@
         android:textAlignment="center"
         android:text="@string/sign_in"
         android:textFontWeight="500"
-        android:textColor="@color/navy"
+        android:textColor="?android:attr/colorPrimary"
         android:textSize="@dimen/medium_large_font_size"
         />
 
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:textSize="@dimen/small_font_size"
-        android:backgroundTint="@color/navy"
+        android:backgroundTint="?android:attr/colorPrimary"
         android:autofillHints="@string/enter_name"
         android:hint="@string/enter_name" />
 
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/navy"
+        android:backgroundTint="?android:attr/colorPrimary"
         android:autofillHints="@string/enter_password"
         android:hint="@string/enter_password"
         />
@@ -68,7 +68,7 @@
         android:textAlignment="center"
         android:text="You don't have a profile?"
         android:textFontWeight="300"
-        android:textColor="@color/navy"
+        android:textColor="?android:attr/colorPrimary"
         android:textSize="@dimen/small_medium_font_size"
         />
 
@@ -79,7 +79,7 @@
         android:textSize="@dimen/small_font_size"
         android:text="@string/sign_up"
         android:textColor="@color/white"
-        android:backgroundTint="@color/navy"
+        android:backgroundTint="@color/holo_blue_light"
         />
 
     </LinearLayout>

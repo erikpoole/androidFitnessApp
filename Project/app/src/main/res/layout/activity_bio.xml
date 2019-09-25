@@ -26,7 +26,7 @@
                     android:paddingTop="?attr/actionBarSize"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/navy"
+                    android:textColor="?android:attr/colorPrimary"
                     android:textSize="@dimen/medium_large_font_size"
                     android:gravity="center" />
                 <LinearLayout
