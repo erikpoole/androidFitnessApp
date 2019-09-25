@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -21,6 +22,7 @@ import com.example.project.AssetHandlers;
 import com.example.project.R;
 import com.example.project.activity.Weather.WeatherActivity;
 import com.example.project.activity.bio.BioActivity;
+import com.example.project.activity.bio.BioEditActivity;
 import com.example.project.database.UserProfile;
 import com.google.android.material.navigation.NavigationView;
 
@@ -106,6 +108,30 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
     public boolean onCreateOptionsMenu(Menu menu) {
         AssetHandlers.loadProfileImage(this, menu, user);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.night_mode:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                finish();
+                startActivity(getIntent());
+                return true;
+            case R.id.edit_profile:
+                Intent bioEdit = new Intent(this, BioEditActivity.class);
+                startActivity(bioEdit);
+                return true;
+            case R.id.logout:
+                UserProfile userProfile = new UserProfile(getApplicationContext());
+                userProfile.logout();
+                Intent mainPage = new Intent(this, MainActivity.class);
+                startActivity(mainPage);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public boolean handleNavigationEvent(@NonNull MenuItem menuItem) {
