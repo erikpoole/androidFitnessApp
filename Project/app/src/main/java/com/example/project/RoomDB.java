@@ -6,17 +6,13 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-//        WeatherDAO
-//        WeatherEntity (Annotations)
-//        UserDAO
-//        UserEntity (Annotations)
-
-
-@Database(entities = {WeatherDBEntity.class, UserDBEntity.class})
+@Database(entities = {WeatherDBEntity.class, UserDBEntity.class}, version = 1, exportSchema = false)
 public abstract class RoomDB extends RoomDatabase {
 
-    //TODO add WeatherDAO and UserDAO
     private static volatile RoomDB INSTANCE;
+
+    public abstract UserDAO userDAO();
+    public abstract WeatherDAO weatherDAO();
 
     static RoomDB getDatabase(final Context context) {
         if (INSTANCE == null) {
