@@ -23,6 +23,7 @@ public class WeatherViewModel extends AndroidViewModel {
         return allWeatherData;
     }
 
+    // This replaces an existing entry for the same location if it exists
     public void insert(WeatherDBEntity weatherDBEntity) {
         repository.insert(weatherDBEntity);
     }
