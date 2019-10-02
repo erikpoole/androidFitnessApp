@@ -24,6 +24,14 @@ public class UserDBEntity {
     private String mAge;
 
     @NonNull
+    @ColumnInfo(name = "height")
+    private String mHeight;
+
+    @NonNull
+    @ColumnInfo(name = "weight")
+    private int mWeight;
+
+    @NonNull
     @ColumnInfo(name = "sex")
     private String mSex;
 
@@ -47,11 +55,13 @@ public class UserDBEntity {
     @ColumnInfo(name = "isInDarkMode")
     private boolean mIsInDarkMode;
 
-    public UserDBEntity(String name, String password, String age, String sex, String imgPath) {
+    public UserDBEntity(String name, String password, String age, String sex, String height, int weight, String imgPath) {
         this.mName = name;
         this.mPassword = password;
         this.mAge = age;
         this.mSex = sex;
+        this.mHeight = height;
+        this.mWeight = weight;
         this.mImgPath = imgPath;
         this.mGoal = 0;
         this.mActiveState = 0;
@@ -79,6 +89,14 @@ public class UserDBEntity {
         return this.mSex;
     }
 
+    public String getHeight(){
+        return this.mHeight;
+    }
+
+    public int getWeight(){
+        return this.mWeight;
+    }
+
     public String getImgPath(){
         return this.mImgPath;
     }
@@ -103,6 +121,22 @@ public class UserDBEntity {
         this.id = id;
     }
 
+    public void setAge(String age){
+        this.mAge = age;
+    }
+
+    public void setSex(String sex){
+        this.mSex = sex;
+    }
+
+    public void setHeight(String height){
+        this.mHeight = height;
+    }
+
+    public void setWeight(int weight){
+        this.mWeight = weight;
+    }
+
     public void setGoal(int goal) {
         this.mGoal = goal;
     }
@@ -119,6 +153,7 @@ public class UserDBEntity {
         this.mIsInDarkMode = isInDarkMode;
     }
 
-    public static class UserViewModel {
-    }
+//    public static class UserViewModel {
+//
+//    }
 }

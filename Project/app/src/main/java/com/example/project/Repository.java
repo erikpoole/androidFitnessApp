@@ -57,6 +57,14 @@ public class Repository {
         return userDAO.getSex();
     }
 
+    public LiveData<String> getHeight() {
+        return userDAO.getHeight();
+    }
+
+    public LiveData<Integer> getWeight() {
+        return userDAO.getWeight();
+    }
+
     LiveData<String> getImgPath() {
         return userDAO.getImgPath();
     }

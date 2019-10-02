@@ -31,6 +31,12 @@ public interface UserDAO {
     @Query("SELECT imgPath FROM UserDBEntity WHERE isLoggedIn = 1")
     LiveData<String> getImgPath();
 
+    @Query("SELECT height FROM UserDBEntity WHERE isLoggedIn = 1")
+    LiveData<String> getHeight();
+
+    @Query("SELECT weight FROM UserDBEntity WHERE isLoggedIn = 1")
+    LiveData<Integer> getWeight();
+
     @Query("SELECT goal FROM UserDBEntity WHERE isLoggedIn = 1")
     LiveData<Integer> getGoal();
 
@@ -42,6 +48,12 @@ public interface UserDAO {
 
     @Query("SELECT isInDarkMode FROM UserDBEntity WHERE isLoggedIn = 1")
     LiveData<Boolean> isInDarkMode();
+
+    @Query("UPDATE UserDBEntity SET height = :newHeight WHERE isLoggedIn = 1")
+    void updateHeight(String newHeight);
+
+    @Query("UPDATE UserDBEntity SET weight = :newWeight WHERE isLoggedIn = 1")
+    void updateWeight(int newWeight);
 
     @Query("UPDATE UserDBEntity SET sex = :newSex WHERE isLoggedIn = 1")
     void updateSex(String newSex);

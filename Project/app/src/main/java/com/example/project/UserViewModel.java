@@ -17,35 +17,43 @@ public class UserViewModel extends AndroidViewModel {
         allUserData = repository.getAllUserData();
     }
 
-    String getName() {
+    public String getName() {
         return repository.getName();
     }
 
-    LiveData<String> getAge() {
+    public LiveData<String> getAge() {
         return repository.getAge();
     }
 
-    LiveData<String> getSex() {
+    public LiveData<String> getSex() {
         return repository.getSex();
     }
 
-    LiveData<String> getImgPath() {
+    public LiveData<String> getHeight() {
+        return repository.getHeight();
+    }
+
+    public LiveData<Integer> getWeight() {
+        return repository.getWeight();
+    }
+
+    public LiveData<String> getImgPath() {
         return repository.getImgPath();
     }
 
-    LiveData<Integer> getGoal() {
+    public LiveData<Integer> getGoal() {
         return repository.getGoal();
     }
 
-    LiveData<Integer> getActiveState() {
+    public LiveData<Integer> getActiveState() {
         return repository.getActiveState();
     }
 
-    LiveData<Boolean> hasUserLoggedIn() {
+    public LiveData<Boolean> hasUserLoggedIn() {
         return repository.hasUserLoggedIn();
     }
 
-    LiveData<Boolean> isInDarkMode() {
+    public LiveData<Boolean> isInDarkMode() {
         return repository.isInDarkMode();
     }
 
@@ -69,7 +77,12 @@ public class UserViewModel extends AndroidViewModel {
         repository.updateLogin(status);
     }
 
-    LiveData<List<UserDBEntity>> getAllUserData() {
+    public void insert(String name, String password, String age, String sex, String height, int weight, String imgPath) {
+        UserDBEntity dbEntity = new UserDBEntity(name, password, age, sex, height, weight, imgPath);
+        repository.insert(dbEntity);
+    }
+
+    public LiveData<List<UserDBEntity>> getAllUserData() {
         return allUserData;
     }
 }
