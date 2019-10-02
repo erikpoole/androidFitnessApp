@@ -17,7 +17,6 @@ public class ViewModel extends AndroidViewModel {
         super(application);
         repository = new Repository(application);
         userAllWordsTemp = repository.getAllUserData();
-
     }
 
     LiveData<List<UserDBEntity>> getAllUserDB() {return userAllWordsTemp;}

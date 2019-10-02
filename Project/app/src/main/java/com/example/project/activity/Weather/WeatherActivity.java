@@ -86,7 +86,7 @@ public class WeatherActivity extends AppCompatActivity {
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                return handleNavigationEvent(item);
+                return AssetHandlers.handleNavigationEvent(this, item);
             }
         });
         isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
@@ -127,38 +127,6 @@ public class WeatherActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public boolean handleNavigationEvent(@NonNull MenuItem menuItem) {
-        int id = menuItem.getItemId();
-        switch (id) {
-            case R.id.nav_home:
-                Intent mainPage = new Intent(this, MainActivity.class);
-                startActivity(mainPage);
-                return true;
-            case R.id.nav_weather:
-                Intent weatherPage = new Intent(this, WeatherActivity.class);
-                startActivity(weatherPage);
-                return true;
-            case R.id.nav_hiking:
-                Intent hikingPage = new Intent(this, HikingActivity.class);
-                startActivity(hikingPage);
-                return true;
-            case R.id.nav_bio:
-                Intent bioPage = new Intent(this, BioActivity.class);
-                startActivity(bioPage);
-                return true;
-            case R.id.nav_bmi:
-                Intent bmiPage = new Intent(this, BmiActivity.class);
-                startActivity(bmiPage);
-                return true;
-            case R.id.nav_calorie:
-                Intent caloriePage = new Intent(this, CalorieActivity.class);
-                startActivity(caloriePage);
-                return true;
-            default:
-                return false;
         }
     }
 
