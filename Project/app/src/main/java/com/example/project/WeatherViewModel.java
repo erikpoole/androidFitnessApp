@@ -28,8 +28,8 @@ public class WeatherViewModel extends AndroidViewModel {
         repository.insert(weatherDBEntity);
     }
 
-    public String getMostRecentWeatherJsonForLocation() {
-        return "";
+    public WeatherDBEntity getWeatherForLocation(String location) {
+        return repository.getWeatherForLocation(location);
     }
 
 }

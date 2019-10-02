@@ -20,4 +20,7 @@ public interface WeatherDAO {
     @Query("SELECT * FROM Weather")
     LiveData<List<WeatherDBEntity>> getAllWeatherData();
 
+    @Query("SELECT * FROM Weather WHERE location = :location LIMIT 1")
+    WeatherDBEntity getWeatherForLocation(String location);
+
 }
