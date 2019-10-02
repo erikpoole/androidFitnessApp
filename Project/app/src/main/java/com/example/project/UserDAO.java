@@ -23,23 +23,23 @@ public interface UserDAO {
     String getName();
 
     @Query("SELECT age from UserDBEntity where isLoggedIn = 1")
-    String getAge();
+    LiveData<String> getAge();
 
     @Query("SELECT sex from UserDBEntity where isLoggedIn = 1")
-    String getSex();
+    LiveData<String> getSex();
 
     @Query("SELECT imgPath from UserDBEntity where isLoggedIn = 1")
-    String getImgPath();
+    LiveData<String> getImgPath();
 
     @Query("SELECT goal from UserDBEntity where isLoggedIn = 1")
-    int getGoal();
+    LiveData<Integer> getGoal();
 
     @Query("SELECT activeState from UserDBEntity where isLoggedIn = 1")
-    int getActiveState();
+    LiveData<Integer> getActiveState();
 
     @Query("SELECT isLoggedIn from UserDBEntity where isLoggedIn = 1")
     boolean hasUserLoggedIn();
 
     @Query("SELECT isInDarkMode from UserDBEntity where isLoggedIn = 1")
-    boolean isInDarkMode();
+    LiveData<Boolean> isInDarkMode();
 }
