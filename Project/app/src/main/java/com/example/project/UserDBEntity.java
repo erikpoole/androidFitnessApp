@@ -59,6 +59,10 @@ public class UserDBEntity {
         this.mIsInDarkMode = false;
     }
 
+    public int getId(){
+        return this.id;
+    }
+
     public String getName(){
         return this.mName;
     }
@@ -93,5 +97,25 @@ public class UserDBEntity {
 
     public boolean getIsInDarkMode(){
         return this.mIsInDarkMode;
+    }
+
+    public void setId(int id){
+        this.id = id;
+    }
+
+    public void setGoal(int goal) {
+        this.mGoal = goal;
+    }
+
+    public void setActiveState(int activeState) {
+        this.mActiveState = activeState;
+    }
+
+    public void setIsLoggedIn(boolean isLoggedIn) {
+        this.mIsLoggedIn = isLoggedIn;
+    }
+
+    public void setIsInDarkMode(boolean isInDarkMode) {
+        this.mIsInDarkMode = isInDarkMode;
     }
 }
