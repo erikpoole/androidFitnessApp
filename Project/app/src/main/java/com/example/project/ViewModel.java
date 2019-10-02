@@ -16,7 +16,7 @@ public class ViewModel extends AndroidViewModel {
     public ViewModel(@NonNull Application application) {
         super(application);
         repository = new Repository(application);
-        userAllWordsTemp = repository.getAllWords();
+        userAllWordsTemp = repository.getAllUserData();
 
     }
 
