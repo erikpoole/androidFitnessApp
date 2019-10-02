@@ -5,8 +5,6 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.project.UserDBEntity;
-
 import java.util.List;
 
 @Dao
@@ -20,4 +18,5 @@ public interface WeatherDAO {
 
     @Query("SELECT * FROM Weather")
     LiveData<List<WeatherDBEntity>> getAllWeatherData();
+
 }
