@@ -8,11 +8,12 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 public class Repository {
+
     private UserDAO userDAO;
     private WeatherDAO weatherDAO;
 
-    private LiveData<List<UserDBEntity>> userAllWordsTemp;
-    private LiveData<List<WeatherDBEntity>> weatherAllWordsTemp;
+    private LiveData<List<UserDBEntity>> allUserData;
+    private LiveData<List<WeatherDBEntity>> allWeatherData;
 
     Repository(Application application) {
         RoomDB roomDB = RoomDB.getDatabase(application);
@@ -20,33 +21,54 @@ public class Repository {
         userDAO = roomDB.userDAO();
         weatherDAO = roomDB.weatherDAO();
 
-        userAllWordsTemp = userDAO.getAllWords();
-        weatherAllWordsTemp = weatherDAO.getAllWords();
-
-        //TODO Finish DAO interactions - wrappers, etc.
-
+        allUserData = userDAO.getAllUserData();
+        allWeatherData = weatherDAO.getAllWeatherData();
     }
-        LiveData<List<UserDBEntity>> getAllWords() {
-            return userAllWordsTemp;
+    
+    LiveData<List<UserDBEntity>> getAllUserData() {
+        return allUserData;
+    }
+
+    LiveData<List<WeatherDBEntity>> getAllWeatherData() {
+        return allWeatherData;
+    }
+
+    public void insert(WeatherDBEntity weatherDbEntity) {
+        new insertWeatherAsyncTask(weatherDAO).execute(weatherDbEntity);
+    }
+
+    public void insert(UserDBEntity word) {
+        new insertUserAsyncTask(userDAO).execute(word);
+    }
+
+    private static class insertUserAsyncTask extends AsyncTask<UserDBEntity, Void, Void> {
+
+        private UserDAO mAsyncTaskDao;
+
+        insertUserAsyncTask(UserDAO dao) {
+            mAsyncTaskDao = dao;
         }
 
-        public void insert (UserDBEntity word) {
-            new insertAsyncTask(userDAO).execute(word);
+        @Override
+        protected Void doInBackground(UserDBEntity... userDBEntities) {
+            mAsyncTaskDao.insert(userDBEntities[0]);
+            return null;
+        }
+    }
+
+    private static class insertWeatherAsyncTask extends AsyncTask<WeatherDBEntity, Void, Void> {
+
+        private WeatherDAO mAsyncTaskDao;
+
+        insertWeatherAsyncTask(WeatherDAO mWeatherDao) {
+            mAsyncTaskDao = mWeatherDao;
         }
 
-        private static class insertAsyncTask extends AsyncTask<UserDBEntity, Void, Void> {
-
-            private UserDAO mAsyncTaskDao;
-
-            insertAsyncTask(UserDAO dao) {
-                mAsyncTaskDao = dao;
-            }
-
-            @Override
-            protected Void doInBackground(UserDBEntity... userDBEntities) {
-                mAsyncTaskDao.insert(userDBEntities[0]);
-                return null;
-            }
+        @Override
+        protected Void doInBackground(WeatherDBEntity... weatherDBEntities) {
+            mAsyncTaskDao.insert(weatherDBEntities[0]);
+            return null;
         }
+    }
 
 }

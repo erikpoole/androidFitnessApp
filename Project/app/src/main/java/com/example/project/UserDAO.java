@@ -17,5 +17,5 @@ public interface UserDAO {
     void deleteAll();
 
     @Query("SELECT * from UserDBEntity")
-    LiveData<List<UserDBEntity>> getAllWords();
+    LiveData<List<UserDBEntity>> getAllUserData();
 }
