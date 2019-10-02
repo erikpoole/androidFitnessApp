@@ -13,29 +13,30 @@ public class WeatherDBEntity {
 
     @PrimaryKey
     @ColumnInfo(name = "id")
-    private UUID id;
+    @NonNull
+    private String id;
 
     @ColumnInfo(name = "weatherJson")
     private String weatherJson;
 
     public WeatherDBEntity(String weatherJson) {
-        id = UUID.randomUUID();
+        id = UUID.randomUUID().toString();
         this.weatherJson = weatherJson;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID mId) {
-        id = mId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getWeatherJson() {
         return weatherJson;
     }
 
-    public void setWeatherJson(String mWeatherJson) {
-        weatherJson = mWeatherJson;
+    public void setWeatherJson(String weatherJson) {
+        this.weatherJson = weatherJson;
     }
 }
