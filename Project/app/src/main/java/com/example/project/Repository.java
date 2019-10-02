@@ -24,13 +24,17 @@ public class Repository {
         allUserData = userDAO.getAllUserData();
         allWeatherData = weatherDAO.getAllWeatherData();
     }
-    
+
     LiveData<List<UserDBEntity>> getAllUserData() {
         return allUserData;
     }
 
     LiveData<List<WeatherDBEntity>> getAllWeatherData() {
         return allWeatherData;
+    }
+
+    WeatherDBEntity getWeatherForLocation(String location) {
+        return weatherDAO.getWeatherForLocation(location);
     }
 
     public void insert(WeatherDBEntity weatherDbEntity) {
