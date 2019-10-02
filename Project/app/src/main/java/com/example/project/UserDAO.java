@@ -38,7 +38,7 @@ public interface UserDAO {
     LiveData<Integer> getActiveState();
 
     @Query("SELECT isLoggedIn from UserDBEntity where isLoggedIn = 1")
-    boolean hasUserLoggedIn();
+    LiveData<Boolean> hasUserLoggedIn();
 
     @Query("SELECT isInDarkMode from UserDBEntity where isLoggedIn = 1")
     LiveData<Boolean> isInDarkMode();

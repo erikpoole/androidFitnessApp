@@ -118,4 +118,7 @@ public class UserDBEntity {
     public void setIsInDarkMode(boolean isInDarkMode) {
         this.mIsInDarkMode = isInDarkMode;
     }
+
+    public static class UserViewModel {
+    }
 }

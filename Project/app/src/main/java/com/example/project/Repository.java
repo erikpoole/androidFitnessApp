@@ -41,8 +41,40 @@ public class Repository {
         new insertWeatherAsyncTask(weatherDAO).execute(weatherDbEntity);
     }
 
-    public void insert(UserDBEntity word) {
-        new insertUserAsyncTask(userDAO).execute(word);
+    public void insert(UserDBEntity userDBEntity) {
+        new insertUserAsyncTask(userDAO).execute(userDBEntity);
+    }
+
+    String getName() {
+        return userDAO.getName();
+    }
+
+    LiveData<String> getAge() {
+        return userDAO.getAge();
+    }
+
+    LiveData<String> getSex() {
+        return userDAO.getSex();
+    }
+
+    LiveData<String> getImgPath() {
+        return userDAO.getImgPath();
+    }
+
+    LiveData<Integer> getGoal() {
+        return userDAO.getGoal();
+    }
+
+    LiveData<Integer> getActiveState() {
+        return userDAO.getActiveState();
+    }
+
+    LiveData<Boolean> hasUserLoggedIn() {
+        return userDAO.hasUserLoggedIn();
+    }
+
+    LiveData<Boolean> isInDarkMode() {
+        return userDAO.isInDarkMode();
     }
 
     private static class insertUserAsyncTask extends AsyncTask<UserDBEntity, Void, Void> {
