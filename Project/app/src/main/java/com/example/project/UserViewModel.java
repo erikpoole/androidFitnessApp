@@ -49,6 +49,26 @@ public class UserViewModel extends AndroidViewModel {
         return repository.isInDarkMode();
     }
 
+    void updateSex(String newSex) {
+        repository.updateSex(newSex);
+    }
+
+    void updateImgPath(String newPath) {
+        repository.updateImgPath(newPath);
+    }
+
+    void updateGoal(int newGoal) {
+        repository.updateGoal(newGoal);
+    }
+
+    void updateActiveState(int newActiveState) {
+        repository.updateActiveState(newActiveState);
+    }
+
+    void updateLogin(boolean status) {
+        repository.updateLogin(status);
+    }
+
     LiveData<List<UserDBEntity>> getAllUserData() {
         return allUserData;
     }
