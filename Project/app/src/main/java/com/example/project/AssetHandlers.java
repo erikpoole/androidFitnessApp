@@ -66,6 +66,7 @@ public abstract class AssetHandlers {
         }
     }
 
+    //used in drawer
     public static boolean handleNavigationEvent(Activity activity, @NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
         switch (id) {
