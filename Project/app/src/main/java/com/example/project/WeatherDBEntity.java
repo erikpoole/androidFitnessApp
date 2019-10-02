@@ -12,24 +12,24 @@ import java.util.UUID;
 public class WeatherDBEntity {
 
     @PrimaryKey
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "location")
     @NonNull
-    private String id;
+    private String location;
 
     @ColumnInfo(name = "weatherJson")
     private String weatherJson;
 
-    public WeatherDBEntity(String weatherJson) {
-        id = UUID.randomUUID().toString();
+    public WeatherDBEntity(String location, String weatherJson) {
+        this.location = location;
         this.weatherJson = weatherJson;
     }
 
-    public String getId() {
-        return id;
+    public String getLocation() {
+        return location;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getWeatherJson() {
