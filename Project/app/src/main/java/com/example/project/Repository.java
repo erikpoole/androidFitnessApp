@@ -77,6 +77,30 @@ public class Repository {
         return userDAO.isInDarkMode();
     }
 
+    void updateSex(String newSex) {
+        userDAO.updateSex(newSex);
+    }
+
+    void updateImgPath(String newPath) {
+        userDAO.updateImgPath(newPath);
+    }
+
+    void updateGoal(int newGoal) {
+        userDAO.updateGoal(newGoal);
+    }
+
+    void updateActiveState(int newActiveState) {
+        userDAO.updateActiveState(newActiveState);
+    }
+
+    void updateLogin(boolean status) {
+        userDAO.updateLogin(status);
+    }
+
+    void updateDarkMode(boolean isInDarkMode) {
+        userDAO.updateDarkMode(isInDarkMode);
+    }
+
     private static class insertUserAsyncTask extends AsyncTask<UserDBEntity, Void, Void> {
 
         private UserDAO mAsyncTaskDao;
