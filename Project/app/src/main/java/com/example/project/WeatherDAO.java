@@ -18,6 +18,6 @@ public interface WeatherDAO {
     @Query("DELETE FROM Weather")
     void deleteAll();
 
-    @Query("SELECT * from Weather")
+    @Query("SELECT * FROM Weather")
     LiveData<List<WeatherDBEntity>> getAllWeatherData();
 }
