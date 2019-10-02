@@ -17,10 +17,39 @@ public class UserViewModel extends AndroidViewModel {
         allUserData = repository.getAllUserData();
     }
 
+    String getName() {
+        return repository.getName();
+    }
 
+    LiveData<String> getAge() {
+        return repository.getAge();
+    }
+
+    LiveData<String> getSex() {
+        return repository.getSex();
+    }
+
+    LiveData<String> getImgPath() {
+        return repository.getImgPath();
+    }
+
+    LiveData<Integer> getGoal() {
+        return repository.getGoal();
+    }
+
+    LiveData<Integer> getActiveState() {
+        return repository.getActiveState();
+    }
+
+    LiveData<Boolean> hasUserLoggedIn() {
+        return repository.hasUserLoggedIn();
+    }
+
+    LiveData<Boolean> isInDarkMode() {
+        return repository.isInDarkMode();
+    }
 
     LiveData<List<UserDBEntity>> getAllUserData() {
         return allUserData;
     }
-
 }
