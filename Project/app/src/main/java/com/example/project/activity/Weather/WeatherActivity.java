@@ -2,6 +2,7 @@ package com.example.project.activity.Weather;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -83,10 +84,11 @@ public class WeatherActivity extends AppCompatActivity {
             toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         }
         NavigationView nav = findViewById(R.id.nav_view);
+        final Activity activity = this;
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                return AssetHandlers.handleNavigationEvent(this, item);
+                return AssetHandlers.handleNavigationEvent(activity, item);
             }
         });
         isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
