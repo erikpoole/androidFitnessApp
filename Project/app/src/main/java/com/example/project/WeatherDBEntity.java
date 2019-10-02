@@ -1,17 +1,25 @@
 package com.example.project;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+import java.util.UUID;
+
+@Entity(tableName = "Weather")
 public class WeatherDBEntity {
 
     @PrimaryKey
-    @NonNull
-    private String mWord;
+    @ColumnInfo(name = "id")
+    private UUID id;
 
-    public WeatherDBEntity(String word) {this.mWord = word;}
+    @ColumnInfo(name = "weatherJson")
+    private String weatherJson;
 
-    public String getWord(){return this.mWord;}
+    public WeatherDBEntity(String mWeatherJson) {
+        id = UUID.randomUUID();
+        weatherJson = mWeatherJson;
+    }
+
 }

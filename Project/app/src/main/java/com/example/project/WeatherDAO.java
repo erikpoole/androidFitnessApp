@@ -13,11 +13,11 @@ import java.util.List;
 public interface WeatherDAO {
 
     @Insert
-    void insert(WeatherDBEntity word);
+    void insert(WeatherDBEntity weatherData);
 
-    @Query("DELETE FROM WeatherDBEntity")
+    @Query("DELETE FROM Weather")
     void deleteAll();
 
-    @Query("SELECT * from WeatherDBEntity")
-    LiveData<List<WeatherDBEntity>> getAllWords();
+    @Query("SELECT * from Weather")
+    LiveData<List<WeatherDBEntity>> getAllWeatherData();
 }

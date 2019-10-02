@@ -21,7 +21,7 @@ public class Repository {
         weatherDAO = roomDB.weatherDAO();
 
         userAllWordsTemp = userDAO.getAllWords();
-        weatherAllWordsTemp = weatherDAO.getAllWords();
+        weatherAllWordsTemp = weatherDAO.getAllWeatherData();
 
         //TODO Finish DAO interactions - wrappers, etc.
 
