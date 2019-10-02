@@ -2,6 +2,7 @@ package com.example.project.activity.Weather;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -83,10 +84,11 @@ public class WeatherActivity extends AppCompatActivity {
             toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         }
         NavigationView nav = findViewById(R.id.nav_view);
+        final Activity activity = this;
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                return handleNavigationEvent(item);
+                return AssetHandlers.handleNavigationEvent(activity, item);
             }
         });
         isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
@@ -127,38 +129,6 @@ public class WeatherActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public boolean handleNavigationEvent(@NonNull MenuItem menuItem) {
-        int id = menuItem.getItemId();
-        switch (id) {
-            case R.id.nav_home:
-                Intent mainPage = new Intent(this, MainActivity.class);
-                startActivity(mainPage);
-                return true;
-            case R.id.nav_weather:
-                Intent weatherPage = new Intent(this, WeatherActivity.class);
-                startActivity(weatherPage);
-                return true;
-            case R.id.nav_hiking:
-                Intent hikingPage = new Intent(this, HikingActivity.class);
-                startActivity(hikingPage);
-                return true;
-            case R.id.nav_bio:
-                Intent bioPage = new Intent(this, BioActivity.class);
-                startActivity(bioPage);
-                return true;
-            case R.id.nav_bmi:
-                Intent bmiPage = new Intent(this, BmiActivity.class);
-                startActivity(bmiPage);
-                return true;
-            case R.id.nav_calorie:
-                Intent caloriePage = new Intent(this, CalorieActivity.class);
-                startActivity(caloriePage);
-                return true;
-            default:
-                return false;
         }
     }
 

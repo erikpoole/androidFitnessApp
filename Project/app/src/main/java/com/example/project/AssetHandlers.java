@@ -2,6 +2,7 @@ package com.example.project;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -9,16 +10,25 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
+import com.example.project.activity.BmiActivity;
+import com.example.project.activity.CalorieActivity;
+import com.example.project.activity.HikingActivity;
+import com.example.project.activity.MainActivity;
+import com.example.project.activity.Weather.WeatherActivity;
+import com.example.project.activity.bio.BioActivity;
 import com.example.project.database.UserProfile;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class AssetHandlers {
+public abstract class AssetHandlers {
 
     public static String readAsset(String filename, Context context) {
         try {
@@ -53,6 +63,38 @@ public class AssetHandlers {
                 drawerTv.setText(userProfile.getName());
                 drawerTv.setTextColor(Color.WHITE);
             }
+        }
+    }
+
+    public static boolean handleNavigationEvent(Activity activity, @NonNull MenuItem menuItem) {
+        int id = menuItem.getItemId();
+        switch (id) {
+            case R.id.nav_home:
+                Intent mainPage = new Intent(activity.getApplicationContext(), MainActivity.class);
+                activity.startActivity(mainPage);
+                return true;
+            case R.id.nav_weather:
+                Intent weatherPage = new Intent(activity.getApplicationContext(), WeatherActivity.class);
+                activity.startActivity(weatherPage);
+                return true;
+            case R.id.nav_hiking:
+                Intent hikingPage = new Intent(activity.getApplicationContext(), HikingActivity.class);
+                activity.startActivity(hikingPage);
+                return true;
+            case R.id.nav_bio:
+                Intent bioPage = new Intent(activity.getApplicationContext(), BioActivity.class);
+                activity.startActivity(bioPage);
+                return true;
+            case R.id.nav_bmi:
+                Intent bmiPage = new Intent(activity.getApplicationContext(), BmiActivity.class);
+                activity.startActivity(bmiPage);
+                return true;
+            case R.id.nav_calorie:
+                Intent caloriePage = new Intent(activity.getApplicationContext(), CalorieActivity.class);
+                activity.startActivity(caloriePage);
+                return true;
+            default:
+                return false;
         }
     }
 }

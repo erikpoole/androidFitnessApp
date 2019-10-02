@@ -1,5 +1,6 @@
 package com.example.project.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -7,7 +8,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -18,8 +18,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.project.AssetHandlers;
 import com.example.project.R;
 import com.example.project.TileFragment;
-import com.example.project.activity.Weather.WeatherActivity;
-import com.example.project.activity.bio.BioActivity;
 import com.example.project.activity.bio.BioEditActivity;
 import com.example.project.activity.login.SignInFragment;
 import com.example.project.database.UserProfile;
@@ -48,10 +46,11 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
             toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         }
         NavigationView nav = findViewById(R.id.nav_view);
+        final Activity activity = this;
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                return handleNavigationEvent(item);
+                return AssetHandlers.handleNavigationEvent(activity, item);
             }
         });
 
@@ -144,38 +143,6 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public boolean handleNavigationEvent(@NonNull MenuItem menuItem) {
-        int id = menuItem.getItemId();
-        switch (id) {
-            case R.id.nav_home:
-                Intent mainPage = new Intent(this, MainActivity.class);
-                startActivity(mainPage);
-                return true;
-            case R.id.nav_weather:
-                Intent weatherPage = new Intent(this, WeatherActivity.class);
-                startActivity(weatherPage);
-                return true;
-            case R.id.nav_hiking:
-                Intent hikingPage = new Intent(this, HikingActivity.class);
-                startActivity(hikingPage);
-                return true;
-            case R.id.nav_bio:
-                Intent bioPage = new Intent(this, BioActivity.class);
-                startActivity(bioPage);
-                return true;
-            case R.id.nav_bmi:
-                Intent bmiPage = new Intent(this, BmiActivity.class);
-                startActivity(bmiPage);
-                return true;
-            case R.id.nav_calorie:
-                Intent caloriePage = new Intent(this, CalorieActivity.class);
-                startActivity(caloriePage);
-                return true;
-            default:
-                return false;
         }
     }
 
