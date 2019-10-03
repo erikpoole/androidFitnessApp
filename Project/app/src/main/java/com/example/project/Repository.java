@@ -29,6 +29,10 @@ public class Repository {
         return allUserData;
     }
 
+    void deleteAllUserData() {
+        userDAO.deleteAll();
+    }
+
     LiveData<List<WeatherDBEntity>> getAllWeatherData() {
         return allWeatherData;
     }
@@ -45,7 +49,7 @@ public class Repository {
         new insertUserAsyncTask(userDAO).execute(userDBEntity);
     }
 
-    String getName() {
+    LiveData<String> getName() {
         return userDAO.getName();
     }
 
@@ -65,51 +69,59 @@ public class Repository {
         return userDAO.getWeight();
     }
 
-    LiveData<String> getImgPath() {
+    public LiveData<String> getImgPath() {
         return userDAO.getImgPath();
     }
 
-    LiveData<Integer> getGoal() {
+    public LiveData<Integer> getGoal() {
         return userDAO.getGoal();
     }
 
-    LiveData<Integer> getActiveState() {
+    public LiveData<Integer> getActiveState() {
         return userDAO.getActiveState();
     }
 
-    LiveData<Boolean> hasUserLoggedIn() {
+    public LiveData<Boolean> hasUserLoggedIn() {
         return userDAO.hasUserLoggedIn();
     }
 
-    LiveData<Boolean> isInDarkMode() {
+    public LiveData<Boolean> isInDarkMode() {
         return userDAO.isInDarkMode();
     }
 
-    void updateSex(String newSex) {
+    public void updateSex(String newSex) {
         userDAO.updateSex(newSex);
     }
 
-    void updateImgPath(String newPath) {
+    public void updateImgPath(String newPath) {
         userDAO.updateImgPath(newPath);
     }
 
-    void updateGoal(int newGoal) {
+    public void updateGoal(int newGoal) {
         userDAO.updateGoal(newGoal);
     }
 
-    void updateActiveState(int newActiveState) {
+    public void updateActiveState(int newActiveState) {
         userDAO.updateActiveState(newActiveState);
     }
 
-    void updateLogin(boolean status) {
-        userDAO.updateLogin(status);
-    }
-
-    void updateDarkMode(boolean isInDarkMode) {
+    public void updateDarkMode(boolean isInDarkMode) {
         userDAO.updateDarkMode(isInDarkMode);
     }
 
-    private static class insertUserAsyncTask extends AsyncTask<UserDBEntity, Void, Void> {
+    public LiveData<Integer> checkUser(String name, String password) {
+        return userDAO.checkUser(name, password);
+    }
+
+    public void login(int id) {
+        new loginAsyncTask(userDAO).execute(id);
+    }
+
+    public void logout() {
+        new logoutAsyncTask(userDAO).execute(false);
+    }
+
+    private static class insertUserAsyncTask extends android.os.AsyncTask<UserDBEntity, Void, Void> {
 
         private UserDAO mAsyncTaskDao;
 
@@ -120,6 +132,36 @@ public class Repository {
         @Override
         protected Void doInBackground(UserDBEntity... userDBEntities) {
             mAsyncTaskDao.insert(userDBEntities[0]);
+            return null;
+        }
+    }
+
+    private static class logoutAsyncTask extends AsyncTask<Boolean, Void, Void> {
+
+        private UserDAO mAsyncTaskDao;
+
+        logoutAsyncTask(UserDAO dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Boolean... status) {
+            mAsyncTaskDao.logout(status[0]);
+            return null;
+        }
+    }
+
+    private static class loginAsyncTask extends AsyncTask<Integer, Void, Void> {
+
+        private UserDAO mAsyncTaskDao;
+
+        loginAsyncTask(UserDAO dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... id) {
+            mAsyncTaskDao.login(id[0]);
             return null;
         }
     }

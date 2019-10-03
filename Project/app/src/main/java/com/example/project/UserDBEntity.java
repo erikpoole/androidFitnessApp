@@ -1,6 +1,7 @@
 package com.example.project;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -12,7 +13,7 @@ public class UserDBEntity {
     private int id;
 
     @NonNull
-    @ColumnInfo(name = "full_name")
+    @ColumnInfo(name = "fullName")
     private String mName;
 
     @NonNull
@@ -35,7 +36,7 @@ public class UserDBEntity {
     @ColumnInfo(name = "sex")
     private String mSex;
 
-    @NonNull
+    @Nullable
     @ColumnInfo(name = "imgPath")
     private String mImgPath;
 
@@ -153,7 +154,4 @@ public class UserDBEntity {
         this.mIsInDarkMode = isInDarkMode;
     }
 
-//    public static class UserViewModel {
-//
-//    }
 }

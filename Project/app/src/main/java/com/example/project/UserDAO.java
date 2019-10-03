@@ -19,8 +19,8 @@ public interface UserDAO {
     @Query("SELECT * FROM UserDBEntity")
     LiveData<List<UserDBEntity>> getAllUserData();
 
-    @Query("SELECT full_name FROM UserDBEntity WHERE isLoggedIn = 1")
-    String getName();
+    @Query("SELECT fullName FROM UserDBEntity WHERE isLoggedIn = 1")
+    LiveData<String> getName();
 
     @Query("SELECT age FROM UserDBEntity WHERE isLoggedIn = 1")
     LiveData<String> getAge();
@@ -68,7 +68,13 @@ public interface UserDAO {
     void updateActiveState(int newActiveState);
 
     @Query("UPDATE UserDBEntity SET isLoggedIn = :status WHERE isLoggedIn = 1")
-    void updateLogin(boolean status);
+    void logout(boolean status);
+
+    @Query("SELECT id FROM UserDBEntity WHERE fullName = :name AND password = :password")
+    LiveData<Integer> checkUser(String name, String password);
+
+    @Query("UPDATE UserDBEntity SET isLoggedIn = 1 WHERE id = :id")
+    void login(int id);
 
     @Query("UPDATE UserDBEntity SET activeState = :isInDarkMode WHERE isLoggedIn = 1")
     void updateDarkMode(boolean isInDarkMode);

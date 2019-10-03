@@ -1,6 +1,7 @@
 package com.example.project.activity.login;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.project.AssetHandlers;
 import com.example.project.R;
 import com.example.project.UserViewModel;
+import com.example.project.activity.MainActivity;
 import com.example.project.activity.bio.BioFormFragment;
 import com.example.project.activity.bio.DatePicker;
 import com.example.project.database.UserHelper;
@@ -68,27 +70,8 @@ public class SignUpActivity extends AppCompatActivity implements BioFormFragment
         } else {
             userViewModel = new UserViewModel(this.getApplication());
             userViewModel.insert(name, password, DOB, sex, height, weight, imgPath);
-
-//            userProfile = new UserProfile(ctx);
-//            userProfile.setName(name);
-//            userProfile.setWeight(weight);
-//            userProfile.setHeight(height);
-//            userProfile.setDOB(DOB);
-//            userProfile.setSex(sex);
-//            userProfile.setImgPath(imgPath);
-//            userProfile.setActiveState(0);
-//            userProfile.setGoal(0);
-//            if (!userProfile.signUp(password)) {
-//                Toast toast = Toast.makeText(ctx, "Something went wrong...", Toast.LENGTH_SHORT);
-//                toast.show();
-
-
-//            } else {
-            String test = userViewModel.getName();
-            Toast.makeText(ctx, test, Toast.LENGTH_LONG).show();
-//                Intent main = new Intent(this, MainActivity.class);
-//                startActivity(main);
-//            }
+            Intent main = new Intent(this, MainActivity.class);
+            startActivity(main);
         }
     }
 

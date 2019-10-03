@@ -17,7 +17,11 @@ public class UserViewModel extends AndroidViewModel {
         allUserData = repository.getAllUserData();
     }
 
-    public String getName() {
+    public void  deleteAllUserData() {
+        repository.deleteAllUserData();
+    }
+
+    public LiveData<String> getName() {
         return repository.getName();
     }
 
@@ -57,24 +61,32 @@ public class UserViewModel extends AndroidViewModel {
         return repository.isInDarkMode();
     }
 
-    void updateSex(String newSex) {
+    public void updateSex(String newSex) {
         repository.updateSex(newSex);
     }
 
-    void updateImgPath(String newPath) {
+    public void updateImgPath(String newPath) {
         repository.updateImgPath(newPath);
     }
 
-    void updateGoal(int newGoal) {
+    public void updateGoal(int newGoal) {
         repository.updateGoal(newGoal);
     }
 
-    void updateActiveState(int newActiveState) {
+    public void updateActiveState(int newActiveState) {
         repository.updateActiveState(newActiveState);
     }
 
-    void updateLogin(boolean status) {
-        repository.updateLogin(status);
+    public void logout() {
+        repository.logout();
+    }
+
+    public LiveData<Integer> checkUser(String name, String password) {
+        return repository.checkUser(name, password);
+    }
+
+    public void login(int id) {
+        repository.login(id);
     }
 
     public void insert(String name, String password, String age, String sex, String height, int weight, String imgPath) {

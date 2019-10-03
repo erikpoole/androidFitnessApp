@@ -1,4 +1,5 @@
 package com.example.project.activity.login;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -10,13 +11,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.project.R;
-import com.example.project.activity.MainActivity;
-import com.example.project.database.UserProfile;
+import com.example.project.UserViewModel;
 
 public class SignInFragment extends DialogFragment implements View.OnClickListener {
+    private UserViewModel userViewModel;
     private EditText nameET, passwordET;
     private TextView errTV;
     private View vw;
@@ -49,6 +53,9 @@ public class SignInFragment extends DialogFragment implements View.OnClickListen
 
         ctx = signInView.getContext();
 
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        userViewModel = new UserViewModel(getActivity().getApplication());
+
         builder.setView(signInView);
         return builder.create();
     }
@@ -59,16 +66,26 @@ public class SignInFragment extends DialogFragment implements View.OnClickListen
             case R.id.signInBtn:
                 String name = nameET.getText().toString();
                 String password = passwordET.getText().toString();
-                UserProfile userProfile = new UserProfile(ctx);
-                if (userProfile.login(name, password)) {
-                    Intent main = new Intent(ctx, MainActivity.class);
-                    startActivity(main);
-                    dismiss();
-                } else {
-                    nameET.setText("");
-                    passwordET.setText("");
-                    errTV.setText("No user with that name and password...");
-                }
+//                UserProfile userProfile = new UserProfile(ctx);
+
+                final Observer<Integer> idObserver = new Observer<Integer>() {
+                    @Override
+                    public void onChanged(@Nullable final Integer id) {
+                        // Update the UI, in this case, a TextView.
+                        if (id != null) {
+                            userViewModel.login(id);
+                            dismiss();
+                        } else {
+                            nameET.setText("");
+                            passwordET.setText("");
+                            errTV.setText("No user with that name and password...");
+                        }
+                    }
+                };
+
+                // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+                userViewModel.checkUser(name, password).observe(this, idObserver);
+
                 break;
             case R.id.signUpBtn:
                 Intent signUpPage = new Intent(ctx, SignUpActivity.class);
