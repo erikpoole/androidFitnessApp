@@ -25,13 +25,7 @@ public class Repository {
         allWeatherData = weatherDAO.getAllWeatherData();
     }
 
-    LiveData<List<UserDBEntity>> getAllUserData() {
-        return allUserData;
-    }
-
-    void deleteAllUserData() {
-        userDAO.deleteAll();
-    }
+    // WEATHER CALLS
 
     LiveData<List<WeatherDBEntity>> getAllWeatherData() {
         return allWeatherData;
@@ -45,10 +39,35 @@ public class Repository {
         new insertWeatherAsyncTask(weatherDAO).execute(weatherDbEntity);
     }
 
+    private static class insertWeatherAsyncTask extends AsyncTask<WeatherDBEntity, Void, Void> {
+
+        private WeatherDAO mAsyncTaskDao;
+
+        insertWeatherAsyncTask(WeatherDAO mWeatherDao) {
+            mAsyncTaskDao = mWeatherDao;
+        }
+
+        @Override
+        protected Void doInBackground(WeatherDBEntity... weatherDBEntities) {
+            mAsyncTaskDao.insert(weatherDBEntities[0]);
+            return null;
+        }
+    }
+
+    // USER PROFILE CALLS
+    LiveData<List<UserDBEntity>> getAllUserData() {
+        return allUserData;
+    }
+
+    void deleteAllUserData() {
+        userDAO.deleteAll();
+    }
+
     public void insert(UserDBEntity userDBEntity) {
         new insertUserAsyncTask(userDAO).execute(userDBEntity);
     }
 
+    // GETTERS
     LiveData<String> getName() {
         return userDAO.getName();
     }
@@ -89,24 +108,34 @@ public class Repository {
         return userDAO.isInDarkMode();
     }
 
+
+    // SETTERS
+    public void updateHeight(String height) {
+        new updateHeightAsyncTask(userDAO).execute(height);
+    }
+
+    public void updateWeight(int weight) {
+        new updateWeightAsyncTask(userDAO).execute(weight);
+    }
+
     public void updateSex(String newSex) {
-        userDAO.updateSex(newSex);
+        new updateSexAsyncTask(userDAO).execute(newSex);
     }
 
     public void updateImgPath(String newPath) {
-        userDAO.updateImgPath(newPath);
+        new updateImgPathAsyncTask(userDAO).execute(newPath);
     }
 
     public void updateGoal(int newGoal) {
-        userDAO.updateGoal(newGoal);
+        new updateGoalAsyncTask(userDAO).execute(newGoal);
     }
 
     public void updateActiveState(int newActiveState) {
-        userDAO.updateActiveState(newActiveState);
+        new updateActiveStateAsyncTask(userDAO).execute(newActiveState);
     }
 
     public void updateDarkMode(boolean isInDarkMode) {
-        userDAO.updateDarkMode(isInDarkMode);
+        new updateDarkModeAsyncTask(userDAO).execute(isInDarkMode);
     }
 
     public LiveData<Integer> checkUser(String name, String password) {
@@ -121,6 +150,8 @@ public class Repository {
         new logoutAsyncTask(userDAO).execute(false);
     }
 
+
+    // Async wrappers for SETTERS
     private static class insertUserAsyncTask extends android.os.AsyncTask<UserDBEntity, Void, Void> {
 
         private UserDAO mAsyncTaskDao;
@@ -151,7 +182,7 @@ public class Repository {
         }
     }
 
-    private static class loginAsyncTask extends AsyncTask<Integer, Void, Void> {
+    private static class loginAsyncTask extends android.os.AsyncTask<Integer, Void, Void> {
 
         private UserDAO mAsyncTaskDao;
 
@@ -166,17 +197,107 @@ public class Repository {
         }
     }
 
-    private static class insertWeatherAsyncTask extends AsyncTask<WeatherDBEntity, Void, Void> {
+    private static class updateHeightAsyncTask extends AsyncTask<String, Void, Void> {
 
-        private WeatherDAO mAsyncTaskDao;
+        private UserDAO mAsyncTaskDao;
 
-        insertWeatherAsyncTask(WeatherDAO mWeatherDao) {
-            mAsyncTaskDao = mWeatherDao;
+        updateHeightAsyncTask(UserDAO dao) {
+            mAsyncTaskDao = dao;
         }
 
         @Override
-        protected Void doInBackground(WeatherDBEntity... weatherDBEntities) {
-            mAsyncTaskDao.insert(weatherDBEntities[0]);
+        protected Void doInBackground(String... height) {
+            mAsyncTaskDao.updateHeight(height[0]);
+            return null;
+        }
+    }
+
+    private static class updateWeightAsyncTask extends AsyncTask<Integer, Void, Void> {
+
+        private UserDAO mAsyncTaskDao;
+
+        updateWeightAsyncTask(UserDAO dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... weight) {
+            mAsyncTaskDao.updateWeight(weight[0]);
+            return null;
+        }
+    }
+
+    private static class updateSexAsyncTask extends AsyncTask<String, Void, Void> {
+
+        private UserDAO mAsyncTaskDao;
+
+        updateSexAsyncTask(UserDAO dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(String... sex) {
+            mAsyncTaskDao.updateSex(sex[0]);
+            return null;
+        }
+    }
+
+    private static class updateImgPathAsyncTask extends AsyncTask<String, Void, Void> {
+
+        private UserDAO mAsyncTaskDao;
+
+        updateImgPathAsyncTask(UserDAO dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(String... imgPath) {
+            mAsyncTaskDao.updateImgPath(imgPath[0]);
+            return null;
+        }
+    }
+
+    private static class updateGoalAsyncTask extends AsyncTask<Integer, Void, Void> {
+
+        private UserDAO mAsyncTaskDao;
+
+        updateGoalAsyncTask(UserDAO dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... goal) {
+            mAsyncTaskDao.updateGoal(goal[0]);
+            return null;
+        }
+    }
+
+    private static class updateActiveStateAsyncTask extends AsyncTask<Integer, Void, Void> {
+
+        private UserDAO mAsyncTaskDao;
+
+        updateActiveStateAsyncTask(UserDAO dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... activeState) {
+            mAsyncTaskDao.updateActiveState(activeState[0]);
+            return null;
+        }
+    }
+
+    private static class updateDarkModeAsyncTask extends AsyncTask<Boolean, Void, Void> {
+
+        private UserDAO mAsyncTaskDao;
+
+        updateDarkModeAsyncTask(UserDAO dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Boolean... darkStatus) {
+            mAsyncTaskDao.updateDarkMode(darkStatus[0]);
             return null;
         }
     }
