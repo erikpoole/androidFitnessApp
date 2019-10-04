@@ -61,6 +61,14 @@ public class UserViewModel extends AndroidViewModel {
         return repository.isInDarkMode();
     }
 
+    public void updateHeight(String newHeight) {
+        repository.updateHeight(newHeight);
+    }
+
+    public void updateWeight(int newWeight) {
+        repository.updateWeight(newWeight);
+    }
+
     public void updateSex(String newSex) {
         repository.updateSex(newSex);
     }
@@ -75,6 +83,10 @@ public class UserViewModel extends AndroidViewModel {
 
     public void updateActiveState(int newActiveState) {
         repository.updateActiveState(newActiveState);
+    }
+
+    public void updateDarkMode(boolean isInDarkMode) {
+        repository.updateDarkMode(isInDarkMode);
     }
 
     public void logout() {
