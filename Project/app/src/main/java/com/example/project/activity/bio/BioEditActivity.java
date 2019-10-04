@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -108,7 +107,7 @@ public class BioEditActivity extends AppCompatActivity implements BioFormFragmen
         userViewModel.updateSex(sex);
         userViewModel.updateHeight(height);
         userViewModel.updateWeight(weight);
-        Toast.makeText(getApplicationContext(), imgPath, Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), imgPath, Toast.LENGTH_LONG).show();
         userViewModel.updateImgPath(imgPath);
         Intent bio = new Intent(this, BioActivity.class);
         startActivity(bio);

@@ -56,8 +56,6 @@ public class BioActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.bio_img);
 
-//        populateInfo();
-
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         userViewModel = new UserViewModel(this.getApplication());
 
@@ -74,8 +72,6 @@ public class BioActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Context ctx = view.getContext();
-//                Toast toast = Toast.makeText(ctx, "Start Bio Activity", Toast.LENGTH_SHORT);
-//                toast.show();
                 Intent editBioPage = new Intent(ctx, BioEditActivity.class);
                 Bundle editBundle = new Bundle();
                 editBundle.putString("name", nameVal);
@@ -210,27 +206,6 @@ public class BioActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    private void populateInfo() {
-        nameTV.setText(userProfile.getName());
-        heightTV.setText(userProfile.getHeight());
-        weightTV.setText(userProfile.getWeight() + " lbs.");
-        ageTV.setText(userProfile.getAge() + " yrs.");
-        sexTV.setText(userProfile.getSex());
-
-        String imgPath = userProfile.getImgPath();
-
-        if (imgPath != null) {
-            File imgFile = new File(userProfile.getImgPath());
-            if(imgFile.exists()){
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                imageView.setImageBitmap(myBitmap);
-            } else {
-                Toast.makeText(getApplicationContext(), "img path not found... " + userProfile.getImgPath(), Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

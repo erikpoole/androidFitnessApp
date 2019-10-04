@@ -58,12 +58,29 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         userViewModel = new UserViewModel(getActivity().getApplication());
 
+        // UPDATING SEX
         final Spinner sexSpinner = view.findViewById(R.id.bio_form_sex);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(ctx,
                 R.array.sex_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sexSpinner.setAdapter(adapter);
         sexSpinner.setOnItemSelectedListener(this);
+
+        final Observer<String> sexObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String sex) {
+                // Update the UI, in this case, a TextView.
+                if (sex != null) {
+                    if (sex.equals("Non-binary")) {
+                        sexSpinner.setSelection(2);
+                    } else if (sex.equals("Female")) {
+                        sexSpinner.setSelection(1);
+                    }
+                }
+            }
+        };
+
+        userViewModel.getSex().observe(this, sexObserver);
 
         // UPDATING HEIGHT
         final Spinner feetSpinner = view.findViewById(R.id.bio_form_ft);
@@ -114,15 +131,35 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
         weightTV = view.findViewById(R.id.bio_form_weight_label);
         weightTV.setText(" " + progress + " lbs.");
 
+
+        // UPDATING IMG
+        final Observer<String> imgPathObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String imgPath) {
+                // Update the UI, in this case, a TextView.
+                if (imgPath != null) {
+                    PATH_TO_IMAGE = imgPath;
+                    File imgFile = new File(imgPath);
+                    if(imgFile.exists()){
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        profileIV.setImageBitmap(myBitmap);
+                    }
+                }
+            }
+        };
+        userViewModel.getImgPath().observe(this, imgPathObserver);
+
+
+        // ONCLICK HANDLERS
         Button submitBtn = view.findViewById(R.id.bio_form_submit);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String height = feetSpinner.getSelectedItem().toString() + " " + inchSpinner.getSelectedItem().toString();
                 submitListener.onSubmitForm(
-                    sexSpinner.getSelectedItem().toString(),
-            feetSpinner.getSelectedItem().toString() + "'" + inchSpinner.getSelectedItem().toString() + "\"",
-                    seekBar.getProgress(),
-                    PATH_TO_IMAGE
+                        sexSpinner.getSelectedItem().toString(),
+                        feetSpinner.getSelectedItem().toString() + "'" + inchSpinner.getSelectedItem().toString() + "\"",
+                        seekBar.getProgress(),
+                        PATH_TO_IMAGE
                 );
             }
         });
@@ -142,64 +179,8 @@ public class BioFormFragment extends Fragment implements AdapterView.OnItemSelec
             }
         });
 
-//        UserProfile userProfile = new UserProfile(ctx);
-//        if (!userProfile.getName().equals("")) {
-//            PATH_TO_IMAGE = userProfile.getImgPath();
-//            if (PATH_TO_IMAGE != null) {
-//                File imgFile = new File(userProfile.getImgPath());
-//                if(imgFile.exists()){
-//                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-//                    profileIV.setImageBitmap(myBitmap);
-//                }
-//            }
-//
-////            seekBar.setProgress(userProfile.getWeight());
-//
-//            String sex = userProfile.getSex();
-//            if (sex.equals("Non-binary")) {
-//                sexSpinner.setSelection(2);
-//            } else if (sex.equals("Female")) {
-//                sexSpinner.setSelection(1);
-//            }
-//
-//            String height = userProfile.getHeight();
-//            height = height.substring(0, height.length() - 1);
-//            String[] heightDimensions = height.split("'");
-////            Toast.makeText(ctx, heightDimensions[1], Toast.LENGTH_LONG).show();
-//            feetSpinner.setSelection(Integer.parseInt(heightDimensions[0]) - 3);
-//            inchSpinner.setSelection(Integer.parseInt(heightDimensions[1]));
-//        }
-
         return view;
     }
-
-
-    final Observer<String> sexObserver = new Observer<String>() {
-        @Override
-        public void onChanged(@Nullable final String sex) {
-            // Update the UI, in this case, a TextView.
-            if (sex != null) {
-                // sex
-            }
-        }
-    };
-
-    final Observer<String> imgPathObserver = new Observer<String>() {
-        @Override
-        public void onChanged(@Nullable final String imgPath) {
-            // Update the UI, in this case, a TextView.
-            if (imgPath != null) {
-//                imgPathVal = imgPath;
-                File imgFile = new File(imgPath);
-                if(imgFile.exists()){
-                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-//                    imageView.setImageBitmap(myBitmap);
-                } else {
-//                    Toast.makeText(getApplicationContext(), "img path not found... " + imgPath, Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-    };
 
     public interface onSubmitFormListener {
         void onSubmitForm(String sex, String height, int weight, String imgPath);
