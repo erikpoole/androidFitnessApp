@@ -9,26 +9,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
-import com.example.project.activity.BmiActivity;
-import com.example.project.activity.CalorieActivity;
-import com.example.project.activity.HikingActivity;
+import com.example.project.UserViewModel;
 import com.example.project.activity.MainActivity;
-import com.example.project.activity.Weather.WeatherActivity;
 import com.example.project.database.UserProfile;
 import com.google.android.material.navigation.NavigationView;
 
 public class BioEditActivity extends AppCompatActivity implements BioFormFragment.onSubmitFormListener {
-
+    private UserViewModel userViewModel;
     UserProfile userProfile;
     TextView nameTV;
     ImageView imageView;
@@ -44,7 +42,11 @@ public class BioEditActivity extends AppCompatActivity implements BioFormFragmen
         userProfile = new UserProfile(ctx);
 
         nameTV = findViewById(R.id.bio_edit_name);
-        nameTV.setText(userProfile.getName());
+        String name = getIntent().getExtras().getString("name");
+        nameTV.setText(name);
+
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        userViewModel = new UserViewModel(this.getApplication());
 
         // Handle navigation drawer
         isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
@@ -103,11 +105,11 @@ public class BioEditActivity extends AppCompatActivity implements BioFormFragmen
     }
 
     public void onSubmitForm(String sex, String height, int weight, String imgPath) {
-        userProfile.setWeight(weight);
-        userProfile.setHeight(height);
-        userProfile.setSex(sex);
-        userProfile.setImgPath(imgPath);
-        userProfile.update();
+        userViewModel.updateSex(sex);
+        userViewModel.updateHeight(height);
+        userViewModel.updateWeight(weight);
+        Toast.makeText(getApplicationContext(), imgPath, Toast.LENGTH_LONG).show();
+        userViewModel.updateImgPath(imgPath);
         Intent bio = new Intent(this, BioActivity.class);
         startActivity(bio);
     }
