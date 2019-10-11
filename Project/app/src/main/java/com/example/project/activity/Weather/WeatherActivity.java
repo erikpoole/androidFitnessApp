@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
+import com.example.project.UserViewModel;
 import com.example.project.WeatherDBEntity;
 import com.example.project.WeatherViewModel;
 import com.example.project.activity.MainActivity;
@@ -53,12 +54,10 @@ public class WeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-        //TODO FIX ME
-        weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
+        weatherViewModel = new WeatherViewModel(this.getApplication());
         weatherViewModel.getWeather().observe(this, new Observer<WeatherDBEntity>() {
             @Override
             public void onChanged(WeatherDBEntity weatherDBEntity) {
-                Log.d("DATA:", String.valueOf(weatherDBEntity));
                 if (weatherDBEntity != null) {
                     handleWeatherJSON(weatherDBEntity.getWeatherJson());
                 }

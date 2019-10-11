@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,22 +13,22 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
-import com.example.project.activity.Weather.WeatherActivity;
-import com.example.project.activity.bio.BioActivity;
+import com.example.project.UserViewModel;
 import com.example.project.activity.bio.BioEditActivity;
 import com.example.project.database.UserProfile;
 import com.google.android.material.navigation.NavigationView;
 
 public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
+    private UserViewModel userViewModel;
 
     private final int MALE_CALORIES = 2500;
     private final int MALE_ACTIVITY_MODIFIER = 500;
@@ -45,8 +46,11 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
 
     private UserProfile user;
 
-    private int originalGoal;
-    private int originalActivity;
+    private Integer originalGoal;
+    private Integer originalActivity;
+    private String sex;
+    private Integer workingGoal;
+    private Integer workingActivity;
 
     private TextView calorieText;
     private TextView calorieWarningText;
@@ -66,9 +70,6 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         setContentView(R.layout.activity_calorie);
 
         user = new UserProfile(getApplicationContext());
-
-        originalGoal = user.getGoal();
-        originalActivity = user.getActiveState();
 
         calorieText = findViewById(R.id.calorieText);
         calorieWarningText = findViewById(R.id.calorieWarningText);
@@ -97,13 +98,56 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
             }
         });
 
-        setDefaultValues();
         disableButtons();
 
         goalSeekBar.setOnSeekBarChangeListener(this);
         activitySeekBar.setOnSeekBarChangeListener(this);
         resetButton.setOnClickListener(this);
         saveButton.setOnClickListener(this);
+
+        userViewModel = new UserViewModel(this.getApplication());
+
+        userViewModel.getGoal().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer goal) {
+                Log.d("DATA:", goal.toString());
+                if (goal != null) {
+                    originalGoal = goal;
+                    workingGoal = goal;
+                    goalText.setText(getGoalText(goal));
+                    goalSeekBar.setProgress(goal + 2);
+
+                    calorieText.setText(calculateCalories());
+                }
+            }
+        });
+
+        userViewModel.getActiveState().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer activity) {
+                Log.d("DATA:", activity.toString());
+                if (activity != null) {
+                    originalActivity = activity;
+                    workingActivity = activity;
+                    activityText.setText(getActivityText(activity));
+                    activitySeekBar.setProgress(activity + 1);
+
+                    calorieText.setText(calculateCalories());
+                }
+            }
+        });
+
+        userViewModel.getSex().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String sex) {
+                Log.d("DATA:", sex);
+                if (sex != null) {
+                    CalorieActivity.this.sex = sex;
+
+                    calculateCalories();
+                }
+            }
+        });
     }
 
     @Override
@@ -156,24 +200,18 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         toggle.onConfigurationChanged(newConfig);
     }
 
-    private void setDefaultValues() {
-        calorieText.setText(calculateCalories());
-        goalText.setText(getGoalText(user.getGoal()));
-        activityText.setText(getActivityText(user.getActiveState()));
-        goalSeekBar.setProgress(user.getGoal() + 2);
-        activitySeekBar.setProgress(user.getActiveState() + 1);
-    }
-
-
     private String calculateCalories() {
-        String sex = user.getSex();
-        int calories;
+        int calories = 0;
+        if (workingGoal == null || workingActivity == null || sex == null) {
+            return calories + "\nCalories";
+        }
+
         switch (sex) {
             case "Male":
                 calories =
                         MALE_CALORIES +
-                                user.getGoal() * CALORIES_PER_POUND +
-                                user.getActiveState() * MALE_ACTIVITY_MODIFIER;
+                                workingGoal * CALORIES_PER_POUND +
+                                workingActivity * MALE_ACTIVITY_MODIFIER;
                 if (calories < MALE_MIN_CALORIES) {
                     calorieWarningText.setText("You are below your recommended minimum calorie limit!");
                 } else {
@@ -183,8 +221,8 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
             case "Female:":
                 calories =
                         FEMALE_CALORIES +
-                                user.getGoal() * CALORIES_PER_POUND +
-                                user.getActiveState() * FEMALE_ACTIVITY_MODIFIER;
+                                workingGoal * CALORIES_PER_POUND +
+                                workingActivity * FEMALE_ACTIVITY_MODIFIER;
                 if (calories < FEMALE_MIN_CALORIES) {
                     calorieWarningText.setText("You are below your recommended minimum calorie limit!");
                 } else {
@@ -194,8 +232,8 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
             default:
                 calories =
                         NONBINARY_CALORIES +
-                                user.getGoal() * CALORIES_PER_POUND +
-                                user.getActiveState() * NONBINARY_ACTIVITY_MODIFER;
+                                workingGoal * CALORIES_PER_POUND +
+                                workingActivity * NONBINARY_ACTIVITY_MODIFER;
                 if (calories < NONBINARY_MIN_CALORIES) {
                     calorieWarningText.setText("You are below your recommended minimum calorie limit!");
                 } else {
@@ -244,15 +282,17 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.saveButton:
-                user.update();
-                originalGoal = user.getGoal();
-                originalActivity = user.getActiveState();
+                userViewModel.updateGoal(workingGoal);
+                userViewModel.updateActiveState(workingActivity);
                 disableButtons();
                 Toast.makeText(getApplicationContext(), "Goals Saved!", Toast.LENGTH_LONG).show();
                 break;
             case R.id.resetButton:
-                user = new UserProfile(getApplicationContext());
-                setDefaultValues();
+                calorieText.setText(calculateCalories());
+                goalText.setText(getGoalText(originalGoal));
+                activityText.setText(getActivityText(originalActivity));
+                goalSeekBar.setProgress(originalGoal + 2);
+                activitySeekBar.setProgress(originalActivity + 1);
                 disableButtons();
                 break;
         }
@@ -263,19 +303,19 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         switch (seekBar.getId()) {
             case R.id.goalSeekBar:
                 int pounds = progress - 2;
-                user.setGoal(pounds);
+                workingGoal = pounds;
                 calorieText.setText(calculateCalories());
                 goalText.setText(getGoalText(pounds));
                 break;
             case R.id.activitySeekBar:
                 int activityState = progress - 1;
-                user.setActiveState(activityState);
+                workingActivity = activityState;
                 calorieText.setText(calculateCalories());
                 activityText.setText(getActivityText(activityState));
                 break;
         }
-        if (originalGoal != goalSeekBar.getProgress() - 2 ||
-                originalActivity != activitySeekBar.getProgress() - 1) {
+        if (originalGoal != workingGoal ||
+                originalActivity != workingActivity) {
             enableButtons();
         } else {
             disableButtons();
