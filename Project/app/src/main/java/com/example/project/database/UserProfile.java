@@ -97,7 +97,7 @@ public class UserProfile {
         int dobYear = Integer.parseInt(dob[2]);
 
         int age = year - dobYear;
-        Log.d("age", "getAge: " + age);
+//        Log.d("age", "getAge: " + age);
 
         if (month > dobMonth) {
             age++;

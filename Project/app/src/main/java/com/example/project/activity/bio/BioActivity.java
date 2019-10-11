@@ -15,29 +15,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
-import com.example.project.activity.BmiActivity;
-import com.example.project.activity.CalorieActivity;
-import com.example.project.activity.HikingActivity;
+import com.example.project.UserViewModel;
 import com.example.project.activity.MainActivity;
-import com.example.project.activity.Weather.WeatherActivity;
 import com.example.project.database.UserProfile;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
 
 public class BioActivity extends AppCompatActivity {
-
+    private UserViewModel userViewModel;
     UserProfile userProfile;
     TextView nameTV, ageTV, sexTV, heightTV, weightTV;
+    String nameVal, ageVal, sexVal, imgPathVal = "";
     ImageView imageView;
     private ActionBarDrawerToggle toggle;
     private boolean isDrawerFixed;
@@ -56,16 +56,26 @@ public class BioActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.bio_img);
 
-        populateInfo();
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        userViewModel = new UserViewModel(this.getApplication());
+
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+        userViewModel.getName().observe(this, nameObserver);
+        userViewModel.getAge().observe(this, ageObserver);
+        userViewModel.getSex().observe(this, sexObserver);
+        userViewModel.getHeight().observe(this, heightObserver);
+        userViewModel.getWeight().observe(this, weightObserver);
+        userViewModel.getImgPath().observe(this, imgPathObserver);
 
         Button editBioBtn = findViewById(R.id.edit_bio_btn);
         editBioBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Context ctx = view.getContext();
-//                Toast toast = Toast.makeText(ctx, "Start Bio Activity", Toast.LENGTH_SHORT);
-//                toast.show();
                 Intent editBioPage = new Intent(ctx, BioEditActivity.class);
+                Bundle editBundle = new Bundle();
+                editBundle.putString("name", nameVal);
+                editBioPage.putExtras(editBundle);
                 startActivity(editBioPage);
             }
         });
@@ -88,6 +98,76 @@ public class BioActivity extends AppCompatActivity {
             }
         });
     }
+
+    final Observer<String> nameObserver = new Observer<String>() {
+        @Override
+        public void onChanged(@Nullable final String name) {
+            // Update the UI, in this case, a TextView.
+            if (name != null) {
+                nameVal = name;
+                nameTV.setText(name);
+            }
+        }
+    };
+
+    final Observer<String> heightObserver = new Observer<String>() {
+        @Override
+        public void onChanged(@Nullable final String height) {
+            // Update the UI, in this case, a TextView.
+            if (height != null) {
+                heightTV.setText(height);
+            }
+        }
+    };
+
+    final Observer<Integer> weightObserver = new Observer<Integer>() {
+        @Override
+        public void onChanged(@Nullable final Integer weight) {
+            // Update the UI, in this case, a TextView.
+            if (weight != null) {
+                weightTV.setText(weight + " lbs.");
+            }
+        }
+    };
+
+    final Observer<String> ageObserver = new Observer<String>() {
+        @Override
+        public void onChanged(@Nullable final String age) {
+            // Update the UI, in this case, a TextView.
+            if (age != null) {
+                ageVal = age;
+                ageTV.setText(age);
+            }
+        }
+    };
+
+    final Observer<String> sexObserver = new Observer<String>() {
+        @Override
+        public void onChanged(@Nullable final String sex) {
+            // Update the UI, in this case, a TextView.
+            if (sex != null) {
+                sexVal = sex;
+                sexTV.setText(sex);
+            }
+        }
+    };
+
+    final Observer<String> imgPathObserver = new Observer<String>() {
+        @Override
+        public void onChanged(@Nullable final String imgPath) {
+            // Update the UI, in this case, a TextView.
+            if (imgPath != null) {
+                imgPathVal = imgPath;
+                File imgFile = new File(imgPath);
+                if(imgFile.exists()){
+                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                    imageView.setImageBitmap(myBitmap);
+                } else {
+                    Toast.makeText(getApplicationContext(), "img path not found... " + imgPath, Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -126,27 +206,6 @@ public class BioActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    private void populateInfo() {
-        nameTV.setText(userProfile.getName());
-        heightTV.setText(userProfile.getHeight());
-        weightTV.setText(userProfile.getWeight() + " lbs.");
-        ageTV.setText(userProfile.getAge() + " yrs.");
-        sexTV.setText(userProfile.getSex());
-
-        String imgPath = userProfile.getImgPath();
-
-        if (imgPath != null) {
-            File imgFile = new File(userProfile.getImgPath());
-            if(imgFile.exists()){
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                imageView.setImageBitmap(myBitmap);
-            } else {
-                Toast.makeText(getApplicationContext(), "img path not found... " + userProfile.getImgPath(), Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

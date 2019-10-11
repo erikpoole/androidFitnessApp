@@ -8,18 +8,22 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
 import com.example.project.TileFragment;
+import com.example.project.UserViewModel;
 import com.example.project.activity.bio.BioEditActivity;
 import com.example.project.activity.login.SignInFragment;
 import com.example.project.database.UserProfile;
@@ -27,6 +31,8 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements SignInFragment.inputPersist {
     final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
+    private UserViewModel userViewModel;
 
     private ActionBarDrawerToggle toggle;
     private Context ctx;
@@ -65,21 +71,38 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
 
         // UserProfile will be our interface for interacting with the database
         userProfile = new UserProfile(ctx);
-        if (!userProfile.isInDarkMode()) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+//        if (!userProfile.isInDarkMode()) {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//        } else {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//        }
 
         //TODO check for permissions before requesting
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
 
 //         UNCOMMENT THIS TO ERASE CONTENTS OF DB
 //        userProfile.upgrade();
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        userViewModel = new UserViewModel(this.getApplication());
 
-        if (!userProfile.isLoggedIn()) {
-            showLoginForm();
-        }
+        final Observer<String> nameObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String name) {
+                // Update the UI, in this case, a TextView.
+                if (name != null) {
+                    Toast.makeText(ctx, "Hello " + name + "!", Toast.LENGTH_LONG).show();
+                } else {
+                    showLoginForm();
+                }
+            }
+        };
+
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+        userViewModel.getName().observe(this, nameObserver);
+
+//        if (!userProfile.isLoggedIn()) {
+//            showLoginForm();
+//        }
     }
 
     @Override
@@ -111,15 +134,15 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
     @Override
     public void onResume() {
         super.onResume();
-        userProfile = new UserProfile(ctx);
-        if (!userProfile.isInDarkMode()) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-        if (!userProfile.isLoggedIn()) {
-            showLoginForm();
-        }
+//        userProfile = new UserProfile(ctx);
+//        if (!userProfile.isInDarkMode()) {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//        } else {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//        }
+//        if (!userProfile.isLoggedIn()) {
+//            showLoginForm();
+//        }
     }
 
     @Override
@@ -127,13 +150,13 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
         int id = item.getItemId();
         switch (id) {
             case R.id.night_mode:
-                if (!userProfile.isInDarkMode()) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
-                userProfile.toggleDarkMode();
-                userProfile.update();
+//                if (!userProfile.isInDarkMode()) {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//                } else {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//                }
+//                userProfile.toggleDarkMode();
+//                userProfile.update();
                 finish();
                 startActivity(getIntent());
                 return true;
@@ -142,11 +165,9 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
                 startActivity(bioEdit);
                 return true;
             case R.id.logout:
-                userProfile.logout();
+                userViewModel.logout();
                 _name = "";
                 _password = "";
-                Intent mainPage = new Intent(this, MainActivity.class);
-                startActivity(mainPage);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
