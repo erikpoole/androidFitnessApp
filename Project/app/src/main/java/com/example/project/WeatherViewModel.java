@@ -23,13 +23,13 @@ public class WeatherViewModel extends AndroidViewModel {
         return allWeatherData;
     }
 
-    // This replaces an existing entry for the same location if it exists
-    public void insert(WeatherDBEntity weatherDBEntity) {
-        repository.insert(weatherDBEntity);
-    }
+//    // This replaces an existing entry for the same location if it exists
+//    public void insert(WeatherDBEntity weatherDBEntity) {
+//        repository.insert(weatherDBEntity);
+//    }
 
-    public WeatherDBEntity getWeatherForLocation(String location) {
-        return repository.getWeatherForLocation(location);
+    public LiveData<WeatherDBEntity> getWeatherForLocation() {
+        return repository.getWeatherForLocation();
     }
 
 }
