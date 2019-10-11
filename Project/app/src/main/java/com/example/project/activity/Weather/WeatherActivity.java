@@ -55,7 +55,7 @@ public class WeatherActivity extends AppCompatActivity {
 
         //TODO FIX ME
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
-        weatherViewModel.getWeatherForLocation().observe(this, new Observer<WeatherDBEntity>() {
+        weatherViewModel.getWeather().observe(this, new Observer<WeatherDBEntity>() {
             @Override
             public void onChanged(WeatherDBEntity weatherDBEntity) {
                 Log.d("DATA:", String.valueOf(weatherDBEntity));
@@ -119,8 +119,6 @@ public class WeatherActivity extends AppCompatActivity {
             JSONObject json = new JSONObject(inputString);
             JSONObject current = json.getJSONObject("currently");
             JSONArray weatherDays = json.getJSONObject("daily").getJSONArray("data");
-
-//                cityText.setText(json.getString("name"));
 
             //from current forecast
             temperatureText.setText(

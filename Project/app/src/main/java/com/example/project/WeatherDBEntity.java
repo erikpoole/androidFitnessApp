@@ -12,31 +12,31 @@ import java.util.UUID;
 public class WeatherDBEntity {
 
     @PrimaryKey
-    @ColumnInfo(name = "location")
     @NonNull
-    private String location;
+    private int id;
 
     @ColumnInfo(name = "weatherJson")
     private String weatherJson;
 
-    public WeatherDBEntity(String location, String weatherJson) {
-        this.location = location;
+    public WeatherDBEntity(String weatherJson) {
+        /*
+        ensures that there is only ever one record stored -
+        which kind of defeats the point of a database
+        but that's just the world we live in
+        */
+        this.id = 0;
         this.weatherJson = weatherJson;
     }
 
-    public String getLocation() {
-        return location;
+    public int getId() {
+        return id;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getWeatherJson() {
         return weatherJson;
-    }
-
-    public void setWeatherJson(String weatherJson) {
-        this.weatherJson = weatherJson;
     }
 }
