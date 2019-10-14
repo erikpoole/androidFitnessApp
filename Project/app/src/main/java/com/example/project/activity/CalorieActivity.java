@@ -22,6 +22,7 @@ import androidx.lifecycle.Observer;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
+import com.example.project.Repository;
 import com.example.project.UserViewModel;
 import com.example.project.activity.bio.BioEditActivity;
 import com.example.project.database.UserProfile;
@@ -171,7 +172,7 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        AssetHandlers.loadProfileImage(this, menu, user);
+        AssetHandlers.loadProfileImage(this, menu, new Repository(getApplication()));
         return true;
     }
 

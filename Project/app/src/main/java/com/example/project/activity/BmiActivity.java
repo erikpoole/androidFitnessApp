@@ -10,27 +10,28 @@ import android.view.MenuItem;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
-import com.example.project.activity.Weather.WeatherActivity;
-import com.example.project.activity.bio.BioActivity;
+import com.example.project.Repository;
+import com.example.project.UserDBEntity;
+import com.example.project.UserViewModel;
 import com.example.project.activity.bio.BioEditActivity;
-import com.example.project.database.UserProfile;
 import com.google.android.material.navigation.NavigationView;
 
 public class BmiActivity extends AppCompatActivity {
 
-    private UserProfile user;
+    private UserViewModel userViewModel;
     private TextView bmiTextView;
-    private float height;
-    private float weight;
+    private String height;
+    private Float heightValue;
+    private Integer weight;
     private int range;
     private ActionBarDrawerToggle toggle;
     private boolean isDrawerFixed;
@@ -58,21 +59,33 @@ public class BmiActivity extends AppCompatActivity {
             }
         });
 
-        user = new UserProfile(getApplicationContext());
-        if (user.getHeight() != null && user.getWeight() > 0) {
-            float feet = Float.parseFloat(user.getHeight().split("'")[0]);
-            float inches = Float.parseFloat(user.getHeight().split("'")[1].split("\"")[0]);
-            height = (feet * 12) + inches; // 1 foot / 12 inches
-            weight = user.getWeight();
-            float bmi = (weight / (height * height)) * 703;
-            bmiTextView = findViewById(R.id.bmi_tv);
-            bmiTextView.setText(String.format(java.util.Locale.US, "%.1f", bmi));
-            if (bmi < 18.5 || bmi > 25.0) {
-                bmiTextView.setTextColor(Color.RED);
-            } else {
-                bmiTextView.setTextColor(Color.parseColor("#29A100"));
+        bmiTextView = findViewById(R.id.bmi_tv);
+        userViewModel = new UserViewModel(this.getApplication());
+
+        userViewModel.getHeight().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String mHeight) {
+                if (mHeight != null) {
+                    height = mHeight;
+                    float feet = Float.parseFloat(height.split("'")[0]);
+                    float inches = Float.parseFloat(height.split("'")[1].split("\"")[0]);
+                    heightValue = (feet * 12) + inches; // 1 foot / 12 inches
+                    displayBMI(heightValue, weight);
+                }
             }
-        }
+        });
+
+        userViewModel.getWeight().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer mWeight) {
+                if (mWeight != null) {
+                    weight = mWeight;
+                    displayBMI(heightValue, weight);
+                }
+            }
+        });
+
+        displayBMI(heightValue, weight);
 
         SeekBar seekBar = findViewById(R.id.seek_bar);
         range = 200;
@@ -82,7 +95,7 @@ public class BmiActivity extends AppCompatActivity {
 
         SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
 
-            float adjustedWeight;
+            Integer adjustedWeight;
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -94,13 +107,7 @@ public class BmiActivity extends AppCompatActivity {
                     difference = "+" + difference;
                 }
                 seekTextView.setText(difference);
-                float bmi = (adjustedWeight / (height * height)) * 703;
-                if (bmi < 18.5 || bmi > 25.0) {
-                    bmiTextView.setTextColor(Color.RED);
-                } else {
-                    bmiTextView.setTextColor(Color.parseColor("#29A100"));
-                }
-                bmiTextView.setText(String.format(java.util.Locale.US, "%.1f", bmi));
+                displayBMI(heightValue, adjustedWeight);
             }
 
             @Override
@@ -117,24 +124,37 @@ public class BmiActivity extends AppCompatActivity {
         seekBar.setOnSeekBarChangeListener(seekBarChangeListener);
     }
 
+    public void displayBMI(Float currentHeight, Integer currentWeight) {
+        if (currentHeight != null && currentWeight != null) {
+            float currentBMI = (currentWeight / (currentHeight * currentHeight)) * 703;
+            if (currentBMI < 18.5 || currentBMI > 25.0) {
+                bmiTextView.setTextColor(Color.RED);
+            } else {
+                bmiTextView.setTextColor(Color.parseColor("#29A100"));
+            }
+            bmiTextView.setText(String.format(java.util.Locale.US, "%.1f", currentBMI));
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        AssetHandlers.loadProfileImage(this, menu, user);
+        AssetHandlers.loadProfileImage(this, menu, new Repository(getApplication()));
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        Repository repository = new Repository(getApplication());
         switch (id) {
             case R.id.night_mode:
-                if (!user.isInDarkMode()) {
+                if (repository.isInDarkMode().getValue() != null && !repository.isInDarkMode().getValue()) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    repository.updateDarkMode(true);
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    repository.updateDarkMode(false);
                 }
-                user.toggleDarkMode();
-                user.update();
                 finish();
                 startActivity(getIntent());
                 return true;
@@ -143,8 +163,7 @@ public class BmiActivity extends AppCompatActivity {
                 startActivity(bioEdit);
                 return true;
             case R.id.logout:
-                UserProfile userProfile = new UserProfile(getApplicationContext());
-                userProfile.logout();
+                repository.logout();
                 Intent mainPage = new Intent(this, MainActivity.class);
                 startActivity(mainPage);
                 return true;

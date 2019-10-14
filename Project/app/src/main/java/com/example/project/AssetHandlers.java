@@ -45,7 +45,7 @@ public abstract class AssetHandlers {
     }
 
     //use in onCreateOptionsMenu
-    public static void loadProfileImage(Activity activity, Menu menu, UserProfile userProfile) {
+    public static void loadProfileImage(Activity activity, Menu menu, Repository repository) {
         MenuInflater inflater = activity.getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
 
@@ -53,14 +53,14 @@ public abstract class AssetHandlers {
         TextView drawerTv = activity.findViewById(R.id.nav_header_textView);
 
         File sd = Environment.getExternalStorageDirectory();
-        String imgPath = userProfile.getImgPath();
+        String imgPath = repository.getImgPath().getValue();
         Log.d("image", "onCreateOptionsMenu: " + imgPath);
         if (imgPath != null) {
-            File imgFile = new File(userProfile.getImgPath());
+            File imgFile = new File(repository.getImgPath().getValue());
             if (imgFile.exists()) {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 drawerImg.setImageBitmap(myBitmap);
-                drawerTv.setText(userProfile.getName());
+                drawerTv.setText(repository.getName().getValue());
                 drawerTv.setTextColor(Color.WHITE);
             }
         }
