@@ -172,7 +172,7 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        AssetHandlers.loadProfileImage(this, menu, new Repository(getApplication()));
+        AssetHandlers.loadProfileImage(this, menu, userViewModel);
         return true;
     }
 

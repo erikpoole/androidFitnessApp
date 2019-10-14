@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
 
 //         UNCOMMENT THIS TO ERASE CONTENTS OF DB
 //        userProfile.upgrade();
-        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         userViewModel = new UserViewModel(this.getApplication());
 
         final Observer<String> nameObserver = new Observer<String>() {
@@ -128,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        AssetHandlers.loadProfileImage(this, menu, new Repository(getApplication()));
+        AssetHandlers.loadProfileImage(this, menu, userViewModel);
         return true;
     }
 

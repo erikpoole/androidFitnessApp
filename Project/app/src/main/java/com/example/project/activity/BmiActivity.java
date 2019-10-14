@@ -138,22 +138,21 @@ public class BmiActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        AssetHandlers.loadProfileImage(this, menu, new Repository(getApplication()));
+        AssetHandlers.loadProfileImage(this, menu, userViewModel);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        Repository repository = new Repository(getApplication());
         switch (id) {
             case R.id.night_mode:
-                if (repository.isInDarkMode().getValue() != null && !repository.isInDarkMode().getValue()) {
+                if (userViewModel.isInDarkMode().getValue() != null && !userViewModel.isInDarkMode().getValue()) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    repository.updateDarkMode(true);
+                    userViewModel.updateDarkMode(true);
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    repository.updateDarkMode(false);
+                    userViewModel.updateDarkMode(false);
                 }
                 finish();
                 startActivity(getIntent());
@@ -163,7 +162,7 @@ public class BmiActivity extends AppCompatActivity {
                 startActivity(bioEdit);
                 return true;
             case R.id.logout:
-                repository.logout();
+                userViewModel.logout();
                 Intent mainPage = new Intent(this, MainActivity.class);
                 startActivity(mainPage);
                 return true;

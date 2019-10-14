@@ -36,6 +36,7 @@ import org.json.JSONObject;
 
 public class WeatherActivity extends AppCompatActivity {
     private WeatherViewModel weatherViewModel;
+    private UserViewModel userViewModel;
 
     private TextView temperatureText;
     private TextView summaryText;
@@ -55,6 +56,7 @@ public class WeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
+        userViewModel = new UserViewModel(this.getApplication());
         weatherViewModel = new WeatherViewModel(this.getApplication());
         weatherViewModel.getWeather().observe(this, new Observer<WeatherDBEntity>() {
             @Override
@@ -152,7 +154,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        AssetHandlers.loadProfileImage(this, menu, new Repository(getApplication()));
+        AssetHandlers.loadProfileImage(this, menu, userViewModel);
         return true;
     }
 

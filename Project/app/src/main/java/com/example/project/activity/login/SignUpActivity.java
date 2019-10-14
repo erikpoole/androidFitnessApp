@@ -53,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity implements BioFormFragment
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        AssetHandlers.loadProfileImage(this, menu, new Repository(getApplication()));
+        AssetHandlers.loadProfileImage(this, menu, userViewModel);
         return true;
     }
 

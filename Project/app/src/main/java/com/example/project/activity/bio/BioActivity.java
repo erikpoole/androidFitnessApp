@@ -57,7 +57,6 @@ public class BioActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.bio_img);
 
-        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         userViewModel = new UserViewModel(this.getApplication());
 
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
@@ -172,7 +171,7 @@ public class BioActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        AssetHandlers.loadProfileImage(this, menu, new Repository(getApplication()));
+        AssetHandlers.loadProfileImage(this, menu, userViewModel);
         return true;
     }
 

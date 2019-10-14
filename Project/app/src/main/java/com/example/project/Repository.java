@@ -30,7 +30,7 @@ public class Repository {
 
     private LiveData<List<UserDBEntity>> allUserData;
 
-    public Repository(Application application) {
+    Repository(Application application) {
         RoomDB roomDB = RoomDB.getDatabase(application);
         context = application.getApplicationContext();
 

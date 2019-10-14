@@ -45,7 +45,6 @@ public class BioEditActivity extends AppCompatActivity implements BioFormFragmen
         String name = getIntent().getExtras().getString("name");
         nameTV.setText(name);
 
-        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         userViewModel = new UserViewModel(this.getApplication());
 
         // Handle navigation drawer
@@ -70,7 +69,7 @@ public class BioEditActivity extends AppCompatActivity implements BioFormFragmen
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        AssetHandlers.loadProfileImage(this, menu, new Repository(getApplication()));
+        AssetHandlers.loadProfileImage(this, menu, userViewModel);
         return true;
     }
 

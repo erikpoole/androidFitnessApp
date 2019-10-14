@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 
 import com.example.project.activity.BmiActivity;
 import com.example.project.activity.CalorieActivity;
@@ -29,6 +31,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public abstract class AssetHandlers {
+
+    private static String profileImagePath;
 
     public static String readAsset(String filename, Context context) {
         try {
@@ -45,7 +49,16 @@ public abstract class AssetHandlers {
     }
 
     //use in onCreateOptionsMenu
-    public static void loadProfileImage(Activity activity, Menu menu, Repository repository) {
+    public static void loadProfileImage(Activity activity, Menu menu, UserViewModel userViewModel) {
+        userViewModel.getImgPath().observe((LifecycleOwner) activity, new Observer<String>() {
+            @Override
+            public void onChanged(String imgPath) {
+                if (imgPath != null) {
+                    profileImagePath = imgPath;
+                }
+            }
+        });
+
         MenuInflater inflater = activity.getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
 
@@ -53,14 +66,13 @@ public abstract class AssetHandlers {
         TextView drawerTv = activity.findViewById(R.id.nav_header_textView);
 
         File sd = Environment.getExternalStorageDirectory();
-        String imgPath = repository.getImgPath().getValue();
-        Log.d("image", "onCreateOptionsMenu: " + imgPath);
-        if (imgPath != null) {
-            File imgFile = new File(repository.getImgPath().getValue());
+        Log.d("image", "onCreateOptionsMenu: " + profileImagePath);
+        if (profileImagePath != null) {
+            File imgFile = new File(profileImagePath);
             if (imgFile.exists()) {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 drawerImg.setImageBitmap(myBitmap);
-                drawerTv.setText(repository.getName().getValue());
+                drawerTv.setText(userViewModel.getName().getValue());
                 drawerTv.setTextColor(Color.WHITE);
             }
         }
