@@ -36,24 +36,4 @@ public class Requests {
 
         queue.add(request);
     }
-
-    //TODO: not currently being used - remove by end of project if unimportant
-    public static void makeImageRequest(String inputURL, Response.Listener<Bitmap> listener, Context context) {
-        RequestQueue queue = Volley.newRequestQueue(context);
-        ImageRequest request = new ImageRequest(
-                inputURL,
-                listener,
-                0,
-                0,
-                ImageView.ScaleType.CENTER_CROP,
-                Bitmap.Config.RGB_565,
-                new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("ERROR: ", "makeImageRequest error - " + error.toString());
-            }
-        });
-
-        queue.add(request);
-    }
 }
