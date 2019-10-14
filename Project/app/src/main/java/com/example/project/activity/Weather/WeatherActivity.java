@@ -67,6 +67,34 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
 
+        weatherViewModel.getTemperature().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String temperature) {
+                temperatureText.setText(temperature + "\u00B0F");
+            }
+        });
+
+        weatherViewModel.getHumidity().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String humidity) {
+                humidityText.setText("Humidity:\n" + humidity + "%");
+            }
+        });
+
+        weatherViewModel.getWindSpeed().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String windSpeed) {
+                windText.setText("Wind Speed:\n" + windSpeed + " mph");
+            }
+        });
+
+        weatherViewModel.getSummary().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String summary) {
+                summaryText.setText(summary);
+            }
+        });
+
         try {
             weatherIcons = new JSONObject(AssetHandlers.readAsset("weatherIcons.json", this));
         } catch (JSONException e) {
@@ -119,25 +147,7 @@ public class WeatherActivity extends AppCompatActivity {
         Log.d("DATA: ", inputString);
         try {
             JSONObject json = new JSONObject(inputString);
-            JSONObject current = json.getJSONObject("currently");
             JSONArray weatherDays = json.getJSONObject("daily").getJSONArray("data");
-
-            //from current forecast
-            temperatureText.setText(
-                    roundStringWithMultiplier(current.getString("temperature"), 1) +
-                            "\u00B0F"
-            );
-            humidityText.setText(
-                    "Humidity:\n" +
-                            roundStringWithMultiplier(current.getString("humidity"), 100) +
-                            "%");
-            windText.setText(
-                    "Wind Speed:\n" +
-                            roundStringWithMultiplier(current.getString("windSpeed"), 1) +
-                            " mph");
-
-            //from weekly forcast
-            summaryText.setText(weatherDays.getJSONObject(0).getString("summary"));
 
             //index 0 is current date
             initializeWeatherFragment(weatherDays.getString(0), R.id.todayIcon, "large");
