@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
+import com.example.project.Repository;
 import com.example.project.UserViewModel;
 import com.example.project.WeatherDBEntity;
 import com.example.project.WeatherViewModel;
@@ -151,7 +152,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        AssetHandlers.loadProfileImage(this, menu, user);
+        AssetHandlers.loadProfileImage(this, menu, new Repository(getApplication()));
         return true;
     }
 

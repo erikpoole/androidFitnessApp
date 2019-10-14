@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
+import com.example.project.Repository;
 import com.example.project.TileFragment;
 import com.example.project.UserViewModel;
 import com.example.project.activity.bio.BioEditActivity;
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        AssetHandlers.loadProfileImage(this, menu, userProfile);
+        AssetHandlers.loadProfileImage(this, menu, new Repository(getApplication()));
         return true;
     }
 

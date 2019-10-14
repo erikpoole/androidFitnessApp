@@ -26,6 +26,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
+import com.example.project.Repository;
 import com.example.project.UserViewModel;
 import com.example.project.activity.MainActivity;
 import com.example.project.database.UserProfile;
@@ -171,7 +172,7 @@ public class BioActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        AssetHandlers.loadProfileImage(this, menu, userProfile);
+        AssetHandlers.loadProfileImage(this, menu, new Repository(getApplication()));
         return true;
     }
 
