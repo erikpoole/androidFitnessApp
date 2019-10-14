@@ -196,8 +196,7 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
                 startActivity(bioEdit);
                 return true;
             case R.id.logout:
-                UserProfile userProfile = new UserProfile(getApplicationContext());
-                userProfile.logout();
+                userViewModel.logout();
                 Intent mainPage = new Intent(this, MainActivity.class);
                 startActivity(mainPage);
                 return true;

@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
         fTrans.commit();
 
         // UserProfile will be our interface for interacting with the database
-        userProfile = new UserProfile(ctx);
+//        userProfile = new UserProfile(ctx);
 //        if (!userProfile.isInDarkMode()) {
 //            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 //        } else {
