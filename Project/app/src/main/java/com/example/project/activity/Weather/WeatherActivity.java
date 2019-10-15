@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -16,13 +15,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
-import com.example.project.Repository;
 import com.example.project.UserViewModel;
-import com.example.project.WeatherDBEntity;
 import com.example.project.WeatherViewModel;
 import com.example.project.activity.MainActivity;
 import com.example.project.activity.bio.BioEditActivity;
@@ -58,14 +54,6 @@ public class WeatherActivity extends AppCompatActivity {
 
         userViewModel = new UserViewModel(this.getApplication());
         weatherViewModel = new WeatherViewModel(this.getApplication());
-        weatherViewModel.getWeather().observe(this, new Observer<WeatherDBEntity>() {
-            @Override
-            public void onChanged(WeatherDBEntity weatherDBEntity) {
-                if (weatherDBEntity != null) {
-                    handleWeatherJSON(weatherDBEntity.getWeatherJson());
-                }
-            }
-        });
 
         weatherViewModel.getTemperature().observe(this, new Observer<String>() {
             @Override
@@ -106,6 +94,8 @@ public class WeatherActivity extends AppCompatActivity {
         humidityText = findViewById(R.id.humidityText);
         windText = findViewById(R.id.windText);
 
+        setupFragments();
+
         user = new UserProfile(getApplicationContext());
 
         // Handle navigation drawer
@@ -127,14 +117,10 @@ public class WeatherActivity extends AppCompatActivity {
         isDrawerFixed = getResources().getBoolean(R.bool.isDrawerFixed);
     }
 
-    private String roundStringWithMultiplier(String input, int multiplier) {
-        return String.valueOf(Math.round(Double.parseDouble(input) * multiplier));
-    }
-
-    private void initializeWeatherFragment(String info, int containerID, String size) {
+    private void initializeWeatherFragment(int dayNumber, int containerID, String size) {
         WeatherFragment fragment = new WeatherFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("json", info);
+        bundle.putInt("dayNumber", dayNumber);
         bundle.putString("size", size);
         fragment.setArguments(bundle);
 
@@ -143,23 +129,11 @@ public class WeatherActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    private void handleWeatherJSON(String inputString) {
-        Log.d("DATA: ", inputString);
-        try {
-            JSONObject json = new JSONObject(inputString);
-            JSONArray weatherDays = json.getJSONObject("daily").getJSONArray("data");
-
-            //index 0 is current date
-            initializeWeatherFragment(weatherDays.getString(0), R.id.todayIcon, "large");
-            initializeWeatherFragment(weatherDays.getString(1), R.id.day1Icon, "small");
-            initializeWeatherFragment(weatherDays.getString(2), R.id.day2Icon, "small");
-            initializeWeatherFragment(weatherDays.getString(3), R.id.day3Icon, "small");
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return;
-        }
-
+    private void setupFragments() {
+        initializeWeatherFragment(0, R.id.todayIcon, "large");
+        initializeWeatherFragment(1, R.id.day1Icon, "small");
+        initializeWeatherFragment(2, R.id.day2Icon, "small");
+        initializeWeatherFragment(3, R.id.day3Icon, "small");
     }
 
     @Override

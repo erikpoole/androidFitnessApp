@@ -3,6 +3,7 @@ package com.example.project.activity.Weather;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +12,16 @@ import android.widget.TextView;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
+import com.example.project.WeatherViewModel;
 import com.github.pwittchen.weathericonview.WeatherIconView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class WeatherFragment extends Fragment {
+    private WeatherViewModel weatherViewModel;
+
     private JSONObject weatherIcons;
 
     private WeatherIconView icon;
@@ -29,9 +34,9 @@ public class WeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        size = getArguments().getString("size");
-
         final View view = inflater.inflate(R.layout.fragment_weather, container, false);
+
+        weatherViewModel = new WeatherViewModel(getActivity().getApplication());
 
         icon = view.findViewById(R.id.icon);
         maxTempText = view.findViewById(R.id.maxTempText);
@@ -43,18 +48,9 @@ public class WeatherFragment extends Fragment {
             e.printStackTrace();
         }
 
-        String jsonRaw = getArguments().getString("json");
-        JSONObject json = null;
-
-        try {
-            json = new JSONObject(jsonRaw);
-            maxTempText.setText(roundStringWithMultiplier(json.getString("temperatureHigh"), 1));
-            minTempText.setText(roundStringWithMultiplier(json.getString("temperatureLow"), 1));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
         //custom conversion to interact with WeatherIconView library (100 is default)
+        size = getArguments().getString("size");
+
         if (size == "small") {
             icon.setIconSize(55);
         }
@@ -64,7 +60,22 @@ public class WeatherFragment extends Fragment {
             maxTempText.setTextSize(48);
         }
 
-        icon.setIconResource(getIconCode(json));
+        weatherViewModel.getWeatherForecast().observe(this, new Observer<JSONArray>() {
+            @Override
+            public void onChanged(JSONArray weatherForecast) {
+                if (weatherForecast != null) {
+                    try {
+                        JSONObject jsonDay = weatherForecast.getJSONObject(getArguments().getInt("dayNumber"));
+
+                        maxTempText.setText(roundStringWithMultiplier(jsonDay.getString("temperatureHigh"), 1));
+                        minTempText.setText(roundStringWithMultiplier(jsonDay.getString("temperatureLow"), 1));
+                        icon.setIconResource(getIconCode(jsonDay));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
 
         return view;
     }

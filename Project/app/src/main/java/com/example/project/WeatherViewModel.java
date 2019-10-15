@@ -23,7 +23,7 @@ public class WeatherViewModel extends AndroidViewModel {
     private MutableLiveData<String> humidity;
     private MutableLiveData<String> windSpeed;
     private MutableLiveData<String> summary;
-    private MutableLiveData<JSONArray> weatherForcast;
+    private MutableLiveData<JSONArray> weatherForecast;
 
     public WeatherViewModel(@NonNull Application application) {
         super(application);
@@ -34,7 +34,7 @@ public class WeatherViewModel extends AndroidViewModel {
         windSpeed = new MutableLiveData<>();
         summary = new MutableLiveData<>();
 
-        weatherForcast = new MutableLiveData<>();
+        weatherForecast = new MutableLiveData<>();
 
         getWeather().observeForever(new Observer<WeatherDBEntity>() {
             @Override
@@ -52,7 +52,7 @@ public class WeatherViewModel extends AndroidViewModel {
                                 .getJSONObject(0)
                                 .getString("summary"));
 
-                        weatherForcast.setValue(json.getJSONObject("daily").getJSONArray("data"));
+                        weatherForecast.setValue(json.getJSONObject("daily").getJSONArray("data"));
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -88,9 +88,7 @@ public class WeatherViewModel extends AndroidViewModel {
         return summary;
     }
 
-    public MutableLiveData<JSONArray> getWeatherForcast() {
-        return weatherForcast;
+    public MutableLiveData<JSONArray> getWeatherForecast() {
+        return weatherForecast;
     }
-
-
 }
