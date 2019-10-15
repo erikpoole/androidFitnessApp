@@ -96,7 +96,6 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         userViewModel.getGoal().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer goal) {
-                Log.d("DATA:", goal.toString());
                 if (goal != null) {
                     originalGoal = goal;
                     workingGoal = goal;
@@ -109,7 +108,6 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         userViewModel.getActiveState().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer activity) {
-                Log.d("DATA:", activity.toString());
                 if (activity != null) {
                     originalActivity = activity;
                     workingActivity = activity;
@@ -122,7 +120,6 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         userViewModel.getSex().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String sex) {
-                Log.d("DATA:", sex);
                 if (sex != null) {
                     CalorieActivity.this.sex = sex;
                 }
