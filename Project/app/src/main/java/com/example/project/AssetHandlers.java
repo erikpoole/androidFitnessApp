@@ -31,6 +31,7 @@ import java.io.InputStream;
 public abstract class AssetHandlers {
 
     private static String profileImagePath;
+    private static String name;
 
     public static String readAsset(String filename, Context context) {
         try {
@@ -63,13 +64,24 @@ public abstract class AssetHandlers {
         ImageView drawerImg = activity.findViewById(R.id.nav_header_imageView);
         TextView drawerTv = activity.findViewById(R.id.nav_header_textView);
 
+        userViewModel.getName().observe((LifecycleOwner) activity, new Observer<String>() {
+            @Override
+            public void onChanged(String mName) {
+                if (mName != null) {
+                    name = mName;
+                }
+            }
+        });
+
         File sd = Environment.getExternalStorageDirectory();
         if (profileImagePath != null) {
             File imgFile = new File(profileImagePath);
             if (imgFile.exists()) {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 drawerImg.setImageBitmap(myBitmap);
-                drawerTv.setText(userViewModel.getName().getValue());
+            }
+            if (name != null) {
+                drawerTv.setText(name);
                 drawerTv.setTextColor(Color.WHITE);
             }
         }
