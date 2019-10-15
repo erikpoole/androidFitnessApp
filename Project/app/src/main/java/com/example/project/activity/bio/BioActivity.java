@@ -22,11 +22,9 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
-import com.example.project.Repository;
 import com.example.project.UserViewModel;
 import com.example.project.activity.MainActivity;
 import com.example.project.database.UserProfile;
@@ -36,19 +34,18 @@ import java.io.File;
 
 public class BioActivity extends AppCompatActivity {
     private UserViewModel userViewModel;
-    UserProfile userProfile;
     TextView nameTV, ageTV, sexTV, heightTV, weightTV;
     String nameVal, ageVal, sexVal, imgPathVal = "";
     ImageView imageView;
     private ActionBarDrawerToggle toggle;
     private boolean isDrawerFixed;
+    private Boolean darkMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bio);
 
-        userProfile = new UserProfile(getApplicationContext());
         nameTV = findViewById(R.id.bio_name);
         ageTV = findViewById(R.id.bio_age);
         sexTV = findViewById(R.id.bio_sex);
@@ -95,6 +92,15 @@ public class BioActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 return AssetHandlers.handleNavigationEvent(activity, item);
+            }
+        });
+
+        userViewModel.isInDarkMode().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean mDarkMode) {
+                if (mDarkMode != null) {
+                    darkMode = mDarkMode;
+                }
             }
         });
     }
@@ -159,7 +165,7 @@ public class BioActivity extends AppCompatActivity {
             if (imgPath != null) {
                 imgPathVal = imgPath;
                 File imgFile = new File(imgPath);
-                if(imgFile.exists()){
+                if (imgFile.exists()) {
                     Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                     imageView.setImageBitmap(myBitmap);
                 } else {
@@ -180,15 +186,13 @@ public class BioActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.night_mode:
-                UserProfile user = new UserProfile(getApplicationContext());
-                boolean nightModeOn = user.isInDarkMode();
-                if (!nightModeOn) {
+                if (!darkMode) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    userViewModel.updateDarkMode(true);
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    userViewModel.updateDarkMode(false);
                 }
-                user.toggleDarkMode();
-                user.update();
                 finish();
                 startActivity(getIntent());
                 return true;

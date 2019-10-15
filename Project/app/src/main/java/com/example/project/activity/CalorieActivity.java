@@ -22,10 +22,8 @@ import androidx.lifecycle.Observer;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
-import com.example.project.Repository;
 import com.example.project.UserViewModel;
 import com.example.project.activity.bio.BioEditActivity;
-import com.example.project.database.UserProfile;
 import com.google.android.material.navigation.NavigationView;
 
 public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
@@ -34,8 +32,6 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
     private final int MALE_MIN_CALORIES = 1200;
     private final int FEMALE_MIN_CALORIES = 1000;
     private final int NONBINARY_MIN_CALORIES = (MALE_MIN_CALORIES + FEMALE_MIN_CALORIES) / 2;
-
-    private UserProfile user;
 
     private Integer originalGoal;
     private Integer originalActivity;
@@ -54,13 +50,12 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
 
     private ActionBarDrawerToggle toggle;
     private boolean isDrawerFixed;
+    private Boolean darkMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calorie);
-
-        user = new UserProfile(getApplicationContext());
 
         calorieText = findViewById(R.id.calorieText);
         calorieWarningText = findViewById(R.id.calorieWarningText);
@@ -168,6 +163,15 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
                 }
             }
         });
+
+        userViewModel.isInDarkMode().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean mDarkMode) {
+                if (mDarkMode != null) {
+                    darkMode = mDarkMode;
+                }
+            }
+        });
     }
 
     @Override
@@ -181,13 +185,13 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         int id = item.getItemId();
         switch (id) {
             case R.id.night_mode:
-                if (!user.isInDarkMode()) {
+                if (!darkMode) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    userViewModel.updateDarkMode(true);
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    userViewModel.updateDarkMode(false);
                 }
-                user.toggleDarkMode();
-                user.update();
                 finish();
                 startActivity(getIntent());
                 return true;

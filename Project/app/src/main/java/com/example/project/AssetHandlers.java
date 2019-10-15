@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,7 +23,6 @@ import com.example.project.activity.HikingActivity;
 import com.example.project.activity.MainActivity;
 import com.example.project.activity.Weather.WeatherActivity;
 import com.example.project.activity.bio.BioActivity;
-import com.example.project.database.UserProfile;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,7 +64,6 @@ public abstract class AssetHandlers {
         TextView drawerTv = activity.findViewById(R.id.nav_header_textView);
 
         File sd = Environment.getExternalStorageDirectory();
-        Log.d("image", "onCreateOptionsMenu: " + profileImagePath);
         if (profileImagePath != null) {
             File imgFile = new File(profileImagePath);
             if (imgFile.exists()) {
