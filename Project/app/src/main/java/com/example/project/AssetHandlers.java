@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,15 +23,12 @@ import com.example.project.activity.HikingActivity;
 import com.example.project.activity.MainActivity;
 import com.example.project.activity.Weather.WeatherActivity;
 import com.example.project.activity.bio.BioActivity;
-import com.example.project.database.UserProfile;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 public abstract class AssetHandlers {
-
-    private static String profileImagePath;
 
     public static String readAsset(String filename, Context context) {
         try {
@@ -49,33 +45,27 @@ public abstract class AssetHandlers {
     }
 
     //use in onCreateOptionsMenu
-    public static void loadProfileImage(Activity activity, Menu menu, UserViewModel userViewModel) {
+    public static void loadProfileImage(final Activity activity, Menu menu, final UserViewModel userViewModel) {
         userViewModel.getImgPath().observe((LifecycleOwner) activity, new Observer<String>() {
             @Override
             public void onChanged(String imgPath) {
                 if (imgPath != null) {
-                    profileImagePath = imgPath;
+                    Log.d("image", "onCreateOptionsMenu: " + imgPath);
+                    ImageView drawerImg = activity.findViewById(R.id.nav_header_imageView);
+                    TextView drawerTv = activity.findViewById(R.id.nav_header_textView);
+                    File imgFile = new File(imgPath);
+                    if (imgFile.exists()) {
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        drawerImg.setImageBitmap(myBitmap);
+                        drawerTv.setText(userViewModel.getName().getValue());
+                        drawerTv.setTextColor(Color.WHITE);
+                    }
                 }
             }
         });
 
         MenuInflater inflater = activity.getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
-
-        ImageView drawerImg = activity.findViewById(R.id.nav_header_imageView);
-        TextView drawerTv = activity.findViewById(R.id.nav_header_textView);
-
-        File sd = Environment.getExternalStorageDirectory();
-        Log.d("image", "onCreateOptionsMenu: " + profileImagePath);
-        if (profileImagePath != null) {
-            File imgFile = new File(profileImagePath);
-            if (imgFile.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                drawerImg.setImageBitmap(myBitmap);
-                drawerTv.setText(userViewModel.getName().getValue());
-                drawerTv.setTextColor(Color.WHITE);
-            }
-        }
     }
 
     //used in drawer
