@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
             }
         });
 
-            //TODO check for permissions before requesting
+        //TODO check for permissions before requesting
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
 
         final Observer<String> nameObserver = new Observer<String>() {
@@ -182,12 +183,15 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
     }
 
     private void showLoginForm() {
-        SignInFragment dialog = new SignInFragment();
-        Bundle args = new Bundle();
-        args.putString("name", _name);
-        args.putString("password", _password);
-        dialog.setArguments(args);
-        dialog.setCancelable(false);
-        dialog.show(getSupportFragmentManager(), "SignInFragment");
+        SignInFragment fragment = (SignInFragment) getSupportFragmentManager().findFragmentByTag("SignInFragment");
+        if (fragment == null) {
+            SignInFragment dialog = new SignInFragment();
+            Bundle args = new Bundle();
+            args.putString("name", _name);
+            args.putString("password", _password);
+            dialog.setArguments(args);
+            dialog.setCancelable(false);
+            dialog.show(getSupportFragmentManager(), "SignInFragment");
+        }
     }
 }
