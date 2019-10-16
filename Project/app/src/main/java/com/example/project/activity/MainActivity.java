@@ -24,6 +24,7 @@ import com.example.project.AssetHandlers;
 import com.example.project.R;
 import com.example.project.TileFragment;
 import com.example.project.UserViewModel;
+import com.example.project.activity.Weather.WeatherActivity;
 import com.example.project.activity.bio.BioEditActivity;
 import com.example.project.activity.login.SignInFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -69,20 +70,45 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
         fTrans.replace(R.id.fl_test_frag, new TileFragment(), "Frag_1");
         fTrans.commit();
 
+        if (getIntent().getExtras() != null) {
+            darkMode = getIntent().getExtras().getBoolean("darkMode");
+        }
+
         //Dark mode!
         userViewModel.isInDarkMode().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean mDarkMode) {
                 if (mDarkMode != null) {
-                    darkMode = mDarkMode;
-                    if (darkMode) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    } else {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    if (darkMode != mDarkMode) {
+                        darkMode = mDarkMode;
+                        if (darkMode) {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        } else {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        }
+                        Intent intent = getIntent();
+                        intent.putExtra("darkMode", darkMode);
+
+                        finish();
+                        startActivity(intent);
                     }
+
+
                 }
             }
         });
+
+//        SignInFragment dialog = new SignInFragment();
+//        Bundle args = new Bundle();
+//        args.putString("name", _name);
+//        args.putString("password", _password);
+//        dialog.setArguments(args);
+//        dialog.setCancelable(false);
+//        dialog.show(getSupportFragmentManager(), "SignInFragment");
+
+//        Intent weatherPage = new Intent(activity.getApplicationContext(), WeatherActivity.class);
+//        activity.startActivity(weatherPage);
+//        return true;
 
             //TODO check for permissions before requesting
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
@@ -153,15 +179,11 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
         int id = item.getItemId();
         switch (id) {
             case R.id.night_mode:
-                if (!darkMode) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    userViewModel.updateDarkMode(true);
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                if (darkMode) {
                     userViewModel.updateDarkMode(false);
+                } else {
+                    userViewModel.updateDarkMode(true);
                 }
-                finish();
-                startActivity(getIntent());
                 return true;
             case R.id.edit_profile:
                 Intent bioEdit = new Intent(this, BioEditActivity.class);

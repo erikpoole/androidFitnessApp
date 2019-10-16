@@ -76,6 +76,6 @@ public interface UserDAO {
     @Query("UPDATE UserDBEntity SET isLoggedIn = 1 WHERE id = :id")
     void login(int id);
 
-    @Query("UPDATE UserDBEntity SET activeState = :isInDarkMode WHERE isLoggedIn = 1")
+    @Query("UPDATE UserDBEntity SET isInDarkMode = :isInDarkMode WHERE isLoggedIn = 1")
     void updateDarkMode(boolean isInDarkMode);
 }
