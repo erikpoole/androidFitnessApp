@@ -15,34 +15,40 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.Observer;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
-import com.example.project.Repository;
 import com.example.project.UserViewModel;
 import com.example.project.activity.MainActivity;
-import com.example.project.database.UserProfile;
 import com.google.android.material.navigation.NavigationView;
 
 public class BioEditActivity extends AppCompatActivity implements BioFormFragment.onSubmitFormListener {
     private UserViewModel userViewModel;
-    UserProfile userProfile;
     TextView nameTV;
     ImageView imageView;
     Context ctx;
     private ActionBarDrawerToggle toggle;
     private boolean isDrawerFixed;
+    private String name;
+    private Boolean darkMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bio_edit);
         ctx = getApplicationContext();
-        userProfile = new UserProfile(ctx);
+
+        userViewModel.getName().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String mName) {
+                if (mName != null) {
+                    name = mName;
+                }
+            }
+        });
 
         nameTV = findViewById(R.id.bio_edit_name);
-        String name = getIntent().getExtras().getString("name");
         nameTV.setText(name);
 
         userViewModel = new UserViewModel(this.getApplication());
@@ -65,6 +71,15 @@ public class BioEditActivity extends AppCompatActivity implements BioFormFragmen
                 return AssetHandlers.handleNavigationEvent(activity, item);
             }
         });
+
+        userViewModel.isInDarkMode().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean mDarkMode) {
+                if (mDarkMode != null) {
+                    darkMode = mDarkMode;
+                }
+            }
+        });
     }
 
     @Override
@@ -78,13 +93,13 @@ public class BioEditActivity extends AppCompatActivity implements BioFormFragmen
         int id = item.getItemId();
         switch (id) {
             case R.id.night_mode:
-                if (!userProfile.isInDarkMode()) {
+                if (!darkMode) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    userViewModel.updateDarkMode(true);
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    userViewModel.updateDarkMode(false);
                 }
-                userProfile.toggleDarkMode();
-                userProfile.update();
                 finish();
                 startActivity(getIntent());
                 return true;

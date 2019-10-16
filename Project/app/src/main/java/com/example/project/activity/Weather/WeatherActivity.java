@@ -22,10 +22,8 @@ import com.example.project.UserViewModel;
 import com.example.project.WeatherViewModel;
 import com.example.project.activity.MainActivity;
 import com.example.project.activity.bio.BioEditActivity;
-import com.example.project.database.UserProfile;
 import com.google.android.material.navigation.NavigationView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,11 +39,9 @@ public class WeatherActivity extends AppCompatActivity {
 
     private JSONObject weatherIcons;
 
-    private UserProfile user;
-
     private ActionBarDrawerToggle toggle;
     private boolean isDrawerFixed;
-
+    private Boolean darkMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +79,15 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
 
+        userViewModel.isInDarkMode().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean mDarkMode) {
+                if (mDarkMode != null) {
+                    darkMode = mDarkMode;
+                }
+            }
+        });
+
         try {
             weatherIcons = new JSONObject(AssetHandlers.readAsset("weatherIcons.json", this));
         } catch (JSONException e) {
@@ -95,8 +100,6 @@ public class WeatherActivity extends AppCompatActivity {
         windText = findViewById(R.id.windText);
 
         setupFragments();
-
-        user = new UserProfile(getApplicationContext());
 
         // Handle navigation drawer
         Toolbar toolbar = findViewById(R.id.toolbar_main);
@@ -147,13 +150,13 @@ public class WeatherActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.night_mode:
-                if (!user.isInDarkMode()) {
+                if (!darkMode) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    userViewModel.updateDarkMode(true);
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    userViewModel.updateDarkMode(false);
                 }
-                user.toggleDarkMode();
-                user.update();
                 finish();
                 startActivity(getIntent());
                 return true;

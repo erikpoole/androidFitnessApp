@@ -66,7 +66,6 @@ public class SignInFragment extends DialogFragment implements View.OnClickListen
             case R.id.signInBtn:
                 String name = nameET.getText().toString();
                 String password = passwordET.getText().toString();
-//                UserProfile userProfile = new UserProfile(ctx);
 
                 final Observer<Integer> idObserver = new Observer<Integer>() {
                     @Override

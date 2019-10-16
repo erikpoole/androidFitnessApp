@@ -35,6 +35,7 @@ public class BmiActivity extends AppCompatActivity {
     private int range;
     private ActionBarDrawerToggle toggle;
     private boolean isDrawerFixed;
+    private Boolean darkMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,15 @@ public class BmiActivity extends AppCompatActivity {
                 if (mWeight != null) {
                     weight = mWeight;
                     displayBMI(heightValue, weight);
+                }
+            }
+        });
+
+        userViewModel.isInDarkMode().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean mDarkMode) {
+                if (mDarkMode != null) {
+                    darkMode = mDarkMode;
                 }
             }
         });
@@ -147,7 +157,7 @@ public class BmiActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.night_mode:
-                if (userViewModel.isInDarkMode().getValue() != null && !userViewModel.isInDarkMode().getValue()) {
+                if (!darkMode) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     userViewModel.updateDarkMode(true);
                 } else {

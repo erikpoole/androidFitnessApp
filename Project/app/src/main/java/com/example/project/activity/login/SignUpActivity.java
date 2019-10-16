@@ -14,19 +14,16 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.project.AssetHandlers;
 import com.example.project.R;
-import com.example.project.Repository;
 import com.example.project.UserViewModel;
 import com.example.project.activity.MainActivity;
 import com.example.project.activity.bio.BioFormFragment;
 import com.example.project.activity.bio.DatePicker;
 import com.example.project.database.UserHelper;
-import com.example.project.database.UserProfile;
 
 public class SignUpActivity extends AppCompatActivity implements BioFormFragment.onSubmitFormListener, DatePicker.onDateSetListener {
     private UserViewModel userViewModel;
     EditText nameET, psswdET, psswdConfirmET, ageET;
     UserHelper dbHelper;
-    UserProfile userProfile;
     Context ctx;
     String DOB;
 
