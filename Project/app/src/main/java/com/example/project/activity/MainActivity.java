@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
         if (loggedIn != null && !loggedIn) {
             showLoginForm();
         }
+
     }
 
     @Override
@@ -146,6 +147,9 @@ public class MainActivity extends AppCompatActivity implements SignInFragment.in
     @Override
     public void onResume() {
         super.onResume();
+        if (loggedIn != null && !loggedIn) {
+            showLoginForm();
+        }
     }
 
     @Override
