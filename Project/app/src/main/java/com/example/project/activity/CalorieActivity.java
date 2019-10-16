@@ -161,11 +161,33 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
             }
         });
 
+
+        if (getIntent().getExtras() != null) {
+            darkMode = getIntent().getExtras().getBoolean("darkMode");
+        } else {
+            darkMode = false;
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+        //Dark mode!
         userViewModel.isInDarkMode().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean mDarkMode) {
                 if (mDarkMode != null) {
-                    darkMode = mDarkMode;
+                    if (darkMode != mDarkMode) {
+                        darkMode = mDarkMode;
+                        if (darkMode) {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        } else {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        }
+                        Intent intent = getIntent();
+                        intent.putExtra("darkMode", darkMode);
+
+                        finish();
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                    }
                 }
             }
         });
@@ -183,14 +205,10 @@ public class CalorieActivity extends AppCompatActivity implements SeekBar.OnSeek
         switch (id) {
             case R.id.night_mode:
                 if (!darkMode) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     userViewModel.updateDarkMode(true);
                 } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     userViewModel.updateDarkMode(false);
                 }
-                finish();
-                startActivity(getIntent());
                 return true;
             case R.id.edit_profile:
                 Intent bioEdit = new Intent(this, BioEditActivity.class);
